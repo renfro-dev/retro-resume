@@ -341,24 +341,26 @@ export default function Home() {
         <div className="relative z-10 max-w-7xl mx-auto px-12 sm:px-16 lg:px-20 py-24">
           
           {/* Top Right Dashboard */}
-          <div className="absolute top-0 right-32 z-50 w-72">
-            <div className="workflow-card p-6">
-              <div className="space-y-2 text-sm font-mono">
-                <div className="flex justify-between">
-                  <span className="text-[var(--terminal-gray)]">Years experience:</span>
-                  <span className="text-[var(--terminal-green)]">16</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[var(--terminal-gray)]">Founder roles:</span>
-                  <span className="text-[var(--terminal-cyan)]">3</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[var(--terminal-gray)]">Current industry:</span>
-                  <span className="text-[var(--terminal-yellow)]">legal_tech</span>
+          {workflowsVisible && (
+            <div className="absolute top-0 right-32 z-50 w-72">
+              <div className="workflow-card p-6">
+                <div className="space-y-2 text-sm font-mono">
+                  <div className="flex justify-between">
+                    <span className="text-[var(--terminal-gray)]">Years experience:</span>
+                    <span className="text-[var(--terminal-green)]">16</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[var(--terminal-gray)]">Founder roles:</span>
+                    <span className="text-[var(--terminal-cyan)]">3</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[var(--terminal-gray)]">Current industry:</span>
+                    <span className="text-[var(--terminal-yellow)]">legal_tech</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
           {/* Workflow Loading Sequence */}
           <div className="flex justify-start mb-8 ml-8">
             <div className="workflow-card w-72 h-32 p-4">
