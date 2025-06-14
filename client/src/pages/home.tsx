@@ -180,8 +180,40 @@ export default function Home() {
       return consumptionInterval;
     };
 
+    // Corner flash effect timing
+    const addCornerFlash = () => {
+      const pacman = document.querySelector('.pacman') as HTMLElement;
+      if (!pacman) return;
+
+      // Flash timing matches the animation keyframes (16s total cycle)
+      // Corners hit at 25%, 50%, 75% of cycle
+      const flashTimes = [4000, 8000, 12000]; // 4s, 8s, 12s
+      
+      flashTimes.forEach(time => {
+        setTimeout(() => {
+          pacman.classList.add('flash');
+          setTimeout(() => {
+            pacman.classList.remove('flash');
+          }, 200); // Flash duration matches CSS animation
+        }, time);
+      });
+
+      // Repeat every 16 seconds
+      setInterval(() => {
+        flashTimes.forEach(time => {
+          setTimeout(() => {
+            pacman.classList.add('flash');
+            setTimeout(() => {
+              pacman.classList.remove('flash');
+            }, 200);
+          }, time);
+        });
+      }, 16000);
+    };
+
     const dots = generateDots();
     const interval = animatePacMan();
+    addCornerFlash();
 
     // Regenerate dots every 16 seconds (one full cycle)
     const regenerateInterval = setInterval(() => {
