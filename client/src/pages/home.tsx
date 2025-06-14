@@ -69,10 +69,23 @@ export default function Home() {
         mainRef.current.style.transform = `translateY(${rate}px)`;
       }
 
-      // Robot running animation
+      // Robot running animation - moves left to right based on scroll
       const robot = robotRef.current;
       if (robot) {
-        robot.classList.add('scrolling', 'running');
+        const scrollY = window.scrollY;
+        const maxScroll = document.body.scrollHeight - window.innerHeight;
+        const screenWidth = window.innerWidth;
+        
+        if (maxScroll > 0) {
+          // Calculate horizontal position based on scroll percentage
+          const scrollPercent = Math.min(scrollY / maxScroll, 1);
+          const robotWidth = 120; // approximate width of robot
+          const maxX = screenWidth - robotWidth;
+          const x = scrollPercent * maxX;
+          
+          robot.style.transform = `translateY(-50%) translateX(${x}px)`;
+          robot.classList.add('scrolling', 'running');
+        }
         
         // Stop running animation after scroll stops
         clearTimeout(scrollTimeout);
@@ -98,146 +111,124 @@ export default function Home() {
       
       {/* Running Robot - appears when scrolling */}
       <div ref={robotRef} className="running-robot">
-        <div className="robot-frame-1">{`   [█▲█]
-  ███████
- █ ◉   ◉ █
- █   ▼   █
- █████████
-   █████
-    ███
-   
-   █████
-  ███████
- █████████
-█ █ ███ █ █
-█ █ ███ █ █
-█ █████ █ █
- ████████
-  ██████
+        <div className="robot-frame-1">{`    [▲]
    ████
+  █ ◉ █ ┐
+  █ ▼ █ ┘
+  █████
+   ███
    
-   ███   ███
-  █████ █████
- ███████████
-█████████████
-█████████████
+  █████
+ ███████
+ █ ███ █
+ █ ███ █ ───►
+ █████████
+  ███████
+   █████
+   
+   ██   ██
+  ████ ████
  ███████████
   █████████
    ███████
    
+    ██   ██
    ███   ███
-  ███     ███
- ███       ███
-███         ███
-███         ███
- ███       ███
-  ███     ███
-   ███   ███`}</div>
-        <div className="robot-frame-2">{`   [█▲█]
-  ███████
- █ ◉   ◉ █
- █   ▼   █
- █████████
-   █████
-    ███
-   
-   █████
-  ███████
- █████████
-█ █ ███ █ █
-█ █ ███ █ █
-█ █████ █ █
- ████████
-  ██████
-   ████
-   
-  ███     ███
+  ████   ████
  █████   █████
-██████████████
-██████████████
-██████████████
- ████████████
-  ██████████
-   ████████
-   
+█████     █████
+ ████     ████
   ███     ███
- ███       ███
-███         ███
-███         ███
-███         ███
-███         ███
- ███       ███
-  ███     ███`}</div>
-        <div className="robot-frame-3">{`   [█▲█]
-  ███████
- █ ◉   ◉ █
- █   ω   █
- █████████
-   █████
-    ███
-   
-   █████
-  ███████
- █████████
-█ █ ███ █ █
-█ █ ███ █ █
-█ █████ █ █
- ████████
-  ██████
+   ██     ██`}</div>
+        <div className="robot-frame-2">{`    [▲]
    ████
+  █ ◉ █ ┐
+  █ ▼ █ ┘
+  █████
+   ███
    
-   ███   ███
-  █████ █████
- ███████████
-█████████████
-█████████████
+  █████
+ ███████
+ █ ███ █
+ █ ███ █ ───►
+ █████████
+  ███████
+   █████
+   
+    ██   ██
+   ████ ████
+  ███████████
+   █████████
+    ███████
+   
+   ██     ██
+  ███     ███
+ ████     ████
+█████     █████
+█████     █████
+ ████     ████
+  ███     ███
+   ██     ██`}</div>
+        <div className="robot-frame-3">{`    [▲]
+   ████
+  █ ◉ █ ┐
+  █ ω █ ┘
+  █████
+   ███
+   
+  █████
+ ███████
+ █ ███ █
+ █ ███ █ ───►
+ █████████
+  ███████
+   █████
+   
+   ██   ██
+  ████ ████
  ███████████
   █████████
    ███████
    
-  ███     ███
- ███      ███
-███        ███
-███        ███
-███        ███
- ███      ███
-  ███    ███
-   ███  ███`}</div>
-        <div className="robot-frame-4">{`   [█▲█]
-  ███████
- █ ◉   ◉ █
- █   ▼   █
- █████████
-   █████
-    ███
-   
-   █████
-  ███████
- █████████
-█ █ ███ █ █
-█ █ ███ █ █
-█ █████ █ █
- ████████
-  ██████
+  ██       ██
+ ███       ███
+████       ████
+████       ████
+████       ████
+████       ████
+ ███       ███
+  ██       ██`}</div>
+        <div className="robot-frame-4">{`    [▲]
    ████
+  █ ◉ █ ┐
+  █ ▼ █ ┘
+  █████
+   ███
    
- ███       ███
-█████     █████
-█████████████
-█████████████
-█████████████
-█████████████
- ███████████
-  █████████
+  █████
+ ███████
+ █ ███ █
+ █ ███ █ ───►
+ █████████
+  ███████
+   █████
    
- ███       ███
+     ██ ██
+    ████████
+   ██████████
+  ████████████
+   ██████████
+    ████████
+     ██████
+   
+ ██         ██
 ███         ███
 ███         ███
 ███         ███
 ███         ███
 ███         ███
 ███         ███
- ███       ███`}</div>
+ ██         ██`}</div>
       </div>
       
       <main ref={mainRef} className="relative overflow-hidden">
