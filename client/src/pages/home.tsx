@@ -355,7 +355,7 @@ export default function Home() {
           
           {/* Call to Action Button */}
           <div id="cta-button" className="flex justify-start mb-16 ml-8" style={{display: 'none'}}>
-            <button className="bg-transparent border-2 border-[var(--terminal-green)] text-[var(--terminal-green)] px-6 py-3 font-mono text-sm hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-green-500/25">
+            <button className="bg-[var(--terminal-yellow)] border-2 border-[var(--terminal-yellow)] text-black px-6 py-3 font-mono text-sm hover:bg-transparent hover:text-[var(--terminal-yellow)] transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-500/25">
               activate workflow
             </button>
           </div>
