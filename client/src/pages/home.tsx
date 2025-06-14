@@ -186,8 +186,8 @@ export default function Home() {
             Math.pow(pacmanCenterY - pelletCenterY, 2)
           );
           
-          // Larger collision radius for power pellets
-          if (distance < 35) {
+          // Much larger collision radius for power pellets
+          if (distance < 50) {
             pelletElement.classList.add('consumed');
           }
         });

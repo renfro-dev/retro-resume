@@ -155,8 +155,9 @@
   }
 
   .retro-corner.consumed {
-    opacity: 0;
-    transform: scale(2);
+    opacity: 0 !important;
+    transform: scale(2) !important;
+    animation: none !important;
   }
 
   .retro-corner.top-left {
