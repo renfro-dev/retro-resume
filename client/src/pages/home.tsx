@@ -79,18 +79,11 @@ export default function Home() {
         <BackgroundDecorations />
         
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          {/* Workflow Start */}
-          <div className="flex justify-center mb-8">
-            <div className="bg-[var(--terminal-green)] text-black px-4 py-2 rounded-full font-mono text-sm font-bold">
-              START JOURNEY
-            </div>
-          </div>
-          
           {/* Workflow Activation Command */}
           <div className="flex justify-start ml-8 mb-6">
             <div className="bg-black border border-[var(--terminal-green)] rounded p-4 w-full max-w-2xl">
               <div className="text-[var(--terminal-green)] font-mono text-xs mb-2">
-                guest@term.toolkit.com:~$ ./activate-workflow.sh
+                ./activate-workflow.sh
               </div>
               <div className="text-[var(--terminal-gray)] font-mono text-xs leading-relaxed">
                 <div>--enable-workflow=true</div>
