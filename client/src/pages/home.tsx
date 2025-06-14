@@ -336,8 +336,8 @@ export default function Home() {
         <div className="relative z-10 max-w-7xl mx-auto px-12 sm:px-16 lg:px-20 py-24">
           {/* Workflow Loading Sequence */}
           <div className="flex justify-start mb-8 ml-8">
-            <div className="workflow-card p-4 w-full max-w-2xl">
-              <div id="workflow-loading" className="font-mono text-xs text-[var(--terminal-green)]">
+            <div className="workflow-card w-72 h-32 p-4">
+              <div id="workflow-loading" className="font-mono text-xs text-[var(--terminal-green)] h-full flex flex-col justify-center">
                 {/* Content will be populated by JavaScript */}
               </div>
             </div>
