@@ -78,25 +78,50 @@ export default function Home() {
       <main ref={mainRef} className="relative overflow-hidden">
         <BackgroundDecorations />
         
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="flex flex-col items-center space-y-6">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          {/* Workflow Start */}
+          <div className="flex justify-center mb-8">
+            <div className="bg-[var(--terminal-green)] text-black px-4 py-2 rounded-full font-mono text-sm font-bold">
+              START JOURNEY
+            </div>
+          </div>
+          
+          {/* Workflow Steps */}
+          <div className="relative">
             {chapters.map((chapter, index) => (
-              <div 
-                key={index}
-                className={`${index % 2 === 0 ? 'self-start ml-4 md:ml-12' : 'self-end mr-4 md:mr-12'}`}
-                style={{
-                  marginTop: index > 0 ? '-40px' : '0'
-                }}
-              >
-                <ChapterRhombus
-                  title={chapter.title}
-                  description={chapter.description}
-                  imageUrl={chapter.imageUrl}
-                  imageAlt={chapter.imageAlt}
-                  index={index}
-                />
+              <div key={index} className="relative mb-12">
+                {/* Workflow Card */}
+                <div className={`flex ${index % 2 === 0 ? 'justify-start ml-8' : 'justify-end mr-8'}`}>
+                  <ChapterRhombus
+                    title={chapter.title}
+                    description={chapter.description}
+                    imageUrl={chapter.imageUrl}
+                    imageAlt={chapter.imageAlt}
+                    index={index}
+                  />
+                </div>
+                
+                {/* Connecting Line */}
+                {index < chapters.length - 1 && (
+                  <div className="flex justify-center mt-6">
+                    <div className="workflow-line workflow-line-vertical"></div>
+                  </div>
+                )}
               </div>
             ))}
+          </div>
+          
+          {/* Final connecting line */}
+          <div className="flex justify-center mt-6 mb-8">
+            <div className="workflow-line workflow-line-vertical"></div>
+          </div>
+          
+          {/* Workflow End */}
+          <div className="flex justify-center">
+            <div className="bg-[var(--terminal-yellow)] text-black px-6 py-3 rounded-full font-mono text-sm font-bold flex items-center space-x-2">
+              <span>✓</span>
+              <span>AUTOMATION COMPLETE</span>
+            </div>
           </div>
         </div>
         
