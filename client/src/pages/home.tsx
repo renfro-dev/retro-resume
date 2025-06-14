@@ -61,6 +61,14 @@ const chapters = [
     imageAlt: "Gardening and family life",
     status: "Active",
     reportContent: "Placeholder content for Roots report."
+  },
+  {
+    title: "Entre-curious",
+    description: "When you have an itch, but you prob shouldn't scratch it, just vibe.",
+    imageUrl: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
+    imageAlt: "Curiosity and entrepreneurial mindset",
+    status: "Active",
+    reportContent: "Placeholder content for Entre-curious report."
   }
 ];
 
