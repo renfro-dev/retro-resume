@@ -78,17 +78,24 @@ export default function Home() {
       <main ref={mainRef} className="relative overflow-hidden">
         <BackgroundDecorations />
         
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 place-items-center">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="flex flex-col items-center space-y-8">
             {chapters.map((chapter, index) => (
-              <ChapterRhombus
+              <div 
                 key={index}
-                title={chapter.title}
-                description={chapter.description}
-                imageUrl={chapter.imageUrl}
-                imageAlt={chapter.imageAlt}
-                index={index}
-              />
+                className={`${index % 2 === 0 ? 'self-start ml-8 md:ml-16' : 'self-end mr-8 md:mr-16'}`}
+                style={{
+                  marginTop: index > 0 ? '-60px' : '0'
+                }}
+              >
+                <ChapterRhombus
+                  title={chapter.title}
+                  description={chapter.description}
+                  imageUrl={chapter.imageUrl}
+                  imageAlt={chapter.imageAlt}
+                  index={index}
+                />
+              </div>
             ))}
           </div>
         </div>
