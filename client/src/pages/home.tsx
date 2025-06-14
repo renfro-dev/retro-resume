@@ -36,18 +36,6 @@ const chapters = [
     imageAlt: "API connections and networking"
   },
   {
-    title: "Mobile First",
-    description: "Adopting mobile-first design principles and progressive web app technologies.",
-    imageUrl: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "Mobile app development"
-  },
-  {
-    title: "AI Integration",
-    description: "Exploring artificial intelligence and machine learning to enhance user experiences.",
-    imageUrl: "https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "AI and machine learning technology"
-  },
-  {
     title: "Future Vision",
     description: "Looking ahead to emerging technologies and the next chapter of innovation.",
     imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
