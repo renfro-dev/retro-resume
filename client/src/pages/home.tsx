@@ -340,6 +340,29 @@ export default function Home() {
       
       <Header />
       
+      {/* Top Right Dashboard */}
+      <div className="fixed top-20 right-8 z-20 hidden lg:block">
+        <div className="workflow-card p-4 w-64">
+          <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
+            [DEVELOPER PROFILE]
+          </div>
+          <div className="space-y-1 text-xs font-mono">
+            <div className="flex justify-between">
+              <span className="text-[var(--terminal-gray)]">Years experience:</span>
+              <span className="text-[var(--terminal-green)]">16</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-[var(--terminal-gray)]">Founder roles:</span>
+              <span className="text-[var(--terminal-cyan)]">3</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-[var(--terminal-gray)]">Current industry:</span>
+              <span className="text-[var(--terminal-yellow)]">legal tech</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <main ref={mainRef} className="relative overflow-hidden">
         <BackgroundDecorations />
         
@@ -395,28 +418,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Top Right Dashboard */}
-          <div className="absolute top-6 right-8 hidden lg:block">
-            <div className="workflow-card p-4 w-64">
-              <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
-                [DEVELOPER PROFILE]
-              </div>
-              <div className="space-y-1 text-xs font-mono">
-                <div className="flex justify-between">
-                  <span className="text-[var(--terminal-gray)]">Years experience:</span>
-                  <span className="text-[var(--terminal-green)]">16</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[var(--terminal-gray)]">Founder roles:</span>
-                  <span className="text-[var(--terminal-cyan)]">3</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[var(--terminal-gray)]">Current industry:</span>
-                  <span className="text-[var(--terminal-yellow)]">legal tech</span>
-                </div>
-              </div>
-            </div>
-          </div>
+
         </div>
         
         <Footer />
