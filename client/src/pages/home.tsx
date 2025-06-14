@@ -89,7 +89,7 @@ export default function Home() {
           {/* Workflow Steps */}
           <div className="relative">
             {chapters.map((chapter, index) => (
-              <div key={index} className="relative mb-12">
+              <div key={index} className="relative mb-16">
                 {/* Workflow Card */}
                 <div className={`flex ${index % 2 === 0 ? 'justify-start ml-8' : 'justify-end mr-8'}`}>
                   <ChapterRhombus
@@ -101,10 +101,30 @@ export default function Home() {
                   />
                 </div>
                 
-                {/* Connecting Line */}
+                {/* Connecting Arrow to Next Card */}
                 {index < chapters.length - 1 && (
-                  <div className="flex justify-center mt-6">
-                    <div className="workflow-line workflow-line-vertical"></div>
+                  <div className="workflow-connector">
+                    {index % 2 === 0 ? (
+                      // Arrow from left card to right card (down-right)
+                      <div 
+                        className="workflow-arrow-down-right"
+                        style={{
+                          left: '50%',
+                          top: '140px',
+                          marginLeft: '-1px'
+                        }}
+                      ></div>
+                    ) : (
+                      // Arrow from right card to left card (down-left)
+                      <div 
+                        className="workflow-arrow-down-left"
+                        style={{
+                          left: '50%',
+                          top: '140px',
+                          marginLeft: '-1px'
+                        }}
+                      ></div>
+                    )}
                   </div>
                 )}
               </div>

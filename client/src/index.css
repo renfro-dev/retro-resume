@@ -161,6 +161,53 @@
     border-left: 8px solid var(--terminal-green);
   }
   
+  .workflow-connector {
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .workflow-arrow-down-right {
+    width: 2px;
+    height: 80px;
+    background: var(--terminal-green);
+    transform-origin: top;
+    transform: rotate(30deg);
+  }
+  
+  .workflow-arrow-down-right::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    right: -4px;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 8px solid var(--terminal-green);
+    transform: rotate(-30deg);
+  }
+  
+  .workflow-arrow-down-left {
+    width: 2px;
+    height: 80px;
+    background: var(--terminal-green);
+    transform-origin: top;
+    transform: rotate(-30deg);
+  }
+  
+  .workflow-arrow-down-left::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: -4px;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 8px solid var(--terminal-green);
+    transform: rotate(30deg);
+  }
+  
   .terminal-glow {
     text-shadow: 0 0 10px currentColor;
   }
