@@ -51,8 +51,16 @@ const chapters = [
     description: "Found product market fit in the legal space.",
     imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Product market fit and legal technology",
-    status: "Active",
+    status: "Complete",
     reportContent: "Placeholder content for PMF report."
+  },
+  {
+    title: "Roots",
+    description: "I'm happily married to a badass creative and spent a lot of time gardening.",
+    imageUrl: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
+    imageAlt: "Gardening and family life",
+    status: "Active",
+    reportContent: "Placeholder content for Roots report."
   }
 ];
 
