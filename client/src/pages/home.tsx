@@ -140,53 +140,107 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Robot ASCII Art - Positioned absolutely to the right */}
-          <div className="hidden lg:block absolute top-20 right-8">
-            <div className="text-[var(--terminal-green)] font-mono text-xs leading-none select-none">
-              <pre className="whitespace-pre">{`      & & &
-    & & & & &
-   & & & & & &
-   &   & &   &
-   & & & & & &
-    & & & & &
-      & & &
-   
-    & & & & &
-   &   & &   &
-  &     &     &
- &      &      &
-&   &&& & &&&   &
-&  &         &  &
-&  &    &    &  &
-&  &         &  &
- &  &       &  &
-  &  &     &  &
-   &  &   &  &
-    &  & &  &
-     &  &  &
-      & & &
-       & &
-        &
+          {/* Right Sidebar - Terminal System Info */}
+          <div className="hidden lg:flex absolute top-20 right-8 flex-col space-y-6 w-80">
+            
+            {/* System Status Panel */}
+            <div className="bg-black/80 border border-[var(--terminal-green)] rounded p-4 backdrop-blur-sm">
+              <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
+                [SYSTEM STATUS]
+              </div>
+              <div className="space-y-1 text-xs font-mono">
+                <div className="flex justify-between">
+                  <span className="text-[var(--terminal-gray)]">Workflow Engine:</span>
+                  <span className="text-[var(--terminal-green)]">ACTIVE</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[var(--terminal-gray)]">Automation Level:</span>
+                  <span className="text-[var(--terminal-cyan)]">ADVANCED</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[var(--terminal-gray)]">Skills Loaded:</span>
+                  <span className="text-[var(--terminal-yellow)]">8/8</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[var(--terminal-gray)]">Experience:</span>
+                  <span className="text-[var(--terminal-green)]">EXPERT</span>
+                </div>
+              </div>
+            </div>
 
-   &&&       &&&
-  &   &     &   &
- &     &   &     &
-&       & &       &
-&       & &       &
-&       & &       &
- &     & & &     &
-  &   &   &   &
-   &&&     &&&
+            {/* Progress Visualization */}
+            <div className="bg-black/80 border border-[var(--terminal-green)] rounded p-4 backdrop-blur-sm">
+              <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
+                [PROGRESS TRACKER]
+              </div>
+              <div className="space-y-2">
+                {chapters.map((chapter, index) => (
+                  <div key={index} className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-[var(--terminal-green)] rounded-full animate-pulse"></div>
+                    <div className="text-xs font-mono text-[var(--terminal-gray)] flex-1 truncate">
+                      {chapter.title}
+                    </div>
+                    <div className="text-xs font-mono text-[var(--terminal-green)]">✓</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ASCII Art Robot Companion */}
+            <div className="bg-black/80 border border-[var(--terminal-green)] rounded p-4 backdrop-blur-sm">
+              <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
+                [COMPANION UNIT]
+              </div>
+              <div className="text-[var(--terminal-green)] font-mono text-xs leading-none select-none">
+                <pre className="whitespace-pre">{`    & & &
+  & & & & &
+ & & & & & &
+ &  ●   ●  &
+ & & & & & &
+  & & & & &
+    & & &
    
-   &&&     &&&
-  &   &   &   &
- &     & &     &
-&       &       &
-&       &       &
-&       &       &
- &     & &     &
-  &   &   &   &
-   &&&     &&&`}</pre>
+  & & & & &
+ &   & &   &
+&     &     &
+&  &&& &&&  &
+&  &     &  &
+ &  &   &  &
+  &  & &  &
+   & & & &
+    & & &
+   
+   & &   & &
+  & & & & & &
+ & & & & & & &
+& & & & & & & &
+& & & & & & & &
+ & & & & & & &
+  & & & & & &
+   & &   & &`}</pre>
+              </div>
+              <div className="text-[var(--terminal-cyan)] font-mono text-xs mt-2">
+                "Ready to automate!"
+              </div>
+            </div>
+
+            {/* Live Terminal Output */}
+            <div className="bg-black/80 border border-[var(--terminal-green)] rounded p-4 backdrop-blur-sm">
+              <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
+                [LIVE OUTPUT]
+              </div>
+              <div className="space-y-1 text-xs font-mono">
+                <div className="text-[var(--terminal-gray)]">$ workflow --status</div>
+                <div className="text-[var(--terminal-green)]">✓ All systems operational</div>
+                <div className="text-[var(--terminal-gray)]">$ deploy --env production</div>
+                <div className="text-[var(--terminal-cyan)]">→ Deployment successful</div>
+                <div className="text-[var(--terminal-gray)]">$ optimize --performance</div>
+                <div className="text-[var(--terminal-yellow)]">⚡ Performance enhanced</div>
+                <div className="flex items-center">
+                  <span className="text-[var(--terminal-green)]">$</span>
+                  <div className="w-2 h-4 bg-[var(--terminal-green)] ml-1 animate-pulse"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
