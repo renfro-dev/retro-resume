@@ -285,9 +285,9 @@ export default function Home() {
       const loadingElement = document.getElementById('workflow-loading');
       if (!loadingElement) return;
 
-      // 1 second delay, then show "workflow loading" with flashing
+      // 1 second delay, then show "uploading Joshua Renfro" with flashing
       setTimeout(() => {
-        loadingElement.innerHTML = 'workflow loading';
+        loadingElement.innerHTML = 'uploading Joshua Renfro';
         loadingElement.classList.add('workflow-loading-flash');
         
         // After 3 seconds, stop flashing and show data sequence
