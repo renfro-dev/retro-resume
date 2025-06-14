@@ -269,9 +269,9 @@ export default function Home() {
           
           // Show each line after 2 second delays
           const lines = [
-            '\\re-enrollment=disabled',
-            '\\lifecycle_stage=noob', 
-            '\\associated_contacts=two_brothers'
+            '/re-enrollment=disabled',
+            '/lifecycle_stage=noob', 
+            '/associated_contacts=two_brothers'
           ];
           
           lines.forEach((line, index) => {
