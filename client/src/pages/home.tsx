@@ -266,7 +266,8 @@ export default function Home() {
           const lines = [
             '/lifecycle_stage=FTE', 
             '/psychographic=entrepreneur',
-            '/plant daddy'
+            '/location=33.0644° N, 117.3017° W',
+            '/re-enrollment=disabled'
           ];
           
           lines.forEach((line, index) => {
