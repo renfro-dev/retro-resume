@@ -136,20 +136,29 @@ export default function Home() {
 
     // Pac-Man movement and dot consumption logic
     const animatePacMan = () => {
-      const pacman = document.querySelector('.pacman') as HTMLElement;
-      const dots = document.querySelectorAll('.pac-dot:not(.consumed)');
-      
-      if (!pacman) return;
-
       const checkDotConsumption = () => {
+        const pacman = document.querySelector('.pacman') as HTMLElement;
+        
+        if (!pacman) {
+          return;
+        }
+
+        // Get fresh list of unconsumed dots each time
+        const dots = dotsContainerRef.current?.querySelectorAll('.pac-dot:not(.consumed)');
+        
+        if (!dots || dots.length === 0) {
+          return;
+        }
+
         const pacmanRect = pacman.getBoundingClientRect();
         const pacmanCenterX = pacmanRect.left + pacmanRect.width / 2;
         const pacmanCenterY = pacmanRect.top + pacmanRect.height / 2;
 
         dots.forEach(dot => {
-          if (dot.classList.contains('consumed')) return;
+          const dotElement = dot as HTMLElement;
+          if (dotElement.classList.contains('consumed')) return;
           
-          const dotRect = dot.getBoundingClientRect();
+          const dotRect = dotElement.getBoundingClientRect();
           const dotCenterX = dotRect.left + dotRect.width / 2;
           const dotCenterY = dotRect.top + dotRect.height / 2;
           
@@ -158,14 +167,15 @@ export default function Home() {
             Math.pow(pacmanCenterY - dotCenterY, 2)
           );
           
-          if (distance < 20) {
-            dot.classList.add('consumed');
+          // Larger collision radius for better detection
+          if (distance < 35) {
+            dotElement.classList.add('consumed');
           }
         });
       };
 
-      // Check for dot consumption every 100ms
-      const consumptionInterval = setInterval(checkDotConsumption, 100);
+      // More frequent checks for smoother interaction
+      const consumptionInterval = setInterval(checkDotConsumption, 50);
       
       return consumptionInterval;
     };
