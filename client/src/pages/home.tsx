@@ -272,9 +272,9 @@ export default function Home() {
       <main ref={mainRef} className="relative overflow-hidden">
         <BackgroundDecorations />
         
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="relative z-10 max-w-7xl mx-auto px-12 sm:px-16 lg:px-20 py-24">
           {/* Workflow Activation Command */}
-          <div className="flex justify-start mb-6">
+          <div className="flex justify-start mb-8 ml-8">
             <div className="bg-black border border-[var(--terminal-green)] rounded p-4 w-full max-w-2xl">
               <div className="text-[var(--terminal-green)] font-mono text-xs mb-2">
                 ./activate-workflow.sh
@@ -298,7 +298,7 @@ export default function Home() {
           {/* Workflow Steps */}
           <div className="relative">
             {chapters.map((chapter, index) => (
-              <div key={index} className="relative mb-12">
+              <div key={index} className="relative mb-16 ml-8">
                 {/* Workflow Card */}
                 <div className="flex justify-start">
                   <ChapterRhombus
