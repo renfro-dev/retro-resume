@@ -341,11 +341,8 @@ export default function Home() {
       <Header />
       
       {/* Top Right Dashboard */}
-      <div className="fixed top-24 right-4 z-50 w-64" style={{backgroundColor: 'red', padding: '10px'}}>
+      <div className="fixed top-24 right-20 z-50 w-64">
         <div className="workflow-card p-4">
-          <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
-            [DEVELOPER PROFILE]
-          </div>
           <div className="space-y-1 text-xs font-mono">
             <div className="flex justify-between">
               <span className="text-[var(--terminal-gray)]">Years experience:</span>
@@ -357,7 +354,7 @@ export default function Home() {
             </div>
             <div className="flex justify-between">
               <span className="text-[var(--terminal-gray)]">Current industry:</span>
-              <span className="text-[var(--terminal-yellow)]">legal tech</span>
+              <span className="text-[var(--terminal-yellow)]">legal_tech</span>
             </div>
           </div>
         </div>
