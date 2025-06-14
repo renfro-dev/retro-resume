@@ -78,64 +78,121 @@ export default function Home() {
       <main ref={mainRef} className="relative overflow-hidden">
         <BackgroundDecorations />
         
-        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          {/* Workflow Activation Command */}
-          <div className="flex justify-start ml-8 mb-6">
-            <div className="bg-black border border-[var(--terminal-green)] rounded p-4 w-full max-w-2xl">
-              <div className="text-[var(--terminal-green)] font-mono text-xs mb-2">
-                ./activate-workflow.sh
-              </div>
-              <div className="text-[var(--terminal-gray)] font-mono text-xs leading-relaxed">
-                <div>--enable-workflow=true</div>
-                <div>--re-enrollment=disabled</div>
-                <div>--lifecycle-stage=noob</div>
-                <div>--persona=trailblazer</div>
-                <div>--element=water</div>
-                <div className="text-[var(--terminal-cyan)] mt-2">
-                  [INFO] Workflow activated successfully
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Left Column - Workflow */}
+            <div>
+              {/* Workflow Activation Command */}
+              <div className="flex justify-start mb-6">
+                <div className="bg-black border border-[var(--terminal-green)] rounded p-4 w-full max-w-2xl">
+                  <div className="text-[var(--terminal-green)] font-mono text-xs mb-2">
+                    ./activate-workflow.sh
+                  </div>
+                  <div className="text-[var(--terminal-gray)] font-mono text-xs leading-relaxed">
+                    <div>--enable-workflow=true</div>
+                    <div>--re-enrollment=disabled</div>
+                    <div>--lifecycle-stage=noob</div>
+                    <div>--persona=trailblazer</div>
+                    <div>--element=water</div>
+                    <div className="text-[var(--terminal-cyan)] mt-2">
+                      [INFO] Workflow activated successfully
+                    </div>
+                    <div className="text-[var(--terminal-green)] mt-1">
+                      ✓ Automation sequence initiated
+                    </div>
+                  </div>
                 </div>
-                <div className="text-[var(--terminal-green)] mt-1">
-                  ✓ Automation sequence initiated
+              </div>
+              
+              {/* Workflow Steps */}
+              <div className="relative">
+                {chapters.map((chapter, index) => (
+                  <div key={index} className="relative mb-12">
+                    {/* Workflow Card */}
+                    <div className="flex justify-start">
+                      <ChapterRhombus
+                        title={chapter.title}
+                        description={chapter.description}
+                        imageUrl={chapter.imageUrl}
+                        imageAlt={chapter.imageAlt}
+                        index={index}
+                      />
+                    </div>
+                    
+                    {/* Connecting Arrow to Next Card */}
+                    {index < chapters.length - 1 && (
+                      <div className="flex justify-start mt-4">
+                        <div className="workflow-line workflow-line-vertical" style={{ marginLeft: '144px' }}></div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              
+              {/* Final connecting line */}
+              <div className="flex justify-start mt-6 mb-8">
+                <div className="workflow-line workflow-line-vertical" style={{ marginLeft: '144px' }}></div>
+              </div>
+              
+              {/* Workflow End */}
+              <div className="flex justify-center">
+                <div className="bg-[var(--terminal-yellow)] text-black px-6 py-3 rounded-full font-mono text-sm font-bold flex items-center space-x-2">
+                  <span>✓</span>
+                  <span>AUTOMATION COMPLETE</span>
                 </div>
               </div>
             </div>
-          </div>
-          
-          {/* Workflow Steps */}
-          <div className="relative">
-            {chapters.map((chapter, index) => (
-              <div key={index} className="relative mb-12">
-                {/* Workflow Card - All on left side */}
-                <div className="flex justify-start ml-8">
-                  <ChapterRhombus
-                    title={chapter.title}
-                    description={chapter.description}
-                    imageUrl={chapter.imageUrl}
-                    imageAlt={chapter.imageAlt}
-                    index={index}
-                  />
-                </div>
-                
-                {/* Connecting Arrow to Next Card */}
-                {index < chapters.length - 1 && (
-                  <div className="flex justify-start ml-8 mt-4">
-                    <div className="workflow-line workflow-line-vertical" style={{ marginLeft: '144px' }}></div>
-                  </div>
-                )}
+
+            {/* Right Column - Robot ASCII Art */}
+            <div className="flex justify-center items-center">
+              <div className="text-[var(--terminal-green)] font-mono text-xs leading-none select-none">
+                <pre className="whitespace-pre">
+{`      & & &
+    & & & & &
+   & & & & & &
+   &   & &   &
+   & & & & & &
+    & & & & &
+      & & &
+   
+    & & & & &
+   &   & &   &
+  &     &     &
+ &      &      &
+&   &&& & &&&   &
+&  &         &  &
+&  &    &    &  &
+&  &         &  &
+ &  &       &  &
+  &  &     &  &
+   &  &   &  &
+    &  & &  &
+     &  &  &
+      & & &
+       & &
+        &
+
+   &&&       &&&
+  &   &     &   &
+ &     &   &     &
+&       & &       &
+&       & &       &
+&       & &       &
+ &     & & &     &
+  &   &   &   &
+   &&&     &&&
+   
+   &&&     &&&
+  &   &   &   &
+ &     & &     &
+&       &       &
+&       &       &
+&       &       &
+ &     & &     &
+  &   &   &   &
+   &&&     &&&`}
+                </pre>
               </div>
-            ))}
-          </div>
-          
-          {/* Final connecting line */}
-          <div className="flex justify-start ml-8 mt-6 mb-8">
-            <div className="workflow-line workflow-line-vertical" style={{ marginLeft: '144px' }}></div>
-          </div>
-          
-          {/* Workflow End */}
-          <div className="flex justify-center">
-            <div className="bg-[var(--terminal-yellow)] text-black px-6 py-3 rounded-full font-mono text-sm font-bold flex items-center space-x-2">
-              <span>✓</span>
-              <span>AUTOMATION COMPLETE</span>
             </div>
           </div>
         </div>
