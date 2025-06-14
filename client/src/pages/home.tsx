@@ -273,9 +273,6 @@ export default function Home() {
             '/re-enrollment=disabled'
           ];
           
-          // Add tech stack line with button after all text lines
-          const techStackLine = '/tech_stack=';
-          
           lines.forEach((line, index) => {
             setTimeout(() => {
               const lineDiv = document.createElement('div');
@@ -283,35 +280,14 @@ export default function Home() {
               lineDiv.style.marginBottom = '4px';
               loadingElement.appendChild(lineDiv);
               
-              // Add tech stack line with button after the last regular line
+              // Show CTA button after the last line is displayed
               if (index === lines.length - 1) {
                 setTimeout(() => {
-                  const techStackDiv = document.createElement('div');
-                  techStackDiv.style.display = 'flex';
-                  techStackDiv.style.justifyContent = 'space-between';
-                  techStackDiv.style.alignItems = 'center';
-                  techStackDiv.style.marginBottom = '4px';
-                  
-                  const techStackLabel = document.createElement('span');
-                  techStackLabel.textContent = techStackLine;
-                  
-                  const techStackButton = document.createElement('button');
-                  techStackButton.textContent = 'Report';
-                  techStackButton.className = 'bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-2 py-1 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300';
-                  techStackButton.style.marginLeft = '8px';
-                  
-                  techStackDiv.appendChild(techStackLabel);
-                  techStackDiv.appendChild(techStackButton);
-                  loadingElement.appendChild(techStackDiv);
-                  
-                  // Show CTA button after tech stack line
-                  setTimeout(() => {
-                    const ctaButton = document.getElementById('cta-button');
-                    if (ctaButton) {
-                      ctaButton.style.display = 'flex';
-                    }
-                  }, 500);
-                }, 1000);
+                  const ctaButton = document.getElementById('cta-button');
+                  if (ctaButton) {
+                    ctaButton.style.display = 'flex';
+                  }
+                }, 500); // Small delay after last line
               }
             }, index * 2000);
           });
