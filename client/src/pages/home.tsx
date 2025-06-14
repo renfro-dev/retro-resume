@@ -346,7 +346,7 @@ export default function Home() {
           
 
           {/* Workflow Loading Sequence */}
-          <div className="flex justify-start mb-8 ml-8">
+          <div className="flex justify-center mb-8">
             <div className="workflow-card w-72 h-48 p-4">
               <div id="workflow-loading" className="font-mono text-xs text-[var(--terminal-green)] h-full flex flex-col justify-center">
                 {/* Content will be populated by JavaScript */}
@@ -355,7 +355,7 @@ export default function Home() {
           </div>
           
           {/* Call to Action Button */}
-          <div id="cta-button" className="flex justify-start mb-16 ml-8" style={{display: 'none'}}>
+          <div id="cta-button" className="flex justify-center mb-16" style={{display: 'none'}}>
             <button 
               onClick={() => setWorkflowsVisible(true)}
               className="bg-[var(--terminal-yellow)] border-2 border-[var(--terminal-yellow)] text-black px-6 py-3 font-mono text-sm hover:bg-transparent hover:text-[var(--terminal-yellow)] transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-500/25"
@@ -366,11 +366,11 @@ export default function Home() {
           
           {/* Workflow Steps */}
           {workflowsVisible && (
-            <div className="relative">
+            <div className="relative flex flex-col items-center">
               {chapters.map((chapter, index) => (
-                <div key={index} className="relative mb-16 ml-8">
+                <div key={index} className="relative mb-16">
                   {/* Workflow Card */}
-                  <div className="flex justify-start">
+                  <div className="flex justify-center">
                     <ChapterRhombus
                       title={chapter.title}
                       description={chapter.description}
@@ -383,8 +383,8 @@ export default function Home() {
                   
                   {/* Connecting Arrow to Next Card */}
                   {index < chapters.length - 1 && (
-                    <div className="flex justify-start mt-4">
-                      <div className="workflow-line workflow-line-vertical" style={{ marginLeft: '144px' }}></div>
+                    <div className="flex justify-center mt-4">
+                      <div className="workflow-line workflow-line-vertical"></div>
                     </div>
                   )}
                 </div>
