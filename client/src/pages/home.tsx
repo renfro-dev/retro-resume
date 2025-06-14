@@ -273,6 +273,9 @@ export default function Home() {
             '/re-enrollment=disabled'
           ];
           
+          // Add tech stack line with button after all text lines
+          const techStackLine = '/tech_stack=';
+          
           lines.forEach((line, index) => {
             setTimeout(() => {
               const lineDiv = document.createElement('div');
@@ -280,14 +283,35 @@ export default function Home() {
               lineDiv.style.marginBottom = '4px';
               loadingElement.appendChild(lineDiv);
               
-              // Show CTA button after the last line is displayed
+              // Add tech stack line with button after the last regular line
               if (index === lines.length - 1) {
                 setTimeout(() => {
-                  const ctaButton = document.getElementById('cta-button');
-                  if (ctaButton) {
-                    ctaButton.style.display = 'flex';
-                  }
-                }, 500); // Small delay after last line
+                  const techStackDiv = document.createElement('div');
+                  techStackDiv.style.display = 'flex';
+                  techStackDiv.style.justifyContent = 'space-between';
+                  techStackDiv.style.alignItems = 'center';
+                  techStackDiv.style.marginBottom = '4px';
+                  
+                  const techStackLabel = document.createElement('span');
+                  techStackLabel.textContent = techStackLine;
+                  
+                  const techStackButton = document.createElement('button');
+                  techStackButton.textContent = 'Report';
+                  techStackButton.className = 'bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-2 py-1 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300';
+                  techStackButton.style.marginLeft = '8px';
+                  
+                  techStackDiv.appendChild(techStackLabel);
+                  techStackDiv.appendChild(techStackButton);
+                  loadingElement.appendChild(techStackDiv);
+                  
+                  // Show CTA button after tech stack line
+                  setTimeout(() => {
+                    const ctaButton = document.getElementById('cta-button');
+                    if (ctaButton) {
+                      ctaButton.style.display = 'flex';
+                    }
+                  }, 500);
+                }, 1000);
               }
             }, index * 2000);
           });
@@ -373,7 +397,7 @@ export default function Home() {
           )}
           {/* Workflow Loading Sequence */}
           <div className="flex justify-start mb-8 ml-8">
-            <div className="workflow-card w-72 h-32 p-4">
+            <div className="workflow-card w-72 h-48 p-4">
               <div id="workflow-loading" className="font-mono text-xs text-[var(--terminal-green)] h-full flex flex-col justify-center">
                 {/* Content will be populated by JavaScript */}
               </div>
