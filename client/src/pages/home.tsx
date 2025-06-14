@@ -385,7 +385,7 @@ export default function Home() {
                 buttonReady 
                   ? 'bg-[var(--terminal-yellow)] border-[var(--terminal-yellow)] text-black hover:bg-transparent hover:text-[var(--terminal-yellow)] hover:shadow-lg hover:shadow-yellow-500/25' 
                   : 'bg-black border-[var(--terminal-yellow)] text-[var(--terminal-yellow)] cursor-default'
-              } ${buttonFlashing ? 'animate-pulse' : ''}`}
+              }`}
               disabled={!buttonReady}
             >
               {buttonText}
