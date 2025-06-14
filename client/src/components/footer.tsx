@@ -12,23 +12,35 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative z-10 bg-black bg-opacity-20 backdrop-blur-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-        <p className="text-white text-lg font-medium mb-4">Continue the Journey</p>
-        <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+    <footer className="relative z-10 bg-black border-t border-[var(--terminal-green)] mt-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center mb-6">
+          <div className="text-[var(--terminal-green)] text-sm font-mono mb-2">
+            guest@term.toolkit.com:~$ ls -la /home/journey/
+          </div>
+          <div className="text-[var(--terminal-gray)] text-xs font-mono">
+            total 8 chapters • drwxr-xr-x innovation completed • -rw-r--r-- future.txt
+          </div>
+        </div>
+        <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8">
           <Button
             onClick={handleContact}
-            className="bg-white bg-opacity-20 backdrop-blur-sm text-white px-6 py-3 rounded-full hover:bg-opacity-30 transition-all duration-300 font-medium border-0"
-            variant="ghost"
+            className="bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-6 py-2 hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300 font-mono text-sm"
+            variant="outline"
           >
-            Get In Touch
+            ./contact.sh
           </Button>
           <Button
             onClick={handlePortfolio}
-            className="bg-[hsl(211,48%,80%)] bg-opacity-80 text-white px-6 py-3 rounded-full hover:bg-opacity-100 transition-all duration-300 font-medium border-0"
+            className="bg-[var(--terminal-green)] text-black px-6 py-2 hover:bg-[var(--terminal-yellow)] transition-all duration-300 font-mono text-sm"
           >
-            View Portfolio
+            cat portfolio.txt
           </Button>
+        </div>
+        <div className="text-center mt-6">
+          <div className="text-[var(--terminal-gray)] text-xs font-mono">
+            Process completed with exit code 0
+          </div>
         </div>
       </div>
     </footer>
