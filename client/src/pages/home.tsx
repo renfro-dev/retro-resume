@@ -357,6 +357,12 @@ export default function Home() {
                     <span className="text-[var(--terminal-gray)]">Current industry:</span>
                     <span className="text-[var(--terminal-yellow)]">legal_tech</span>
                   </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[var(--terminal-gray)]">Tech stack:</span>
+                    <button className="bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-2 py-1 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300">
+                      Report
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
