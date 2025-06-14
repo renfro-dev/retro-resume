@@ -6,40 +6,40 @@ import Footer from "@/components/footer";
 
 const chapters = [
   {
-    title: "First Steps",
-    description: "Learning the fundamentals of web development and discovering my passion for technology.",
+    title: "Time mgmt",
+    description: "Built a six figure business",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "Person coding at a modern workspace"
+    imageAlt: "Business growth and time management"
   },
   {
-    title: "Framework Discovery",
-    description: "Diving deep into React and modern JavaScript frameworks that revolutionized my development approach.",
+    title: "Velocity",
+    description: "First 100 employees at legal tech",
     imageUrl: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "React development workspace"
+    imageAlt: "Legal tech team scaling"
   },
   {
-    title: "Design Systems",
-    description: "Mastering design systems and component libraries to create cohesive user experiences.",
+    title: "Grit",
+    description: "Started two software companies",
     imageUrl: "https://images.unsplash.com/photo-1558655146-d09347e92766?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "UI/UX design process"
+    imageAlt: "Software company founding"
   },
   {
-    title: "Cloud Migration",
-    description: "Embracing cloud technologies and containerization to build scalable applications.",
+    title: "Perspective",
+    description: "Spent time at 20 person startup",
     imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "Cloud computing visualization"
+    imageAlt: "Small startup environment"
   },
   {
-    title: "API Integration",
-    description: "Building robust integrations and learning to orchestrate complex data flows.",
+    title: "Humility",
+    description: "Ran an operation valued at $50M",
     imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "API connections and networking"
+    imageAlt: "Large scale operations management"
   },
   {
-    title: "Future Vision",
-    description: "Looking ahead to emerging technologies and the next chapter of innovation.",
+    title: "PIF",
+    description: "Founded product focused business",
     imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "Futuristic technology concepts"
+    imageAlt: "Product development and innovation"
   }
 ];
 
