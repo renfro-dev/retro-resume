@@ -407,14 +407,7 @@ export default function Home() {
           )}
           
 
-          
-          {/* Workflow End */}
-          <div className="flex justify-center">
-            <div className="bg-[var(--terminal-yellow)] text-black px-6 py-3 rounded-full font-mono text-sm font-bold flex items-center space-x-2">
-              <span>✓</span>
-              <span>AUTOMATION COMPLETE</span>
-            </div>
-          </div>
+
 
 
         </div>
