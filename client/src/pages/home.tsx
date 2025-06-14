@@ -262,16 +262,16 @@ export default function Home() {
         loadingElement.innerHTML = 'workflow loading';
         loadingElement.classList.add('workflow-loading-flash');
         
-        // After 5 seconds, stop flashing and show data sequence
+        // After 3 seconds, stop flashing and show data sequence
         setTimeout(() => {
           loadingElement.classList.remove('workflow-loading-flash');
           loadingElement.innerHTML = '';
           
           // Show each line after 2 second delays
           const lines = [
-            '--re-enrollment=disabled',
-            '--lifecycle_stage=noob', 
-            '--associated_contacts=two_brothers'
+            '\\re-enrollment=disabled',
+            '\\lifecycle_stage=noob', 
+            '\\associated_contacts=two_brothers'
           ];
           
           lines.forEach((line, index) => {
@@ -282,7 +282,7 @@ export default function Home() {
               loadingElement.appendChild(lineDiv);
             }, index * 2000);
           });
-        }, 5000);
+        }, 3000);
       }, 1000);
     };
     
