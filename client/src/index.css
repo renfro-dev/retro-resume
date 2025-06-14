@@ -360,18 +360,7 @@
     border-top: 8px solid var(--terminal-green);
   }
   
-  .workflow-line-horizontal {
-    height: 2px;
-    width: 60px;
-  }
-  
-  .workflow-line-horizontal::after {
-    right: -8px;
-    top: -4px;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    border-left: 8px solid var(--terminal-green);
-  }
+
   
   .workflow-connector {
     position: absolute;
