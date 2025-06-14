@@ -264,9 +264,9 @@ export default function Home() {
           
           // Show each line after 2 second delays
           const lines = [
-            '/lifecycle_stage=advanced', 
-            '/location=33.0644° N, 117.3017° W',
-            '/re-enrollment=disabled'
+            '/lifecycle_stage=FTE', 
+            '/psychographic=entrepreneur',
+            '/plant daddy'
           ];
           
           lines.forEach((line, index) => {
