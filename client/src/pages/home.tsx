@@ -341,8 +341,8 @@ export default function Home() {
       <Header />
       
       {/* Top Right Dashboard */}
-      <div className="fixed top-20 right-8 z-20 hidden lg:block">
-        <div className="workflow-card p-4 w-64">
+      <div className="fixed top-24 right-4 z-50 w-64" style={{backgroundColor: 'red', padding: '10px'}}>
+        <div className="workflow-card p-4">
           <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
             [DEVELOPER PROFILE]
           </div>
