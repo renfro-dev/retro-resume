@@ -104,6 +104,189 @@
     background-size: 50px 50px;
   }
 
+  /* Retro Animated Borders */
+  .retro-border-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  /* Top border with moving dots */
+  .retro-border-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+      var(--terminal-green) 10px, 
+      transparent 10px, 
+      transparent 20px, 
+      var(--terminal-green) 20px,
+      var(--terminal-green) 30px,
+      transparent 30px
+    );
+    background-size: 40px 4px;
+    animation: moveBorderHorizontal 8s linear infinite;
+  }
+
+  /* Bottom border with moving dots */
+  .retro-border-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+      var(--terminal-green) 10px, 
+      transparent 10px, 
+      transparent 20px, 
+      var(--terminal-green) 20px,
+      var(--terminal-green) 30px,
+      transparent 30px
+    );
+    background-size: 40px 4px;
+    animation: moveBorderHorizontal 8s linear infinite reverse;
+  }
+
+  /* Left border with moving segments */
+  .retro-border-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(0deg, 
+      var(--terminal-green) 15px, 
+      transparent 15px, 
+      transparent 25px, 
+      var(--terminal-green) 25px,
+      var(--terminal-green) 40px,
+      transparent 40px
+    );
+    background-size: 4px 50px;
+    animation: moveBorderVertical 6s linear infinite;
+  }
+
+  /* Right border with moving segments */
+  .retro-border-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(0deg, 
+      var(--terminal-green) 15px, 
+      transparent 15px, 
+      transparent 25px, 
+      var(--terminal-green) 25px,
+      var(--terminal-green) 40px,
+      transparent 40px
+    );
+    background-size: 4px 50px;
+    animation: moveBorderVertical 6s linear infinite reverse;
+  }
+
+  /* Corner elements - like power-ups */
+  .retro-corner {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: var(--terminal-green);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .retro-corner.top-left {
+    top: 8px;
+    left: 8px;
+  }
+
+  .retro-corner.top-right {
+    top: 8px;
+    right: 8px;
+  }
+
+  .retro-corner.bottom-left {
+    bottom: 8px;
+    left: 8px;
+  }
+
+  .retro-corner.bottom-right {
+    bottom: 8px;
+    right: 8px;
+  }
+
+  /* Snake-like segments moving along borders */
+  .snake-segment {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--terminal-yellow);
+    border-radius: 2px;
+    animation: snakeMove 12s linear infinite;
+  }
+
+  .snake-segment:nth-child(2) { animation-delay: -1s; }
+  .snake-segment:nth-child(3) { animation-delay: -2s; }
+  .snake-segment:nth-child(4) { animation-delay: -3s; }
+
+  @keyframes moveBorderHorizontal {
+    0% { background-position-x: 0px; }
+    100% { background-position-x: 40px; }
+  }
+
+  @keyframes moveBorderVertical {
+    0% { background-position-y: 0px; }
+    100% { background-position-y: 50px; }
+  }
+
+  @keyframes snakeMove {
+    0% { 
+      top: 0px; 
+      left: 0px; 
+      transform: rotate(0deg);
+    }
+    25% { 
+      top: 0px; 
+      left: calc(100vw - 12px);
+      transform: rotate(90deg);
+    }
+    50% { 
+      top: calc(100vh - 12px); 
+      left: calc(100vw - 12px);
+      transform: rotate(180deg);
+    }
+    75% { 
+      top: calc(100vh - 12px); 
+      left: 0px;
+      transform: rotate(270deg);
+    }
+    100% { 
+      top: 0px; 
+      left: 0px;
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% { 
+      opacity: 1; 
+      transform: scale(1);
+      box-shadow: 0 0 10px var(--terminal-green);
+    }
+    50% { 
+      opacity: 0.6; 
+      transform: scale(1.2);
+      box-shadow: 0 0 20px var(--terminal-green);
+    }
+  }
+
 
   
   .workflow-card {

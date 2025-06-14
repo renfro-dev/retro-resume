@@ -73,8 +73,27 @@ export default function Home() {
 
   return (
     <div className="font-mono bg-terminal pattern-grid min-h-screen">
-      <Header />
+      {/* Retro Animated Borders */}
+      <div className="retro-border-container">
+        <div className="retro-border-top"></div>
+        <div className="retro-border-bottom"></div>
+        <div className="retro-border-left"></div>
+        <div className="retro-border-right"></div>
+        
+        {/* Corner power-ups */}
+        <div className="retro-corner top-left"></div>
+        <div className="retro-corner top-right"></div>
+        <div className="retro-corner bottom-left"></div>
+        <div className="retro-corner bottom-right"></div>
+        
+        {/* Snake segments */}
+        <div className="snake-segment"></div>
+        <div className="snake-segment"></div>
+        <div className="snake-segment"></div>
+        <div className="snake-segment"></div>
+      </div>
       
+      <Header />
       
       <main ref={mainRef} className="relative overflow-hidden">
         <BackgroundDecorations />
