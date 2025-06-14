@@ -151,6 +151,12 @@
     background: var(--terminal-green);
     border-radius: 50%;
     animation: powerPelletPulse 1.5s ease-in-out infinite;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+
+  .retro-corner.consumed {
+    opacity: 0;
+    transform: scale(2);
   }
 
   .retro-corner.top-left {

@@ -172,6 +172,25 @@ export default function Home() {
             dotElement.classList.add('consumed');
           }
         });
+
+        // Check power pellet consumption
+        const powerPellets = document.querySelectorAll('.retro-corner:not(.consumed)');
+        powerPellets.forEach(pellet => {
+          const pelletElement = pellet as HTMLElement;
+          const pelletRect = pelletElement.getBoundingClientRect();
+          const pelletCenterX = pelletRect.left + pelletRect.width / 2;
+          const pelletCenterY = pelletRect.top + pelletRect.height / 2;
+          
+          const distance = Math.sqrt(
+            Math.pow(pacmanCenterX - pelletCenterX, 2) + 
+            Math.pow(pacmanCenterY - pelletCenterY, 2)
+          );
+          
+          // Larger collision radius for power pellets
+          if (distance < 35) {
+            pelletElement.classList.add('consumed');
+          }
+        });
       };
 
       // More frequent checks for smoother interaction
@@ -233,7 +252,7 @@ export default function Home() {
     const interval = animatePacMan();
     addCornerFlash();
 
-    // Regenerate dots every 16 seconds (one full cycle)
+    // Regenerate dots and power pellets every 16 seconds (one full cycle)
     const regenerateInterval = setInterval(() => {
       const container = dotsContainerRef.current;
       if (container) {
@@ -242,6 +261,12 @@ export default function Home() {
         // Generate new dots
         generateDots();
       }
+      
+      // Regenerate power pellets
+      const powerPellets = document.querySelectorAll('.retro-corner');
+      powerPellets.forEach(pellet => {
+        pellet.classList.remove('consumed');
+      });
     }, 16000);
 
     return () => {
