@@ -57,179 +57,24 @@ const chapters = [
 
 export default function Home() {
   const mainRef = useRef<HTMLElement>(null);
-  const robotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout;
-    
     const handleScroll = () => {
       if (mainRef.current) {
         const scrolled = window.scrollY;
         const rate = scrolled * -0.5;
         mainRef.current.style.transform = `translateY(${rate}px)`;
       }
-
-      // Robot running animation - moves left to right based on scroll
-      const robot = robotRef.current;
-      if (robot) {
-        const scrollY = window.scrollY;
-        const maxScroll = document.body.scrollHeight - window.innerHeight;
-        const screenWidth = window.innerWidth;
-        
-        if (maxScroll > 0) {
-          // Calculate horizontal position based on scroll percentage
-          const scrollPercent = Math.min(scrollY / maxScroll, 1);
-          const robotWidth = 120; // approximate width of robot
-          const maxX = screenWidth - robotWidth;
-          const x = scrollPercent * maxX;
-          
-          robot.style.transform = `translateY(-50%) translateX(${x}px)`;
-          robot.classList.add('scrolling', 'running');
-        }
-        
-        // Stop running animation after scroll stops
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-          robot.classList.remove('running');
-          setTimeout(() => {
-            robot.classList.remove('scrolling');
-          }, 1000);
-        }, 150);
-      }
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      clearTimeout(scrollTimeout);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <div className="font-mono bg-terminal pattern-grid min-h-screen">
       <Header />
       
-      {/* Running Robot - appears when scrolling */}
-      <div ref={robotRef} className="running-robot">
-        <div className="robot-frame-1">{`    [▲]
-   ████
-  █ ◉ █ ┐
-  █ ▼ █ ┘
-  █████
-   ███
-   
-  █████
- ███████
- █ ███ █
- █ ███ █ ───►
- █████████
-  ███████
-   █████
-   
-   ██   ██
-  ████ ████
- ███████████
-  █████████
-   ███████
-   
-    ██   ██
-   ███   ███
-  ████   ████
- █████   █████
-█████     █████
- ████     ████
-  ███     ███
-   ██     ██`}</div>
-        <div className="robot-frame-2">{`    [▲]
-   ████
-  █ ◉ █ ┐
-  █ ▼ █ ┘
-  █████
-   ███
-   
-  █████
- ███████
- █ ███ █
- █ ███ █ ───►
- █████████
-  ███████
-   █████
-   
-    ██   ██
-   ████ ████
-  ███████████
-   █████████
-    ███████
-   
-   ██     ██
-  ███     ███
- ████     ████
-█████     █████
-█████     █████
- ████     ████
-  ███     ███
-   ██     ██`}</div>
-        <div className="robot-frame-3">{`    [▲]
-   ████
-  █ ◉ █ ┐
-  █ ω █ ┘
-  █████
-   ███
-   
-  █████
- ███████
- █ ███ █
- █ ███ █ ───►
- █████████
-  ███████
-   █████
-   
-   ██   ██
-  ████ ████
- ███████████
-  █████████
-   ███████
-   
-  ██       ██
- ███       ███
-████       ████
-████       ████
-████       ████
-████       ████
- ███       ███
-  ██       ██`}</div>
-        <div className="robot-frame-4">{`    [▲]
-   ████
-  █ ◉ █ ┐
-  █ ▼ █ ┘
-  █████
-   ███
-   
-  █████
- ███████
- █ ███ █
- █ ███ █ ───►
- █████████
-  ███████
-   █████
-   
-     ██ ██
-    ████████
-   ██████████
-  ████████████
-   ██████████
-    ████████
-     ██████
-   
- ██         ██
-███         ███
-███         ███
-███         ███
-███         ███
-███         ███
-███         ███
- ██         ██`}</div>
-      </div>
       
       <main ref={mainRef} className="relative overflow-hidden">
         <BackgroundDecorations />
