@@ -206,36 +206,21 @@ export default function Home() {
       const cornerFlashTiming = () => {
         // Top-right corner flash
         setTimeout(() => {
-          console.log('Flashing at top-right corner');
           flashPacman();
         }, 4000);
         
         // Bottom-right corner flash  
         setTimeout(() => {
-          console.log('Flashing at bottom-right corner');
           flashPacman();
         }, 8000);
         
         // Bottom-left corner flash
         setTimeout(() => {
-          console.log('Flashing at bottom-left corner');
           flashPacman();
         }, 12000);
       };
 
-      // Test flash immediately on load - make it more obvious
-      setTimeout(() => {
-        console.log('Testing flash with style override');
-        pacman.style.background = '#ffffff';
-        pacman.style.boxShadow = '0 0 40px #ffffff';
-        pacman.style.transform = 'scale(1.5)';
-        setTimeout(() => {
-          pacman.style.background = '';
-          pacman.style.boxShadow = '';
-          pacman.style.transform = '';
-          console.log('Test flash removed');
-        }, 500);
-      }, 1000);
+
 
       // Initial flash sequence
       cornerFlashTiming();
