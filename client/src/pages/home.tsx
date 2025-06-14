@@ -57,24 +57,100 @@ const chapters = [
 
 export default function Home() {
   const mainRef = useRef<HTMLElement>(null);
+  const robotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout;
+    
     const handleScroll = () => {
       if (mainRef.current) {
         const scrolled = window.scrollY;
         const rate = scrolled * -0.5;
         mainRef.current.style.transform = `translateY(${rate}px)`;
       }
+
+      // Robot running animation
+      const robot = robotRef.current;
+      if (robot) {
+        robot.classList.add('scrolling', 'running');
+        
+        // Stop running animation after scroll stops
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          robot.classList.remove('running');
+          setTimeout(() => {
+            robot.classList.remove('scrolling');
+          }, 1000);
+        }, 150);
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout);
+    };
   }, []);
 
   return (
     <div className="font-mono bg-terminal pattern-grid min-h-screen">
       <Header />
       
+      {/* Running Robot - appears when scrolling */}
+      <div ref={robotRef} className="running-robot">
+        <div className="robot-frame-1">{`    ●●●
+   ●●●●●
+  ●●●●●●●
+  ●  ●  ●
+  ●●●●●●●
+   ●●●●●
+    ●●●
+    
+  ●●●●●●●
+ ●   ●   ●
+●     ●     ●
+●     ●     ●
+●  ●●●●●●●  ●
+●  ●     ●  ●
+ ●  ●   ●  ●
+  ●  ●●●  ●
+   ●●●●●●●
+   
+   ●●●   ●●●
+  ●   ● ●   ●
+ ●     ●     ●
+●       ●       ●
+●       ●       ●
+ ●     ● ●     ●
+  ●   ●   ●   ●
+   ●●●     ●●●`}</div>
+        <div className="robot-frame-2">{`    ●●●
+   ●●●●●
+  ●●●●●●●
+  ●  ●  ●
+  ●●●●●●●
+   ●●●●●
+    ●●●
+    
+  ●●●●●●●
+ ●   ●   ●
+●     ●     ●
+●     ●     ●
+●  ●●●●●●●  ●
+●  ●     ●  ●
+ ●  ●   ●  ●
+  ●  ●●●  ●
+   ●●●●●●●
+   
+  ●●●     ●●●
+ ●   ●   ●   ●
+●     ● ●     ●
+●       ●       ●
+●       ●       ●
+●     ● ●     ●
+ ●   ●   ●   ●
+  ●●●     ●●●`}</div>
+      </div>
       
       <main ref={mainRef} className="relative overflow-hidden">
         <BackgroundDecorations />

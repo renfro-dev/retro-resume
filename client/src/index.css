@@ -103,6 +103,58 @@
       linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
     background-size: 50px 50px;
   }
+
+  /* Running Robot Animation */
+  .running-robot {
+    position: fixed;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--terminal-green);
+    font-size: 10px;
+    line-height: 1;
+    white-space: pre;
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .running-robot.scrolling {
+    opacity: 1;
+  }
+
+  .running-robot.running {
+    animation: robotRun 0.5s steps(2) infinite;
+  }
+
+  @keyframes robotRun {
+    0% {
+      transform: translateY(-50%) translateX(0px);
+    }
+    50% {
+      transform: translateY(-50%) translateX(-2px);
+    }
+    100% {
+      transform: translateY(-50%) translateX(0px);
+    }
+  }
+
+  .robot-frame-1 {
+    display: block;
+  }
+
+  .robot-frame-2 {
+    display: none;
+  }
+
+  .running-robot.running .robot-frame-1 {
+    display: none;
+  }
+
+  .running-robot.running .robot-frame-2 {
+    display: block;
+  }
   
   .workflow-card {
     background: rgba(0, 0, 0, 0.8);
