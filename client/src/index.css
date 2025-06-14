@@ -192,7 +192,7 @@
     width: 0;
     height: 0;
     border: 8px solid transparent;
-    border-left: 12px solid var(--terminal-bg);
+    border-right: 12px solid var(--terminal-bg);
     transform: translate(-50%, -50%);
     animation: pacmanChomp 0.5s ease-in-out infinite;
   }
@@ -236,17 +236,17 @@
 
   @keyframes pacmanChomp {
     0% { 
-      border-left-width: 12px;
+      border-right-width: 12px;
       border-top-width: 8px;
       border-bottom-width: 8px;
     }
     50% { 
-      border-left-width: 12px;
+      border-right-width: 12px;
       border-top-width: 2px;
       border-bottom-width: 2px;
     }
     100% { 
-      border-left-width: 12px;
+      border-right-width: 12px;
       border-top-width: 8px;
       border-bottom-width: 8px;
     }
