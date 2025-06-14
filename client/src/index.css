@@ -4,29 +4,29 @@
 
 :root {
   --background: hsl(0, 0%, 7%);
-  --foreground: hsl(120, 100%, 80%);
+  --foreground: hsl(60, 100%, 80%);
   --muted: hsl(0, 0%, 15%);
   --muted-foreground: hsl(0, 0%, 60%);
   --popover: hsl(0, 0%, 10%);
-  --popover-foreground: hsl(120, 100%, 80%);
+  --popover-foreground: hsl(60, 100%, 80%);
   --card: hsl(0, 0%, 10%);
-  --card-foreground: hsl(120, 100%, 80%);
+  --card-foreground: hsl(60, 100%, 80%);
   --border: hsl(0, 0%, 20%);
   --input: hsl(0, 0%, 15%);
-  --primary: hsl(120, 100%, 80%);
+  --primary: hsl(60, 100%, 80%);
   --primary-foreground: hsl(0, 0%, 7%);
   --secondary: hsl(0, 0%, 15%);
-  --secondary-foreground: hsl(120, 100%, 80%);
+  --secondary-foreground: hsl(60, 100%, 80%);
   --accent: hsl(0, 0%, 15%);
-  --accent-foreground: hsl(120, 100%, 80%);
+  --accent-foreground: hsl(60, 100%, 80%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(120, 100%, 80%);
+  --ring: hsl(60, 100%, 80%);
   --radius: 0.2rem;
   
   /* Terminal colors */
   --terminal-bg: hsl(0, 0%, 7%);
-  --terminal-green: hsl(120, 100%, 80%);
+  --terminal-green: hsl(60, 100%, 80%);
   --terminal-yellow: hsl(60, 100%, 80%);
   --terminal-cyan: hsl(180, 100%, 80%);
   --terminal-gray: hsl(0, 0%, 60%);
