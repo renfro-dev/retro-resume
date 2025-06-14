@@ -86,6 +86,28 @@ export default function Home() {
             </div>
           </div>
           
+          {/* Workflow Activation Command */}
+          <div className="flex justify-start ml-8 mb-6">
+            <div className="bg-black border border-[var(--terminal-green)] rounded p-4 w-full max-w-2xl">
+              <div className="text-[var(--terminal-green)] font-mono text-xs mb-2">
+                guest@term.toolkit.com:~$ ./activate-workflow.sh
+              </div>
+              <div className="text-[var(--terminal-gray)] font-mono text-xs leading-relaxed">
+                <div>--enable-workflow=true</div>
+                <div>--re-enrollment=disabled</div>
+                <div>--lifecycle-stage=noob</div>
+                <div>--persona=trailblazer</div>
+                <div>--element=water</div>
+                <div className="text-[var(--terminal-cyan)] mt-2">
+                  [INFO] Workflow activated successfully
+                </div>
+                <div className="text-[var(--terminal-green)] mt-1">
+                  ✓ Automation sequence initiated
+                </div>
+              </div>
+            </div>
+          </div>
+          
           {/* Workflow Steps */}
           <div className="relative">
             {chapters.map((chapter, index) => (
