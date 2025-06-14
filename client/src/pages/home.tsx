@@ -79,7 +79,7 @@ export default function Home() {
         <BackgroundDecorations />
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="flex flex-col lg:flex-row gap-12 items-start">
             {/* Left Column - Workflow */}
             <div>
               {/* Workflow Activation Command */}
@@ -144,7 +144,7 @@ export default function Home() {
             </div>
 
             {/* Right Column - Robot ASCII Art */}
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-start lg:sticky lg:top-24">
               <div className="text-[var(--terminal-green)] font-mono text-xs leading-none select-none">
                 <pre className="whitespace-pre">
 {`      & & &
