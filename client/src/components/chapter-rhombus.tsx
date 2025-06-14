@@ -31,10 +31,10 @@ export default function ChapterRhombus({ title, description, imageUrl, imageAlt,
           <span className="text-[var(--terminal-gray)] text-xs font-mono">#{index + 1}</span>
         </div>
         <div className="w-full">
-          <div className="text-[var(--terminal-gray)] text-xs font-mono leading-tight mb-2">
-            {description.length > 80 ? description.substring(0, 80) + '...' : description}
+          <div className="text-[var(--terminal-gray)] text-xs font-mono leading-tight mb-3">
+            {description.length > 70 ? description.substring(0, 70) + '...' : description}
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-2">
             <div className="flex items-center space-x-2">
               <span className="text-[var(--terminal-cyan)] text-xs font-mono">ACTIVE</span>
               <div className="flex space-x-1">
@@ -45,6 +45,9 @@ export default function ChapterRhombus({ title, description, imageUrl, imageAlt,
             </div>
             <div className="text-[var(--terminal-green)] text-xs font-mono">✓</div>
           </div>
+          <button className="w-full bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-2 py-1 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300">
+            See Report
+          </button>
         </div>
       </div>
     </motion.div>
