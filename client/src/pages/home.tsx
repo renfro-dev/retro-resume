@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import Header from "@/components/header";
 import ChapterRhombus from "@/components/chapter-rhombus";
 import BackgroundDecorations from "@/components/background-decorations";
@@ -412,7 +413,17 @@ export default function Home() {
           {workflowsVisible && (
             <div className="relative flex flex-col items-center">
               {chapters.map((chapter, index) => (
-                <div key={index} className="relative mb-16">
+                <motion.div 
+                  key={index} 
+                  className="relative mb-16"
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    duration: 0.6,
+                    delay: index * 1.0,
+                    ease: "easeOut"
+                  }}
+                >
                   {/* Workflow Card */}
                   <div className="flex justify-center">
                     <ChapterRhombus
@@ -432,7 +443,7 @@ export default function Home() {
                       <div className="workflow-line workflow-line-vertical"></div>
                     </div>
                   )}
-                </div>
+                </motion.div>
               ))}
             </div>
           )}
