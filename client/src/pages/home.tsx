@@ -395,124 +395,24 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right Sidebar - Terminal Dashboard */}
-          <div className="hidden lg:flex absolute top-20 right-8 flex-col space-y-6 w-80">
-            
-            {/* System Status Panel */}
-            <div className="workflow-card p-4">
+          {/* Top Right Dashboard */}
+          <div className="absolute top-6 right-8 hidden lg:block">
+            <div className="workflow-card p-4 w-64">
               <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
-                [SYSTEM STATUS]
+                [DEVELOPER PROFILE]
               </div>
               <div className="space-y-1 text-xs font-mono">
                 <div className="flex justify-between">
-                  <span className="text-[var(--terminal-gray)]">Workflow Engine:</span>
-                  <span className="text-[var(--terminal-green)]">ACTIVE</span>
+                  <span className="text-[var(--terminal-gray)]">Years experience:</span>
+                  <span className="text-[var(--terminal-green)]">16</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[var(--terminal-gray)]">Automation Level:</span>
-                  <span className="text-[var(--terminal-cyan)]">ADVANCED</span>
+                  <span className="text-[var(--terminal-gray)]">Founder roles:</span>
+                  <span className="text-[var(--terminal-cyan)]">3</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[var(--terminal-gray)]">Skills Loaded:</span>
-                  <span className="text-[var(--terminal-yellow)]">8/8</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[var(--terminal-gray)]">Experience:</span>
-                  <span className="text-[var(--terminal-green)]">EXPERT</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Performance Metrics */}
-            <div className="workflow-card p-4">
-              <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
-                [PERFORMANCE METRICS]
-              </div>
-              <div className="space-y-2 text-xs font-mono">
-                <div className="flex justify-between">
-                  <span className="text-[var(--terminal-gray)]">CPU Usage:</span>
-                  <span className="text-[var(--terminal-cyan)]">23%</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[var(--terminal-gray)]">Memory:</span>
-                  <span className="text-[var(--terminal-yellow)]">1.2GB</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[var(--terminal-gray)]">Network:</span>
-                  <span className="text-[var(--terminal-green)]">45Mbps</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[var(--terminal-gray)]">Uptime:</span>
-                  <span className="text-[var(--terminal-green)]">99.8%</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Activity Log */}
-            <div className="workflow-card p-4">
-              <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
-                [ACTIVITY LOG]
-              </div>
-              <div className="space-y-1 text-xs font-mono">
-                <div className="text-[var(--terminal-gray)]">14:32:15 - Workflow initiated</div>
-                <div className="text-[var(--terminal-cyan)]">14:32:18 - Parameters loaded</div>
-                <div className="text-[var(--terminal-yellow)]">14:32:22 - Processing chapter 1</div>
-                <div className="text-[var(--terminal-green)]">14:32:25 - Chapter 1 complete</div>
-                <div className="text-[var(--terminal-gray)]">14:32:28 - Standby mode</div>
-              </div>
-            </div>
-
-            {/* Quick Actions */}
-            <div className="workflow-card p-4">
-              <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
-                [QUICK ACTIONS]
-              </div>
-              <div className="space-y-2">
-                <button className="w-full bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-3 py-1 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300">
-                  restart system
-                </button>
-                <button className="w-full bg-transparent border border-[var(--terminal-cyan)] text-[var(--terminal-cyan)] px-3 py-1 font-mono text-xs hover:bg-[var(--terminal-cyan)] hover:text-black transition-all duration-300">
-                  export logs
-                </button>
-                <button className="w-full bg-transparent border border-[var(--terminal-yellow)] text-[var(--terminal-yellow)] px-3 py-1 font-mono text-xs hover:bg-[var(--terminal-yellow)] hover:text-black transition-all duration-300">
-                  view metrics
-                </button>
-              </div>
-            </div>
-
-            {/* Progress Visualization */}
-            <div className="workflow-card p-4">
-              <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
-                [PROGRESS TRACKER]
-              </div>
-              <div className="space-y-2">
-                {chapters.map((chapter, index) => (
-                  <div key={index} className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-[var(--terminal-green)] rounded-full animate-pulse"></div>
-                    <div className="text-xs font-mono text-[var(--terminal-gray)] flex-1 truncate">
-                      {chapter.title}
-                    </div>
-                    <div className="text-xs font-mono text-[var(--terminal-green)]">✓</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Live Terminal Output */}
-            <div className="workflow-card p-4">
-              <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
-                [LIVE OUTPUT]
-              </div>
-              <div className="space-y-1 text-xs font-mono">
-                <div className="text-[var(--terminal-gray)]">$ workflow --status</div>
-                <div className="text-[var(--terminal-green)]">✓ All systems operational</div>
-                <div className="text-[var(--terminal-gray)]">$ deploy --env production</div>
-                <div className="text-[var(--terminal-cyan)]">→ Deployment successful</div>
-                <div className="text-[var(--terminal-gray)]">$ optimize --performance</div>
-                <div className="text-[var(--terminal-yellow)]">⚡ Performance enhanced</div>
-                <div className="flex items-center">
-                  <span className="text-[var(--terminal-green)]">$</span>
-                  <div className="w-2 h-4 bg-[var(--terminal-green)] ml-1 animate-pulse"></div>
+                  <span className="text-[var(--terminal-gray)]">Current industry:</span>
+                  <span className="text-[var(--terminal-yellow)]">legal tech</span>
                 </div>
               </div>
             </div>
