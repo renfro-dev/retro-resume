@@ -62,6 +62,9 @@ export default function Home() {
   const [workflowsVisible, setWorkflowsVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedWorkflow, setSelectedWorkflow] = useState<typeof chapters[0] | null>(null);
+  const [buttonReady, setButtonReady] = useState(false);
+  const [buttonText, setButtonText] = useState("workflow loading...");
+  const [buttonFlashing, setButtonFlashing] = useState(true);
 
   const openModal = (workflow: typeof chapters[0]) => {
     setSelectedWorkflow(workflow);
@@ -84,6 +87,17 @@ export default function Home() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    // Button transition sequence
+    const timer = setTimeout(() => {
+      setButtonFlashing(false);
+      setButtonText("activate workflow");
+      setButtonReady(true);
+    }, 5000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -266,55 +280,26 @@ export default function Home() {
     const interval = animatePacMan();
     addCornerFlash();
     
-    // Workflow loading sequence
-    const initializeWorkflowSequence = () => {
-      const loadingElement = document.getElementById('workflow-loading');
-      if (!loadingElement) return;
-
-      // 1 second delay, then show "workflow loading" with flashing
-      setTimeout(() => {
-        loadingElement.innerHTML = 'workflow loading';
-        loadingElement.classList.add('workflow-loading-flash');
-        
-        // After 3 seconds, stop flashing and show data sequence
-        setTimeout(() => {
-          loadingElement.classList.remove('workflow-loading-flash');
-          loadingElement.innerHTML = '';
-          
-          // Show each line after 2 second delays
-          const lines = [
-            '/lifecycle_stage=FTE', 
-            '/psychographic=entrepreneur',
-            '/experience=16_years',
-            '/founder_roles=3',
-            '/current_industry=legal_tech',
-            '/location=33.0644° N, 117.3017° W',
-            '/re-enrollment=disabled'
-          ];
-          
-          lines.forEach((line, index) => {
-            setTimeout(() => {
-              const lineDiv = document.createElement('div');
-              lineDiv.textContent = line;
-              lineDiv.style.marginBottom = '4px';
-              loadingElement.appendChild(lineDiv);
-              
-              // Show CTA button after the last line is displayed
-              if (index === lines.length - 1) {
-                setTimeout(() => {
-                  const ctaButton = document.getElementById('cta-button');
-                  if (ctaButton) {
-                    ctaButton.style.display = 'flex';
-                  }
-                }, 500); // Small delay after last line
-              }
-            }, index * 2000);
-          });
-        }, 3000);
-      }, 1000);
-    };
-    
-    initializeWorkflowSequence();
+    // Show lifecycle data immediately 
+    const loadingElement = document.getElementById('workflow-loading');
+    if (loadingElement) {
+      const lines = [
+        '/lifecycle_stage=FTE', 
+        '/psychographic=entrepreneur',
+        '/experience=16_years',
+        '/founder_roles=3',
+        '/current_industry=legal_tech',
+        '/location=33.0644° N, 117.3017° W',
+        '/re-enrollment=disabled'
+      ];
+      
+      lines.forEach((line) => {
+        const lineDiv = document.createElement('div');
+        lineDiv.textContent = line;
+        lineDiv.style.marginBottom = '4px';
+        loadingElement.appendChild(lineDiv);
+      });
+    }
 
     // Regenerate dots and power pellets every 16 seconds (one full cycle)
     const regenerateInterval = setInterval(() => {
@@ -374,12 +359,17 @@ export default function Home() {
           </div>
           
           {/* Call to Action Button */}
-          <div id="cta-button" className="flex justify-center mb-16" style={{display: 'none'}}>
+          <div className="flex justify-center mb-16">
             <button 
-              onClick={() => setWorkflowsVisible(true)}
-              className="bg-[var(--terminal-yellow)] border-2 border-[var(--terminal-yellow)] text-black px-6 py-3 font-mono text-sm hover:bg-transparent hover:text-[var(--terminal-yellow)] transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-500/25"
+              onClick={buttonReady ? () => setWorkflowsVisible(true) : undefined}
+              className={`px-6 py-3 font-mono text-sm transition-all duration-300 ease-in-out border-2 ${
+                buttonReady 
+                  ? 'bg-[var(--terminal-yellow)] border-[var(--terminal-yellow)] text-black hover:bg-transparent hover:text-[var(--terminal-yellow)] hover:shadow-lg hover:shadow-yellow-500/25' 
+                  : 'bg-black border-[var(--terminal-yellow)] text-[var(--terminal-yellow)] cursor-default'
+              } ${buttonFlashing ? 'animate-pulse' : ''}`}
+              disabled={!buttonReady}
             >
-              activate workflow
+              {buttonText}
             </button>
           </div>
           
