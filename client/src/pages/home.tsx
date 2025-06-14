@@ -81,7 +81,7 @@ export default function Home() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="flex flex-col lg:flex-row gap-12 items-start">
             {/* Left Column - Workflow */}
-            <div>
+            <div className="flex-1 lg:max-w-2xl">
               {/* Workflow Activation Command */}
               <div className="flex justify-start mb-6">
                 <div className="bg-black border border-[var(--terminal-green)] rounded p-4 w-full max-w-2xl">
@@ -144,7 +144,7 @@ export default function Home() {
             </div>
 
             {/* Right Column - Robot ASCII Art */}
-            <div className="flex justify-center items-start lg:sticky lg:top-24">
+            <div className="flex-shrink-0 lg:w-80 flex justify-center items-start">
               <div className="text-[var(--terminal-green)] font-mono text-xs leading-none select-none">
                 <pre className="whitespace-pre">
 {`      & & &
