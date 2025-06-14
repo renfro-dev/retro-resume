@@ -3,6 +3,7 @@ import Header from "@/components/header";
 import ChapterRhombus from "@/components/chapter-rhombus";
 import BackgroundDecorations from "@/components/background-decorations";
 import Footer from "@/components/footer";
+import bombermanImage from "@assets/bomberman_1749909454648.png";
 
 const chapters = [
   {
@@ -57,6 +58,7 @@ const chapters = [
 
 export default function Home() {
   const mainRef = useRef<HTMLElement>(null);
+  const bombermanRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,6 +66,19 @@ export default function Home() {
         const scrolled = window.scrollY;
         const rate = scrolled * -0.5;
         mainRef.current.style.transform = `translateY(${rate}px)`;
+      }
+
+      // Bomberman scroll animation
+      const scrollY = window.scrollY;
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+      const bomberman = bombermanRef.current;
+      const screenWidth = window.innerWidth;
+
+      if (bomberman && maxScroll > 0) {
+        // Move Bomberman left to right based on scroll percentage
+        const scrollPercent = scrollY / maxScroll;
+        const x = scrollPercent * (screenWidth - 120); // 120 = image width
+        bomberman.style.transform = `translateX(${x}px)`;
       }
     };
 
@@ -74,6 +89,16 @@ export default function Home() {
   return (
     <div className="font-mono bg-terminal pattern-grid min-h-screen">
       <Header />
+      
+      {/* Bomberman Container - Fixed position for scroll animation */}
+      <div className="fixed top-1/2 transform -translate-y-1/2 w-full pointer-events-none z-10">
+        <img 
+          ref={bombermanRef}
+          src={bombermanImage} 
+          alt="Bomberman" 
+          className="absolute w-[120px] transition-transform duration-100 ease-linear"
+        />
+      </div>
       
       <main ref={mainRef} className="relative overflow-hidden">
         <BackgroundDecorations />
@@ -191,6 +216,9 @@ export default function Home() {
         </div>
         
         <Footer />
+        
+        {/* Spacer content to enable scrolling for Bomberman animation */}
+        <div className="h-[200vh] w-full"></div>
       </main>
     </div>
   );
