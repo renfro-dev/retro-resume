@@ -187,25 +187,55 @@ export default function Home() {
 
       // Flash timing matches exactly when Pac-Man hits corners (16s total cycle)
       // Top-right corner: 25% = 4s, Bottom-right: 50% = 8s, Bottom-left: 75% = 12s
+      const flashPacman = () => {
+        const originalBg = pacman.style.background;
+        const originalShadow = pacman.style.boxShadow;
+        const originalTransform = pacman.style.transform;
+        
+        pacman.style.background = '#ffffff';
+        pacman.style.boxShadow = '0 0 30px #ffffff, 0 0 60px #ffffff';
+        pacman.style.transform = 'scale(1.3)';
+        
+        setTimeout(() => {
+          pacman.style.background = originalBg;
+          pacman.style.boxShadow = originalShadow;
+          pacman.style.transform = originalTransform;
+        }, 200);
+      };
+
       const cornerFlashTiming = () => {
         // Top-right corner flash
         setTimeout(() => {
-          pacman.classList.add('flash');
-          setTimeout(() => pacman.classList.remove('flash'), 200);
+          console.log('Flashing at top-right corner');
+          flashPacman();
         }, 4000);
         
         // Bottom-right corner flash  
         setTimeout(() => {
-          pacman.classList.add('flash');
-          setTimeout(() => pacman.classList.remove('flash'), 200);
+          console.log('Flashing at bottom-right corner');
+          flashPacman();
         }, 8000);
         
         // Bottom-left corner flash
         setTimeout(() => {
-          pacman.classList.add('flash');
-          setTimeout(() => pacman.classList.remove('flash'), 200);
+          console.log('Flashing at bottom-left corner');
+          flashPacman();
         }, 12000);
       };
+
+      // Test flash immediately on load - make it more obvious
+      setTimeout(() => {
+        console.log('Testing flash with style override');
+        pacman.style.background = '#ffffff';
+        pacman.style.boxShadow = '0 0 40px #ffffff';
+        pacman.style.transform = 'scale(1.5)';
+        setTimeout(() => {
+          pacman.style.background = '';
+          pacman.style.boxShadow = '';
+          pacman.style.transform = '';
+          console.log('Test flash removed');
+        }, 500);
+      }, 1000);
 
       // Initial flash sequence
       cornerFlashTiming();
