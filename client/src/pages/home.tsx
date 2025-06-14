@@ -280,6 +280,16 @@ export default function Home() {
               lineDiv.textContent = line;
               lineDiv.style.marginBottom = '4px';
               loadingElement.appendChild(lineDiv);
+              
+              // Show CTA button after the last line is displayed
+              if (index === lines.length - 1) {
+                setTimeout(() => {
+                  const ctaButton = document.getElementById('cta-button');
+                  if (ctaButton) {
+                    ctaButton.style.display = 'flex';
+                  }
+                }, 500); // Small delay after last line
+              }
             }, index * 2000);
           });
         }, 3000);
@@ -344,7 +354,7 @@ export default function Home() {
           </div>
           
           {/* Call to Action Button */}
-          <div className="flex justify-start mb-16 ml-8">
+          <div id="cta-button" className="flex justify-start mb-16 ml-8" style={{display: 'none'}}>
             <button className="bg-transparent border-2 border-[var(--terminal-green)] text-[var(--terminal-green)] px-6 py-3 font-mono text-sm hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-green-500/25">
               activate workflow
             </button>
