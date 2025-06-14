@@ -255,14 +255,7 @@ export default function Home() {
     // Workflow loading sequence
     const initializeWorkflowSequence = () => {
       const loadingElement = document.getElementById('workflow-loading');
-      const dashboardElements = document.querySelectorAll('.fixed.top-24.right-32');
       if (!loadingElement) return;
-
-      // Hide dashboard, show loading card
-      dashboardElements.forEach((el, index) => {
-        if (index === 0) el.style.display = 'block'; // Loading card
-        if (index === 1) el.style.display = 'none';  // Dashboard
-      });
 
       // 1 second delay, then show "workflow loading" with flashing
       setTimeout(() => {
@@ -288,19 +281,13 @@ export default function Home() {
               lineDiv.style.marginBottom = '4px';
               loadingElement.appendChild(lineDiv);
               
-              // Show CTA button and switch to dashboard after the last line
+              // Show CTA button after the last line is displayed
               if (index === lines.length - 1) {
                 setTimeout(() => {
                   const ctaButton = document.getElementById('cta-button');
                   if (ctaButton) {
                     ctaButton.style.display = 'flex';
                   }
-                  
-                  // Hide loading card, show dashboard
-                  dashboardElements.forEach((el, index) => {
-                    if (index === 0) el.style.display = 'none';  // Loading card
-                    if (index === 1) el.style.display = 'block'; // Dashboard
-                  });
                 }, 500); // Small delay after last line
               }
             }, index * 2000);
@@ -353,15 +340,6 @@ export default function Home() {
       
       <Header />
       
-      {/* Top Right Loading Card */}
-      <div className="fixed top-24 right-32 z-50 w-80">
-        <div className="workflow-card p-6">
-          <div id="workflow-loading" className="font-mono text-sm text-[var(--terminal-green)] h-full flex flex-col justify-center">
-            {/* Content will be populated by JavaScript */}
-          </div>
-        </div>
-      </div>
-
       {/* Top Right Dashboard */}
       <div className="fixed top-24 right-32 z-50 w-80">
         <div className="workflow-card p-6">
@@ -386,6 +364,14 @@ export default function Home() {
         <BackgroundDecorations />
         
         <div className="relative z-10 max-w-7xl mx-auto px-12 sm:px-16 lg:px-20 py-24">
+          {/* Workflow Loading Sequence */}
+          <div className="flex justify-start mb-8 ml-8">
+            <div className="workflow-card w-72 h-32 p-4">
+              <div id="workflow-loading" className="font-mono text-xs text-[var(--terminal-green)] h-full flex flex-col justify-center">
+                {/* Content will be populated by JavaScript */}
+              </div>
+            </div>
+          </div>
           
           {/* Call to Action Button */}
           <div id="cta-button" className="flex justify-start mb-16 ml-8" style={{display: 'none'}}>
