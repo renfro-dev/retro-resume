@@ -112,31 +112,40 @@
     transform: translateY(-50%);
     font-family: 'JetBrains Mono', monospace;
     color: var(--terminal-green);
-    font-size: 10px;
-    line-height: 1;
+    font-size: 8px;
+    line-height: 0.9;
     white-space: pre;
     z-index: 20;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
+    filter: drop-shadow(0 0 8px rgba(0, 255, 0, 0.3));
   }
 
   .running-robot.scrolling {
     opacity: 1;
+    animation: robotBounce 0.6s ease-in-out infinite alternate;
   }
 
   .running-robot.running {
-    animation: robotRun 0.5s steps(2) infinite;
+    animation: robotRun 0.3s steps(4) infinite, robotBounce 0.6s ease-in-out infinite alternate;
   }
 
   @keyframes robotRun {
-    0% {
-      transform: translateY(-50%) translateX(0px);
+    0% { transform: translateY(-50%) translateX(0px) scaleX(1); }
+    25% { transform: translateY(-50%) translateX(-1px) scaleX(0.98); }
+    50% { transform: translateY(-50%) translateX(0px) scaleX(1.02); }
+    75% { transform: translateY(-50%) translateX(1px) scaleX(0.98); }
+    100% { transform: translateY(-50%) translateX(0px) scaleX(1); }
+  }
+
+  @keyframes robotBounce {
+    0% { 
+      transform: translateY(-50%) scale(1);
+      filter: drop-shadow(0 0 8px rgba(0, 255, 0, 0.3));
     }
-    50% {
-      transform: translateY(-50%) translateX(-2px);
-    }
-    100% {
-      transform: translateY(-50%) translateX(0px);
+    100% { 
+      transform: translateY(-52%) scale(1.02);
+      filter: drop-shadow(0 0 12px rgba(0, 255, 0, 0.5));
     }
   }
 
@@ -148,12 +157,42 @@
     display: none;
   }
 
-  .running-robot.running .robot-frame-1 {
+  .robot-frame-3 {
     display: none;
+  }
+
+  .robot-frame-4 {
+    display: none;
+  }
+
+  .running-robot.running .robot-frame-1 {
+    animation: frameSequence 1.2s steps(4) infinite;
+  }
+
+  @keyframes frameSequence {
+    0% { opacity: 1; }
+    25% { opacity: 0; }
+    50% { opacity: 0; }
+    75% { opacity: 0; }
+    100% { opacity: 1; }
   }
 
   .running-robot.running .robot-frame-2 {
     display: block;
+    animation: frameSequence 1.2s steps(4) infinite;
+    animation-delay: 0.3s;
+  }
+
+  .running-robot.running .robot-frame-3 {
+    display: block;
+    animation: frameSequence 1.2s steps(4) infinite;
+    animation-delay: 0.6s;
+  }
+
+  .running-robot.running .robot-frame-4 {
+    display: block;
+    animation: frameSequence 1.2s steps(4) infinite;
+    animation-delay: 0.9s;
   }
   
   .workflow-card {
