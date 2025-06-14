@@ -167,8 +167,8 @@ export default function Home() {
             Math.pow(pacmanCenterY - dotCenterY, 2)
           );
           
-          // Larger collision radius for better detection
-          if (distance < 35) {
+          // Optimized collision radius for centered alignment
+          if (distance < 30) {
             dotElement.classList.add('consumed');
           }
         });
