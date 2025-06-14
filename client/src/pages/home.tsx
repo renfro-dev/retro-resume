@@ -57,6 +57,7 @@ const chapters = [
 
 export default function Home() {
   const mainRef = useRef<HTMLElement>(null);
+  const dotsContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -71,14 +72,130 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    // Generate dots around the border
+    const generateDots = () => {
+      const container = dotsContainerRef.current;
+      if (!container) return;
+
+      const dots: HTMLDivElement[] = [];
+      const dotSpacing = 30;
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+
+      // Top border dots
+      for (let x = 50; x < screenWidth - 50; x += dotSpacing) {
+        const dot = document.createElement('div');
+        dot.className = 'pac-dot';
+        dot.style.left = `${x}px`;
+        dot.style.top = '15px';
+        dot.dataset.side = 'top';
+        dot.dataset.position = x.toString();
+        container.appendChild(dot);
+        dots.push(dot);
+      }
+
+      // Right border dots
+      for (let y = 50; y < screenHeight - 50; y += dotSpacing) {
+        const dot = document.createElement('div');
+        dot.className = 'pac-dot';
+        dot.style.right = '15px';
+        dot.style.top = `${y}px`;
+        dot.dataset.side = 'right';
+        dot.dataset.position = y.toString();
+        container.appendChild(dot);
+        dots.push(dot);
+      }
+
+      // Bottom border dots
+      for (let x = screenWidth - 50; x > 50; x -= dotSpacing) {
+        const dot = document.createElement('div');
+        dot.className = 'pac-dot';
+        dot.style.left = `${x}px`;
+        dot.style.bottom = '15px';
+        dot.dataset.side = 'bottom';
+        dot.dataset.position = x.toString();
+        container.appendChild(dot);
+        dots.push(dot);
+      }
+
+      // Left border dots
+      for (let y = screenHeight - 50; y > 50; y -= dotSpacing) {
+        const dot = document.createElement('div');
+        dot.className = 'pac-dot';
+        dot.style.left = '15px';
+        dot.style.top = `${y}px`;
+        dot.dataset.side = 'left';
+        dot.dataset.position = y.toString();
+        container.appendChild(dot);
+        dots.push(dot);
+      }
+
+      return dots;
+    };
+
+    // Pac-Man movement and dot consumption logic
+    const animatePacMan = () => {
+      const pacman = document.querySelector('.pacman') as HTMLElement;
+      const dots = document.querySelectorAll('.pac-dot:not(.consumed)');
+      
+      if (!pacman) return;
+
+      const checkDotConsumption = () => {
+        const pacmanRect = pacman.getBoundingClientRect();
+        const pacmanCenterX = pacmanRect.left + pacmanRect.width / 2;
+        const pacmanCenterY = pacmanRect.top + pacmanRect.height / 2;
+
+        dots.forEach(dot => {
+          if (dot.classList.contains('consumed')) return;
+          
+          const dotRect = dot.getBoundingClientRect();
+          const dotCenterX = dotRect.left + dotRect.width / 2;
+          const dotCenterY = dotRect.top + dotRect.height / 2;
+          
+          const distance = Math.sqrt(
+            Math.pow(pacmanCenterX - dotCenterX, 2) + 
+            Math.pow(pacmanCenterY - dotCenterY, 2)
+          );
+          
+          if (distance < 20) {
+            dot.classList.add('consumed');
+          }
+        });
+      };
+
+      // Check for dot consumption every 100ms
+      const consumptionInterval = setInterval(checkDotConsumption, 100);
+      
+      return consumptionInterval;
+    };
+
+    const dots = generateDots();
+    const interval = animatePacMan();
+
+    // Regenerate dots every 16 seconds (one full cycle)
+    const regenerateInterval = setInterval(() => {
+      const container = dotsContainerRef.current;
+      if (container) {
+        // Remove all existing dots
+        container.innerHTML = '';
+        // Generate new dots
+        generateDots();
+      }
+    }, 16000);
+
+    return () => {
+      if (interval) clearInterval(interval);
+      clearInterval(regenerateInterval);
+    };
+  }, []);
+
   return (
     <div className="font-mono bg-terminal pattern-grid min-h-screen">
-      {/* Retro Animated Borders */}
+      {/* Pac-Man Game Border */}
       <div className="retro-border-container">
-        <div className="retro-border-top"></div>
-        <div className="retro-border-bottom"></div>
-        <div className="retro-border-left"></div>
-        <div className="retro-border-right"></div>
+        {/* Dynamic dots container */}
+        <div ref={dotsContainerRef} className="dots-container"></div>
         
         {/* Corner power pellets */}
         <div className="retro-corner top-left"></div>
