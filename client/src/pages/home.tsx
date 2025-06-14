@@ -280,26 +280,45 @@ export default function Home() {
     const interval = animatePacMan();
     addCornerFlash();
     
-    // Show lifecycle data immediately 
-    const loadingElement = document.getElementById('workflow-loading');
-    if (loadingElement) {
-      const lines = [
-        '/lifecycle_stage=FTE', 
-        '/psychographic=entrepreneur',
-        '/experience=16_years',
-        '/founder_roles=3',
-        '/current_industry=legal_tech',
-        '/location=33.0644° N, 117.3017° W',
-        '/re-enrollment=disabled'
-      ];
-      
-      lines.forEach((line) => {
-        const lineDiv = document.createElement('div');
-        lineDiv.textContent = line;
-        lineDiv.style.marginBottom = '4px';
-        loadingElement.appendChild(lineDiv);
-      });
-    }
+    // Workflow loading sequence for lifecycle card
+    const initializeWorkflowSequence = () => {
+      const loadingElement = document.getElementById('workflow-loading');
+      if (!loadingElement) return;
+
+      // 1 second delay, then show "workflow loading" with flashing
+      setTimeout(() => {
+        loadingElement.innerHTML = 'workflow loading';
+        loadingElement.classList.add('workflow-loading-flash');
+        
+        // After 3 seconds, stop flashing and show data sequence
+        setTimeout(() => {
+          loadingElement.classList.remove('workflow-loading-flash');
+          loadingElement.innerHTML = '';
+          
+          // Show each line after 2 second delays
+          const lines = [
+            '/lifecycle_stage=FTE', 
+            '/psychographic=entrepreneur',
+            '/experience=16_years',
+            '/founder_roles=3',
+            '/current_industry=legal_tech',
+            '/location=33.0644° N, 117.3017° W',
+            '/re-enrollment=disabled'
+          ];
+          
+          lines.forEach((line, index) => {
+            setTimeout(() => {
+              const lineDiv = document.createElement('div');
+              lineDiv.textContent = line;
+              lineDiv.style.marginBottom = '4px';
+              loadingElement.appendChild(lineDiv);
+            }, index * 2000);
+          });
+        }, 3000);
+      }, 1000);
+    };
+    
+    initializeWorkflowSequence();
 
     // Regenerate dots and power pellets every 16 seconds (one full cycle)
     const regenerateInterval = setInterval(() => {
