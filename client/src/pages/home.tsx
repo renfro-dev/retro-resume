@@ -95,17 +95,17 @@ export default function Home() {
         dots.push(dot);
       }
 
-      // Right border dots - temporarily disabled
-      // for (let y = 50; y < screenHeight - 50; y += dotSpacing) {
-      //   const dot = document.createElement('div');
-      //   dot.className = 'pac-dot';
-      //   dot.style.right = '15px';
-      //   dot.style.top = `${y}px`;
-      //   dot.dataset.side = 'right';
-      //   dot.dataset.position = y.toString();
-      //   container.appendChild(dot);
-      //   dots.push(dot);
-      // }
+      // Right border dots
+      for (let y = 50; y < screenHeight - 50; y += dotSpacing) {
+        const dot = document.createElement('div');
+        dot.className = 'pac-dot';
+        dot.style.right = '15px';
+        dot.style.top = `${y}px`;
+        dot.dataset.side = 'right';
+        dot.dataset.position = y.toString();
+        container.appendChild(dot);
+        dots.push(dot);
+      }
 
       // Bottom border dots
       for (let x = screenWidth - 50; x > 50; x -= dotSpacing) {
