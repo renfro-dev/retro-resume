@@ -266,6 +266,9 @@ export default function Home() {
           const lines = [
             '/lifecycle_stage=FTE', 
             '/psychographic=entrepreneur',
+            '/experience=16_years',
+            '/founder_roles=3',
+            '/current_industry=legal_tech',
             '/location=33.0644° N, 117.3017° W',
             '/re-enrollment=disabled'
           ];
