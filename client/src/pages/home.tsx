@@ -185,30 +185,33 @@ export default function Home() {
       const pacman = document.querySelector('.pacman') as HTMLElement;
       if (!pacman) return;
 
-      // Flash timing matches the animation keyframes (16s total cycle)
-      // Corners hit at 25%, 50%, 75% of cycle
-      const flashTimes = [4000, 8000, 12000]; // 4s, 8s, 12s
-      
-      flashTimes.forEach(time => {
+      // Flash timing matches exactly when Pac-Man hits corners (16s total cycle)
+      // Top-right corner: 25% = 4s, Bottom-right: 50% = 8s, Bottom-left: 75% = 12s
+      const cornerFlashTiming = () => {
+        // Top-right corner flash
         setTimeout(() => {
           pacman.classList.add('flash');
-          setTimeout(() => {
-            pacman.classList.remove('flash');
-          }, 200); // Flash duration matches CSS animation
-        }, time);
-      });
+          setTimeout(() => pacman.classList.remove('flash'), 200);
+        }, 4000);
+        
+        // Bottom-right corner flash  
+        setTimeout(() => {
+          pacman.classList.add('flash');
+          setTimeout(() => pacman.classList.remove('flash'), 200);
+        }, 8000);
+        
+        // Bottom-left corner flash
+        setTimeout(() => {
+          pacman.classList.add('flash');
+          setTimeout(() => pacman.classList.remove('flash'), 200);
+        }, 12000);
+      };
 
+      // Initial flash sequence
+      cornerFlashTiming();
+      
       // Repeat every 16 seconds
-      setInterval(() => {
-        flashTimes.forEach(time => {
-          setTimeout(() => {
-            pacman.classList.add('flash');
-            setTimeout(() => {
-              pacman.classList.remove('flash');
-            }, 200);
-          }, time);
-        });
-      }, 16000);
+      setInterval(cornerFlashTiming, 16000);
     };
 
     const dots = generateDots();
