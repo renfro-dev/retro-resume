@@ -343,6 +343,13 @@ export default function Home() {
             </div>
           </div>
           
+          {/* Call to Action Button */}
+          <div className="flex justify-start mb-16 ml-8">
+            <button className="bg-transparent border-2 border-[var(--terminal-green)] text-[var(--terminal-green)] px-6 py-3 font-mono text-sm hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-green-500/25">
+              activate workflow
+            </button>
+          </div>
+          
           {/* Workflow Steps */}
           <div className="relative">
             {chapters.map((chapter, index) => (
