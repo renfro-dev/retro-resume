@@ -72,7 +72,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="font-inter bg-gradient-nft pattern-dots min-h-screen">
+    <div className="font-mono bg-terminal pattern-grid min-h-screen">
       <Header />
       
       <main ref={mainRef} className="relative overflow-hidden">

@@ -3,35 +3,34 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(0, 0%, 100%);
-  --foreground: hsl(20, 14.3%, 4.1%);
-  --muted: hsl(60, 4.8%, 95.9%);
-  --muted-foreground: hsl(25, 5.3%, 44.7%);
-  --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(20, 14.3%, 4.1%);
-  --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(20, 14.3%, 4.1%);
-  --border: hsl(20, 5.9%, 90%);
-  --input: hsl(20, 5.9%, 90%);
-  --primary: hsl(207, 90%, 54%);
-  --primary-foreground: hsl(211, 100%, 99%);
-  --secondary: hsl(60, 4.8%, 95.9%);
-  --secondary-foreground: hsl(24, 9.8%, 10%);
-  --accent: hsl(60, 4.8%, 95.9%);
-  --accent-foreground: hsl(24, 9.8%, 10%);
+  --background: hsl(0, 0%, 7%);
+  --foreground: hsl(120, 100%, 80%);
+  --muted: hsl(0, 0%, 15%);
+  --muted-foreground: hsl(0, 0%, 60%);
+  --popover: hsl(0, 0%, 10%);
+  --popover-foreground: hsl(120, 100%, 80%);
+  --card: hsl(0, 0%, 10%);
+  --card-foreground: hsl(120, 100%, 80%);
+  --border: hsl(0, 0%, 20%);
+  --input: hsl(0, 0%, 15%);
+  --primary: hsl(120, 100%, 80%);
+  --primary-foreground: hsl(0, 0%, 7%);
+  --secondary: hsl(0, 0%, 15%);
+  --secondary-foreground: hsl(120, 100%, 80%);
+  --accent: hsl(0, 0%, 15%);
+  --accent-foreground: hsl(120, 100%, 80%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(20, 14.3%, 4.1%);
-  --radius: 0.5rem;
+  --ring: hsl(120, 100%, 80%);
+  --radius: 0.2rem;
   
-  /* Custom colors for the design */
-  --pastel-blue: hsl(211, 48%, 80%);
-  --pastel-pink: hsl(0, 100%, 85%);
-  --pastel-green: hsl(120, 100%, 87%);
-  --pastel-light-blue: hsl(202, 100%, 87%);
-  --pastel-yellow: hsl(60, 100%, 93%);
-  --pastel-orange: hsl(28, 100%, 86%);
-  --off-white: hsl(50, 25%, 97%);
+  /* Terminal colors */
+  --terminal-bg: hsl(0, 0%, 7%);
+  --terminal-green: hsl(120, 100%, 80%);
+  --terminal-yellow: hsl(60, 100%, 80%);
+  --terminal-cyan: hsl(180, 100%, 80%);
+  --terminal-gray: hsl(0, 0%, 60%);
+  --terminal-dark-gray: hsl(0, 0%, 15%);
 }
 
 .dark {
@@ -63,47 +62,72 @@
   }
 
   body {
-    @apply font-inter antialiased bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
+    @apply font-mono antialiased bg-background text-foreground;
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--terminal-bg);
+    color: var(--terminal-green);
   }
 }
 
 @layer utilities {
-  .font-dancing {
-    font-family: 'Dancing Script', cursive;
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
   }
   
   .font-inter {
     font-family: 'Inter', sans-serif;
   }
   
-  .bg-gradient-nft {
-    background: linear-gradient(135deg, hsl(0, 100%, 85%) 0%, hsl(120, 100%, 87%) 25%, hsl(202, 100%, 87%) 50%, hsl(60, 100%, 93%) 75%, hsl(28, 100%, 86%) 100%);
-    background-size: 400% 400%;
-    animation: gradient-shift 15s ease infinite;
+  .bg-terminal {
+    background: var(--terminal-bg);
+    position: relative;
   }
   
-  .pattern-dots {
-    background-image: radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px);
-    background-size: 30px 30px;
+  .bg-terminal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      linear-gradient(45deg, transparent 48%, rgba(0, 255, 0, 0.03) 50%, transparent 52%),
+      linear-gradient(-45deg, transparent 48%, rgba(0, 255, 0, 0.03) 50%, transparent 52%);
+    background-size: 100px 100px;
+    pointer-events: none;
   }
   
-  .parallelogram {
+  .pattern-grid {
+    background-image: 
+      linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+  
+  .terminal-card {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--terminal-green);
     transform: skew(-15deg);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     z-index: 1;
+    backdrop-filter: blur(10px);
   }
   
-  .parallelogram-content {
+  .terminal-card-content {
     transform: skew(15deg);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  .parallelogram:hover {
-    transform: skew(-15deg) scale(1.05);
-    box-shadow: 0 25px 50px -12px rgba(168, 200, 236, 0.4);
+  .terminal-card:hover {
+    transform: skew(-15deg) scale(1.02);
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
     z-index: 10;
+    border-color: var(--terminal-yellow);
+  }
+  
+  .terminal-glow {
+    text-shadow: 0 0 10px currentColor;
   }
   
   .chapter-reveal {
@@ -111,7 +135,7 @@
     transition: opacity 0.4s ease;
   }
   
-  .rhombus:hover .chapter-reveal {
+  .terminal-card:hover .chapter-reveal {
     opacity: 1;
   }
 }
