@@ -312,7 +312,7 @@ export default function Home() {
               lineDiv.textContent = line;
               lineDiv.style.marginBottom = '4px';
               loadingElement.appendChild(lineDiv);
-            }, index * 2000);
+            }, index * 250);
           });
         }, 3000);
       }, 1000);
