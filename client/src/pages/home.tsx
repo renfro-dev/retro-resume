@@ -395,11 +395,11 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right Sidebar - Terminal System Info */}
+          {/* Right Sidebar - Terminal Dashboard */}
           <div className="hidden lg:flex absolute top-20 right-8 flex-col space-y-6 w-80">
             
             {/* System Status Panel */}
-            <div className="bg-black/80 border border-[var(--terminal-green)] rounded p-4 backdrop-blur-sm">
+            <div className="workflow-card p-4">
               <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
                 [SYSTEM STATUS]
               </div>
@@ -423,8 +423,65 @@ export default function Home() {
               </div>
             </div>
 
+            {/* Performance Metrics */}
+            <div className="workflow-card p-4">
+              <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
+                [PERFORMANCE METRICS]
+              </div>
+              <div className="space-y-2 text-xs font-mono">
+                <div className="flex justify-between">
+                  <span className="text-[var(--terminal-gray)]">CPU Usage:</span>
+                  <span className="text-[var(--terminal-cyan)]">23%</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[var(--terminal-gray)]">Memory:</span>
+                  <span className="text-[var(--terminal-yellow)]">1.2GB</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[var(--terminal-gray)]">Network:</span>
+                  <span className="text-[var(--terminal-green)]">45Mbps</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[var(--terminal-gray)]">Uptime:</span>
+                  <span className="text-[var(--terminal-green)]">99.8%</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Activity Log */}
+            <div className="workflow-card p-4">
+              <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
+                [ACTIVITY LOG]
+              </div>
+              <div className="space-y-1 text-xs font-mono">
+                <div className="text-[var(--terminal-gray)]">14:32:15 - Workflow initiated</div>
+                <div className="text-[var(--terminal-cyan)]">14:32:18 - Parameters loaded</div>
+                <div className="text-[var(--terminal-yellow)]">14:32:22 - Processing chapter 1</div>
+                <div className="text-[var(--terminal-green)]">14:32:25 - Chapter 1 complete</div>
+                <div className="text-[var(--terminal-gray)]">14:32:28 - Standby mode</div>
+              </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="workflow-card p-4">
+              <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
+                [QUICK ACTIONS]
+              </div>
+              <div className="space-y-2">
+                <button className="w-full bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-3 py-1 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300">
+                  restart system
+                </button>
+                <button className="w-full bg-transparent border border-[var(--terminal-cyan)] text-[var(--terminal-cyan)] px-3 py-1 font-mono text-xs hover:bg-[var(--terminal-cyan)] hover:text-black transition-all duration-300">
+                  export logs
+                </button>
+                <button className="w-full bg-transparent border border-[var(--terminal-yellow)] text-[var(--terminal-yellow)] px-3 py-1 font-mono text-xs hover:bg-[var(--terminal-yellow)] hover:text-black transition-all duration-300">
+                  view metrics
+                </button>
+              </div>
+            </div>
+
             {/* Progress Visualization */}
-            <div className="bg-black/80 border border-[var(--terminal-green)] rounded p-4 backdrop-blur-sm">
+            <div className="workflow-card p-4">
               <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
                 [PROGRESS TRACKER]
               </div>
@@ -441,46 +498,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* ASCII Art Robot Companion */}
-            <div className="bg-black/80 border border-[var(--terminal-green)] rounded p-4 backdrop-blur-sm">
-              <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
-                [COMPANION UNIT]
-              </div>
-              <div className="text-[var(--terminal-green)] font-mono text-xs leading-none select-none">
-                <pre className="whitespace-pre">{`    & & &
-  & & & & &
- & & & & & &
- &  ●   ●  &
- & & & & & &
-  & & & & &
-    & & &
-   
-  & & & & &
- &   & &   &
-&     &     &
-&  &&& &&&  &
-&  &     &  &
- &  &   &  &
-  &  & &  &
-   & & & &
-    & & &
-   
-   & &   & &
-  & & & & & &
- & & & & & & &
-& & & & & & & &
-& & & & & & & &
- & & & & & & &
-  & & & & & &
-   & &   & &`}</pre>
-              </div>
-              <div className="text-[var(--terminal-cyan)] font-mono text-xs mt-2">
-                "Ready to automate!"
-              </div>
-            </div>
-
             {/* Live Terminal Output */}
-            <div className="bg-black/80 border border-[var(--terminal-green)] rounded p-4 backdrop-blur-sm">
+            <div className="workflow-card p-4">
               <div className="text-[var(--terminal-green)] font-mono text-xs mb-3">
                 [LIVE OUTPUT]
               </div>
