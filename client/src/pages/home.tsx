@@ -3,6 +3,7 @@ import Header from "@/components/header";
 import ChapterRhombus from "@/components/chapter-rhombus";
 import BackgroundDecorations from "@/components/background-decorations";
 import Footer from "@/components/footer";
+import ReportModal from "@/components/report-modal";
 
 const chapters = [
   {
@@ -10,42 +11,48 @@ const chapters = [
     description: "Built a six figure business at 19 while attending university full time.",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Business growth and time management",
-    status: "Complete"
+    status: "Complete",
+    reportContent: "Placeholder content for Time mgmt report."
   },
   {
     title: "Velocity",
     description: "First 100 employees at one of the fastest growing companies in the world.",
     imageUrl: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Fast growing company scaling",
-    status: "Complete"
+    status: "Complete",
+    reportContent: "Placeholder content for Velocity report."
   },
   {
     title: "Grit",
     description: "Started two software companies that ultimately failed. Raised >$2M.",
     imageUrl: "https://images.unsplash.com/photo-1558655146-d09347e92766?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Software company founding and fundraising",
-    status: "Complete"
+    status: "Complete",
+    reportContent: "Placeholder content for Grit report."
   },
   {
     title: "Perspective",
     description: "Spent over a year in the developing world.",
     imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Global perspective and travel",
-    status: "Complete"
+    status: "Complete",
+    reportContent: "Placeholder content for Perspective report."
   },
   {
     title: "Humility",
     description: "Ran an operation valued at >$1B that was destroyed by the govt.",
     imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Large scale operations management",
-    status: "Complete"
+    status: "Complete",
+    reportContent: "Placeholder content for Humility report."
   },
   {
     title: "PMF",
     description: "Found product market fit in the legal space.",
     imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Product market fit and legal technology",
-    status: "Active"
+    status: "Active",
+    reportContent: "Placeholder content for PMF report."
   }
 ];
 
@@ -53,6 +60,18 @@ export default function Home() {
   const mainRef = useRef<HTMLElement>(null);
   const dotsContainerRef = useRef<HTMLDivElement>(null);
   const [workflowsVisible, setWorkflowsVisible] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedWorkflow, setSelectedWorkflow] = useState<typeof chapters[0] | null>(null);
+
+  const openModal = (workflow: typeof chapters[0]) => {
+    setSelectedWorkflow(workflow);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedWorkflow(null);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -378,6 +397,7 @@ export default function Home() {
                       imageAlt={chapter.imageAlt}
                       index={index}
                       status={chapter.status}
+                      onReportClick={() => openModal(chapter)}
                     />
                   </div>
                   
@@ -400,6 +420,14 @@ export default function Home() {
         
         <Footer />
       </main>
+
+      {/* Report Modal */}
+      <ReportModal
+        isOpen={modalOpen}
+        onClose={closeModal}
+        title={selectedWorkflow?.title || ""}
+        content={selectedWorkflow?.reportContent || ""}
+      />
     </div>
   );
 }
