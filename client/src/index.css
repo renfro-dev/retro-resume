@@ -116,174 +116,170 @@
     overflow: hidden;
   }
 
-  /* Top border with moving dots */
+  /* Pac-Man dots borders */
   .retro-border-top {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, 
-      var(--terminal-green) 10px, 
-      transparent 10px, 
-      transparent 20px, 
-      var(--terminal-green) 20px,
-      var(--terminal-green) 30px,
-      transparent 30px
-    );
-    background-size: 40px 4px;
-    animation: moveBorderHorizontal 8s linear infinite;
+    top: 12px;
+    left: 20px;
+    right: 20px;
+    height: 6px;
+    background: radial-gradient(circle, var(--terminal-green) 2px, transparent 2px);
+    background-size: 30px 6px;
+    background-repeat: repeat-x;
   }
 
-  /* Bottom border with moving dots */
   .retro-border-bottom {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, 
-      var(--terminal-green) 10px, 
-      transparent 10px, 
-      transparent 20px, 
-      var(--terminal-green) 20px,
-      var(--terminal-green) 30px,
-      transparent 30px
-    );
-    background-size: 40px 4px;
-    animation: moveBorderHorizontal 8s linear infinite reverse;
+    bottom: 12px;
+    left: 20px;
+    right: 20px;
+    height: 6px;
+    background: radial-gradient(circle, var(--terminal-green) 2px, transparent 2px);
+    background-size: 30px 6px;
+    background-repeat: repeat-x;
   }
 
-  /* Left border with moving segments */
   .retro-border-left {
     position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 4px;
-    background: linear-gradient(0deg, 
-      var(--terminal-green) 15px, 
-      transparent 15px, 
-      transparent 25px, 
-      var(--terminal-green) 25px,
-      var(--terminal-green) 40px,
-      transparent 40px
-    );
-    background-size: 4px 50px;
-    animation: moveBorderVertical 6s linear infinite;
+    top: 20px;
+    bottom: 20px;
+    left: 12px;
+    width: 6px;
+    background: radial-gradient(circle, var(--terminal-green) 2px, transparent 2px);
+    background-size: 6px 30px;
+    background-repeat: repeat-y;
   }
 
-  /* Right border with moving segments */
   .retro-border-right {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 4px;
-    background: linear-gradient(0deg, 
-      var(--terminal-green) 15px, 
-      transparent 15px, 
-      transparent 25px, 
-      var(--terminal-green) 25px,
-      var(--terminal-green) 40px,
-      transparent 40px
-    );
-    background-size: 4px 50px;
-    animation: moveBorderVertical 6s linear infinite reverse;
+    top: 20px;
+    bottom: 20px;
+    right: 12px;
+    width: 6px;
+    background: radial-gradient(circle, var(--terminal-green) 2px, transparent 2px);
+    background-size: 6px 30px;
+    background-repeat: repeat-y;
   }
 
-  /* Corner elements - like power-ups */
+  /* Corner power pellets */
   .retro-corner {
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    background: var(--terminal-green);
-    border-radius: 50%;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  .retro-corner.top-left {
-    top: 8px;
-    left: 8px;
-  }
-
-  .retro-corner.top-right {
-    top: 8px;
-    right: 8px;
-  }
-
-  .retro-corner.bottom-left {
-    bottom: 8px;
-    left: 8px;
-  }
-
-  .retro-corner.bottom-right {
-    bottom: 8px;
-    right: 8px;
-  }
-
-  /* Snake-like segments moving along borders */
-  .snake-segment {
     position: absolute;
     width: 12px;
     height: 12px;
+    background: var(--terminal-green);
+    border-radius: 50%;
+    animation: powerPelletPulse 1.5s ease-in-out infinite;
+  }
+
+  .retro-corner.top-left {
+    top: 10px;
+    left: 10px;
+  }
+
+  .retro-corner.top-right {
+    top: 10px;
+    right: 10px;
+  }
+
+  .retro-corner.bottom-left {
+    bottom: 10px;
+    left: 10px;
+  }
+
+  .retro-corner.bottom-right {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  /* Pac-Man character */
+  .pacman {
+    position: absolute;
+    width: 20px;
+    height: 20px;
     background: var(--terminal-yellow);
-    border-radius: 2px;
-    animation: snakeMove 12s linear infinite;
+    border-radius: 50%;
+    animation: pacmanMove 16s linear infinite;
+    z-index: 2;
   }
 
-  .snake-segment:nth-child(2) { animation-delay: -1s; }
-  .snake-segment:nth-child(3) { animation-delay: -2s; }
-  .snake-segment:nth-child(4) { animation-delay: -3s; }
-
-  @keyframes moveBorderHorizontal {
-    0% { background-position-x: 0px; }
-    100% { background-position-x: 40px; }
+  .pacman::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    border-left: 12px solid var(--terminal-bg);
+    transform: translate(-50%, -50%);
+    animation: pacmanChomp 0.5s ease-in-out infinite;
   }
 
-  @keyframes moveBorderVertical {
-    0% { background-position-y: 0px; }
-    100% { background-position-y: 50px; }
-  }
-
-  @keyframes snakeMove {
+  @keyframes pacmanMove {
     0% { 
-      top: 0px; 
-      left: 0px; 
+      top: 15px; 
+      left: 15px; 
       transform: rotate(0deg);
     }
     25% { 
-      top: 0px; 
-      left: calc(100vw - 12px);
+      top: 15px; 
+      left: calc(100vw - 35px);
+      transform: rotate(0deg);
+    }
+    25.1% {
       transform: rotate(90deg);
     }
     50% { 
-      top: calc(100vh - 12px); 
-      left: calc(100vw - 12px);
+      top: calc(100vh - 35px); 
+      left: calc(100vw - 35px);
+      transform: rotate(90deg);
+    }
+    50.1% {
       transform: rotate(180deg);
     }
     75% { 
-      top: calc(100vh - 12px); 
-      left: 0px;
+      top: calc(100vh - 35px); 
+      left: 15px;
+      transform: rotate(180deg);
+    }
+    75.1% {
       transform: rotate(270deg);
     }
     100% { 
-      top: 0px; 
-      left: 0px;
-      transform: rotate(360deg);
+      top: 15px; 
+      left: 15px;
+      transform: rotate(270deg);
     }
   }
 
-  @keyframes pulse {
+  @keyframes pacmanChomp {
+    0% { 
+      border-left-width: 12px;
+      border-top-width: 8px;
+      border-bottom-width: 8px;
+    }
+    50% { 
+      border-left-width: 12px;
+      border-top-width: 2px;
+      border-bottom-width: 2px;
+    }
+    100% { 
+      border-left-width: 12px;
+      border-top-width: 8px;
+      border-bottom-width: 8px;
+    }
+  }
+
+  @keyframes powerPelletPulse {
     0%, 100% { 
       opacity: 1; 
       transform: scale(1);
-      box-shadow: 0 0 10px var(--terminal-green);
+      box-shadow: 0 0 8px var(--terminal-green);
     }
     50% { 
-      opacity: 0.6; 
-      transform: scale(1.2);
-      box-shadow: 0 0 20px var(--terminal-green);
+      opacity: 0.5; 
+      transform: scale(1.3);
+      box-shadow: 0 0 15px var(--terminal-green);
     }
   }
 

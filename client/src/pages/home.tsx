@@ -80,17 +80,14 @@ export default function Home() {
         <div className="retro-border-left"></div>
         <div className="retro-border-right"></div>
         
-        {/* Corner power-ups */}
+        {/* Corner power pellets */}
         <div className="retro-corner top-left"></div>
         <div className="retro-corner top-right"></div>
         <div className="retro-corner bottom-left"></div>
         <div className="retro-corner bottom-right"></div>
         
-        {/* Snake segments */}
-        <div className="snake-segment"></div>
-        <div className="snake-segment"></div>
-        <div className="snake-segment"></div>
-        <div className="snake-segment"></div>
+        {/* Pac-Man */}
+        <div className="pacman"></div>
       </div>
       
       <Header />
