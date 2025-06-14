@@ -341,9 +341,9 @@ export default function Home() {
       <Header />
       
       {/* Top Right Dashboard */}
-      <div className="fixed top-24 right-20 z-50 w-64">
-        <div className="workflow-card p-4">
-          <div className="space-y-1 text-xs font-mono">
+      <div className="fixed top-24 right-32 z-50 w-80">
+        <div className="workflow-card p-6">
+          <div className="space-y-2 text-sm font-mono">
             <div className="flex justify-between">
               <span className="text-[var(--terminal-gray)]">Years experience:</span>
               <span className="text-[var(--terminal-green)]">16</span>
