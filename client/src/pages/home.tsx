@@ -77,6 +77,7 @@ export default function Home() {
   const mainRef = useRef<HTMLElement>(null);
   const dotsContainerRef = useRef<HTMLDivElement>(null);
   const [workflowsVisible, setWorkflowsVisible] = useState(false);
+  const [techStackVisible, setTechStackVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedWorkflow, setSelectedWorkflow] = useState<typeof chapters[0] | null>(null);
   const [buttonReady, setButtonReady] = useState(false);
@@ -397,7 +398,14 @@ export default function Home() {
           {/* Call to Action Button */}
           <div className="flex justify-center mb-16">
             <button 
-              onClick={buttonReady ? () => setWorkflowsVisible(true) : undefined}
+              onClick={buttonReady ? () => {
+                setWorkflowsVisible(true);
+                // Show tech stack button after all workflows have appeared
+                // Last workflow (index 7) appears after 7 seconds + animation duration
+                setTimeout(() => {
+                  setTechStackVisible(true);
+                }, (chapters.length - 1) * 1000 + 600);
+              } : undefined}
               className={`px-6 py-3 font-mono text-sm transition-all duration-300 ease-in-out border-2 ${
                 buttonReady 
                   ? 'bg-[var(--terminal-yellow)] border-[var(--terminal-yellow)] text-black hover:bg-transparent hover:text-[var(--terminal-yellow)] hover:shadow-lg hover:shadow-yellow-500/25' 
@@ -449,13 +457,20 @@ export default function Home() {
           )}
           
           {/* Tech Stack Button */}
-          <div className="flex justify-center mt-16 mb-8">
-            <button 
-              className="px-8 py-4 font-mono text-lg bg-transparent border-2 border-[var(--terminal-yellow)] text-[var(--terminal-yellow)] hover:bg-[var(--terminal-yellow)] hover:text-black transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-500/25"
+          {techStackVisible && (
+            <motion.div 
+              className="flex justify-center mt-16 mb-8"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              show me your tech stack
-            </button>
-          </div>
+              <button 
+                className="px-8 py-4 font-mono text-lg bg-transparent border-2 border-[var(--terminal-yellow)] text-[var(--terminal-yellow)] hover:bg-[var(--terminal-yellow)] hover:text-black transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-500/25"
+              >
+                show me your tech stack
+              </button>
+            </motion.div>
+          )}
 
         </div>
         
