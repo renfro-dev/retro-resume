@@ -385,10 +385,7 @@ export default function Home() {
             ))}
           </div>
           
-          {/* Final connecting line */}
-          <div className="flex justify-start mt-6 mb-8">
-            <div className="workflow-line workflow-line-vertical" style={{ marginLeft: '144px' }}></div>
-          </div>
+
           
           {/* Workflow End */}
           <div className="flex justify-center">
