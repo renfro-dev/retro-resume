@@ -341,7 +341,7 @@ export default function Home() {
       <Header />
       
       {/* Top Right Dashboard */}
-      <div className="fixed top-24 right-32 z-50 w-80">
+      <div className="fixed top-52 right-8 z-50 w-72">
         <div className="workflow-card p-6">
           <div className="space-y-2 text-sm font-mono">
             <div className="flex justify-between">
