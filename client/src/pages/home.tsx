@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "@/components/header";
 import ChapterRhombus from "@/components/chapter-rhombus";
 import BackgroundDecorations from "@/components/background-decorations";
@@ -52,6 +52,7 @@ const chapters = [
 export default function Home() {
   const mainRef = useRef<HTMLElement>(null);
   const dotsContainerRef = useRef<HTMLDivElement>(null);
+  const [workflowsVisible, setWorkflowsVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -369,36 +370,41 @@ export default function Home() {
           
           {/* Call to Action Button */}
           <div id="cta-button" className="flex justify-start mb-16 ml-8" style={{display: 'none'}}>
-            <button className="bg-[var(--terminal-yellow)] border-2 border-[var(--terminal-yellow)] text-black px-6 py-3 font-mono text-sm hover:bg-transparent hover:text-[var(--terminal-yellow)] transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-500/25">
+            <button 
+              onClick={() => setWorkflowsVisible(true)}
+              className="bg-[var(--terminal-yellow)] border-2 border-[var(--terminal-yellow)] text-black px-6 py-3 font-mono text-sm hover:bg-transparent hover:text-[var(--terminal-yellow)] transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-500/25"
+            >
               activate workflow
             </button>
           </div>
           
           {/* Workflow Steps */}
-          <div className="relative">
-            {chapters.map((chapter, index) => (
-              <div key={index} className="relative mb-16 ml-8">
-                {/* Workflow Card */}
-                <div className="flex justify-start">
-                  <ChapterRhombus
-                    title={chapter.title}
-                    description={chapter.description}
-                    imageUrl={chapter.imageUrl}
-                    imageAlt={chapter.imageAlt}
-                    index={index}
-                    status={chapter.status}
-                  />
-                </div>
-                
-                {/* Connecting Arrow to Next Card */}
-                {index < chapters.length - 1 && (
-                  <div className="flex justify-start mt-4">
-                    <div className="workflow-line workflow-line-vertical" style={{ marginLeft: '144px' }}></div>
+          {workflowsVisible && (
+            <div className="relative">
+              {chapters.map((chapter, index) => (
+                <div key={index} className="relative mb-16 ml-8">
+                  {/* Workflow Card */}
+                  <div className="flex justify-start">
+                    <ChapterRhombus
+                      title={chapter.title}
+                      description={chapter.description}
+                      imageUrl={chapter.imageUrl}
+                      imageAlt={chapter.imageAlt}
+                      index={index}
+                      status={chapter.status}
+                    />
                   </div>
-                )}
-              </div>
-            ))}
-          </div>
+                  
+                  {/* Connecting Arrow to Next Card */}
+                  {index < chapters.length - 1 && (
+                    <div className="flex justify-start mt-4">
+                      <div className="workflow-line workflow-line-vertical" style={{ marginLeft: '144px' }}></div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
           
 
           
