@@ -301,6 +301,19 @@
     }
   }
 
+  @keyframes workflowFlash {
+    0%, 100% { 
+      opacity: 1;
+    }
+    50% { 
+      opacity: 0;
+    }
+  }
+
+  .workflow-loading-flash {
+    animation: workflowFlash 0.5s ease-in-out infinite;
+  }
+
 
   
   .workflow-card {

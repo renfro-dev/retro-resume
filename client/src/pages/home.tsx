@@ -251,6 +251,42 @@ export default function Home() {
     const dots = generateDots();
     const interval = animatePacMan();
     addCornerFlash();
+    
+    // Workflow loading sequence
+    const initializeWorkflowSequence = () => {
+      const loadingElement = document.getElementById('workflow-loading');
+      if (!loadingElement) return;
+
+      // 1 second delay, then show "workflow loading" with flashing
+      setTimeout(() => {
+        loadingElement.innerHTML = 'workflow loading';
+        loadingElement.classList.add('workflow-loading-flash');
+        
+        // After 5 seconds, stop flashing and show data sequence
+        setTimeout(() => {
+          loadingElement.classList.remove('workflow-loading-flash');
+          loadingElement.innerHTML = '';
+          
+          // Show each line after 2 second delays
+          const lines = [
+            '--re-enrollment=disabled',
+            '--lifecycle_stage=noob', 
+            '--associated_contacts=two_brothers'
+          ];
+          
+          lines.forEach((line, index) => {
+            setTimeout(() => {
+              const lineDiv = document.createElement('div');
+              lineDiv.textContent = line;
+              lineDiv.style.marginBottom = '4px';
+              loadingElement.appendChild(lineDiv);
+            }, index * 2000);
+          });
+        }, 5000);
+      }, 1000);
+    };
+    
+    initializeWorkflowSequence();
 
     // Regenerate dots and power pellets every 16 seconds (one full cycle)
     const regenerateInterval = setInterval(() => {
@@ -298,24 +334,11 @@ export default function Home() {
         <BackgroundDecorations />
         
         <div className="relative z-10 max-w-7xl mx-auto px-12 sm:px-16 lg:px-20 py-24">
-          {/* Workflow Activation Command */}
+          {/* Workflow Loading Sequence */}
           <div className="flex justify-start mb-8 ml-8">
             <div className="bg-black border border-[var(--terminal-green)] rounded p-4 w-full max-w-2xl">
-              <div className="text-[var(--terminal-green)] font-mono text-xs mb-2">
-                ./activate-workflow.sh
-              </div>
-              <div className="text-[var(--terminal-gray)] font-mono text-xs leading-relaxed">
-                <div>--enable-workflow=true</div>
-                <div>--re-enrollment=disabled</div>
-                <div>--lifecycle-stage=noob</div>
-                <div>--persona=trailblazer</div>
-                <div>--element=water</div>
-                <div className="text-[var(--terminal-cyan)] mt-2">
-                  [INFO] Workflow activated successfully
-                </div>
-                <div className="text-[var(--terminal-green)] mt-1">
-                  ✓ Automation sequence initiated
-                </div>
+              <div id="workflow-loading" className="font-mono text-xs text-[var(--terminal-green)]">
+                {/* Content will be populated by JavaScript */}
               </div>
             </div>
           </div>
