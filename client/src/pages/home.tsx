@@ -7,39 +7,45 @@ import Footer from "@/components/footer";
 const chapters = [
   {
     title: "Time mgmt",
-    description: "Built a six figure business",
+    description: "Built a six figure business at 19 while attending university full time.",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "Business growth and time management"
+    imageAlt: "Business growth and time management",
+    status: "Complete"
   },
   {
     title: "Velocity",
-    description: "First 100 employees at legal tech",
+    description: "First 100 employees at one of the fastest growing companies in the world.",
     imageUrl: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "Legal tech team scaling"
+    imageAlt: "Fast growing company scaling",
+    status: "Complete"
   },
   {
     title: "Grit",
-    description: "Started two software companies",
+    description: "Started two software companies that ultimately failed. Raised >$2M.",
     imageUrl: "https://images.unsplash.com/photo-1558655146-d09347e92766?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "Software company founding"
+    imageAlt: "Software company founding and fundraising",
+    status: "Complete"
   },
   {
     title: "Perspective",
-    description: "Spent time at 20 person startup",
+    description: "Spent over a year in the developing world.",
     imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "Small startup environment"
+    imageAlt: "Global perspective and travel",
+    status: "Complete"
   },
   {
     title: "Humility",
-    description: "Ran an operation valued at $50M",
+    description: "Ran an operation valued at >$1B that was destroyed by the govt.",
     imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "Large scale operations management"
+    imageAlt: "Large scale operations management",
+    status: "Complete"
   },
   {
-    title: "PIF",
-    description: "Founded product focused business",
+    title: "PMF",
+    description: "Found product market fit in the legal space.",
     imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "Product development and innovation"
+    imageAlt: "Product market fit and legal technology",
+    status: "Active"
   }
 ];
 
@@ -380,6 +386,7 @@ export default function Home() {
                     imageUrl={chapter.imageUrl}
                     imageAlt={chapter.imageAlt}
                     index={index}
+                    status={chapter.status}
                   />
                 </div>
                 

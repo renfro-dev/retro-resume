@@ -6,9 +6,10 @@ interface ChapterRhombusProps {
   imageUrl: string;
   imageAlt: string;
   index: number;
+  status?: string;
 }
 
-export default function ChapterRhombus({ title, description, imageUrl, imageAlt, index }: ChapterRhombusProps) {
+export default function ChapterRhombus({ title, description, imageUrl, imageAlt, index, status = "Complete" }: ChapterRhombusProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -36,15 +37,17 @@ export default function ChapterRhombus({ title, description, imageUrl, imageAlt,
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <span className="text-[var(--terminal-cyan)] text-xs font-mono">ACTIVE</span>
-              <div className="flex space-x-1">
-                <div className="w-1 h-1 bg-[var(--terminal-green)] rounded-full animate-pulse"></div>
-                <div className="w-1 h-1 bg-[var(--terminal-green)] rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                <div className="w-1 h-1 bg-[var(--terminal-green)] rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
-              </div>
+              <span className="text-[var(--terminal-cyan)] text-xs font-mono">{status.toUpperCase()}</span>
+              {status === "Active" && (
+                <div className="flex space-x-1">
+                  <div className="w-1 h-1 bg-[var(--terminal-green)] rounded-full animate-pulse"></div>
+                  <div className="w-1 h-1 bg-[var(--terminal-green)] rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                  <div className="w-1 h-1 bg-[var(--terminal-green)] rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                </div>
+              )}
             </div>
             <div className="flex items-center space-x-2">
-              <div className="text-[var(--terminal-green)] text-xs font-mono">✓</div>
+              <div className="text-[var(--terminal-green)] text-xs font-mono">{status === "Complete" ? "✓" : "◯"}</div>
               <button className="bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-2 py-1 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300">
                 Report
               </button>
