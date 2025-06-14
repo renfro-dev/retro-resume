@@ -68,16 +68,16 @@ export default function Home() {
         mainRef.current.style.transform = `translateY(${rate}px)`;
       }
 
-      // Bomberman scroll animation
+      // Bomberman scroll animation - constrained to right side area
       const scrollY = window.scrollY;
       const maxScroll = document.body.scrollHeight - window.innerHeight;
       const bomberman = bombermanRef.current;
-      const screenWidth = window.innerWidth;
+      const rightAreaWidth = 320; // 80 * 4 = 320px (w-80 in Tailwind)
 
       if (bomberman && maxScroll > 0) {
-        // Move Bomberman left to right based on scroll percentage
+        // Move Bomberman within the right side area based on scroll percentage
         const scrollPercent = scrollY / maxScroll;
-        const x = scrollPercent * (screenWidth - 120); // 120 = image width
+        const x = scrollPercent * (rightAreaWidth - 120); // 120 = image width
         bomberman.style.transform = `translateX(${x}px)`;
       }
     };
@@ -90,8 +90,8 @@ export default function Home() {
     <div className="font-mono bg-terminal pattern-grid min-h-screen">
       <Header />
       
-      {/* Bomberman Container - Fixed position for scroll animation */}
-      <div className="fixed top-1/2 transform -translate-y-1/2 w-full pointer-events-none z-10">
+      {/* Bomberman Container - Right side of workflows */}
+      <div className="fixed top-1/2 transform -translate-y-1/2 right-0 w-80 pointer-events-none z-10">
         <img 
           ref={bombermanRef}
           src={bombermanImage} 
