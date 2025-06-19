@@ -330,7 +330,7 @@ export default function Home() {
               lineDiv.textContent = line;
               lineDiv.style.marginBottom = '4px';
               loadingElement.appendChild(lineDiv);
-            }, index * 250);
+            }, index * 1000);
           });
         }, 3000);
       }, 1000);
