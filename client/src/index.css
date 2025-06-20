@@ -455,12 +455,12 @@
 }
 
 .galaga-ship.left {
-  left: calc(50% - 500px);
+  left: calc(50% - 356px);
   transform: translateX(-50%);
 }
 
 .galaga-ship.right {
-  right: calc(50% - 500px);
+  right: calc(50% - 356px);
   transform: translateX(50%);
 }
 
