@@ -5,6 +5,8 @@ import ChapterRhombus from "@/components/chapter-rhombus";
 import BackgroundDecorations from "@/components/background-decorations";
 import Footer from "@/components/footer";
 import ReportModal from "@/components/report-modal";
+import LaserDefenseGame from "@/components/laser-defense-game";
+import ContactInfo from "@/components/contact-info";
 
 const chapters = [
   {
@@ -78,6 +80,8 @@ export default function Home() {
   const [loadingSequenceCompleted, setLoadingSequenceCompleted] = useState(false);
   const [arcadeLoading, setArcadeLoading] = useState(true);
   const [arcadeLoadingStep, setArcadeLoadingStep] = useState(0);
+  const [gameOpen, setGameOpen] = useState(false);
+  const [contactUnlocked, setContactUnlocked] = useState(false);
   const galagaShipsRef = useRef<{ left: HTMLDivElement | null; right: HTMLDivElement | null }>({ left: null, right: null });
 
   const arcadeSequence = [
@@ -557,17 +561,30 @@ export default function Home() {
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
               <button 
+                onClick={() => setGameOpen(true)}
                 className="px-8 py-4 font-mono text-lg bg-transparent border-2 border-[var(--terminal-yellow)] text-[var(--terminal-yellow)] hover:bg-[var(--terminal-yellow)] hover:text-black transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-500/25"
               >
-                unlock contact information
+                {contactUnlocked ? "contact information unlocked" : "unlock contact information"}
               </button>
             </motion.div>
           )}
+
+          {/* Contact Information */}
+          <div className="flex justify-center">
+            <ContactInfo isVisible={contactUnlocked} />
+          </div>
 
         </div>
         
         <Footer />
       </main>
+
+        {/* Laser Defense Game */}
+        <LaserDefenseGame
+          isOpen={gameOpen}
+          onClose={() => setGameOpen(false)}
+          onWin={() => setContactUnlocked(true)}
+        />
 
         {/* Report Modal */}
         <ReportModal
