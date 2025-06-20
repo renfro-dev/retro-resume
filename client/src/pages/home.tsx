@@ -9,7 +9,7 @@ import ReportModal from "@/components/report-modal";
 const chapters = [
   {
     title: "Hustle",
-    description: "Built a six figure business at 19 while attending university full time studying engineering. Managed to balance demanding coursework with aggressive client acquisition and service delivery across multiple time zones. Learned the fundamentals of time management, prioritization, and the relentless work ethic required to succeed in competitive markets while maintaining academic excellence.",
+    description: "Built a six figure business at 19 while attending university full time. Managed to balance demanding coursework with aggressive client acquisition and service delivery. Learned the fundamentals of time management, prioritization, and the relentless work ethic required to succeed in competitive markets.",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Business growth and time management",
     status: "Complete",
@@ -17,7 +17,7 @@ const chapters = [
   },
   {
     title: "Velocity",
-    description: "First 100 employees at one of the fastest growing companies in the world, experiencing hypergrowth from startup to unicorn status worth billions. Witnessed firsthand how operational excellence, culture preservation, and systematic scaling enable sustainable rapid expansion across global markets. Developed expertise in high-velocity environments where decisions must be made quickly with incomplete information under extreme pressure.",
+    description: "First 100 employees at one of the fastest growing companies in the world, experiencing hypergrowth from startup to unicorn status. Witnessed firsthand how operational excellence, culture preservation, and systematic scaling enable sustainable rapid expansion. Developed expertise in high-velocity environments where decisions must be made quickly with incomplete information.",
     imageUrl: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Fast growing company scaling",
     status: "Complete",
@@ -25,7 +25,7 @@ const chapters = [
   },
   {
     title: "Grit",
-    description: "Started two software companies that ultimately failed despite raising over $2M in venture capital from prominent Silicon Valley investors. Experienced the full entrepreneurial cycle from ideation through fundraising to market reality and eventual shutdown with difficult conversations. These failures provided invaluable lessons about product-market fit, capital efficiency, team dynamics, investor relations, and the resilience required to bounce back from significant setbacks while maintaining relationships.",
+    description: "Started two software companies that ultimately failed despite raising over $2M in venture capital. Experienced the full entrepreneurial cycle from ideation through fundraising to market reality and eventual shutdown. These failures provided invaluable lessons about product-market fit, capital efficiency, team dynamics, and the resilience required to bounce back from significant setbacks.",
     imageUrl: "https://images.unsplash.com/photo-1558655146-d09347e92766?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Software company founding and fundraising",
     status: "Complete",
@@ -34,7 +34,7 @@ const chapters = [
 
   {
     title: "Humility",
-    description: "Ran an operation valued at over $1B that was ultimately destroyed by government intervention and regulatory changes affecting the entire industry. Managed large-scale operations with thousands of stakeholders while navigating complex compliance requirements and political pressures from multiple jurisdictions. This experience taught profound lessons about external risk factors, regulatory capture, political dynamics, and the importance of building sustainable businesses that align with long-term societal interests and regulatory frameworks.",
+    description: "Ran an operation valued at over $1B that was ultimately destroyed by government intervention and regulatory changes. Managed large-scale operations with thousands of stakeholders while navigating complex compliance requirements and political pressures. This experience taught profound lessons about external risk factors, regulatory capture, and the importance of building sustainable businesses that align with long-term societal interests.",
     imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Large scale operations management",
     status: "Complete",
@@ -42,7 +42,7 @@ const chapters = [
   },
   {
     title: "PMF",
-    description: "Found product market fit in the legal space after years of iteration and customer development across multiple law firm segments and practice areas. Built a technology platform that successfully addresses real pain points for legal professionals, achieving consistent revenue growth and customer retention with measurable ROI. This success validated the hypothesis that legal technology can significantly improve efficiency and outcomes when properly designed with deep domain expertise and continuous user feedback.",
+    description: "Found product market fit in the legal space after years of iteration and customer development. Built a technology platform that successfully addresses real pain points for legal professionals, achieving consistent revenue growth and customer retention. This success validated the hypothesis that legal technology can significantly improve efficiency and outcomes when properly designed with deep domain expertise.",
     imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Product market fit and legal technology",
     status: "Complete",
@@ -50,7 +50,7 @@ const chapters = [
   },
   {
     title: "Roots",
-    description: "I'm happily married to a badass creative who brings artistic vision and design expertise to everything we do together in business and life. We've spent considerable time gardening, cultivating both plants and our relationship through shared projects and outdoor work that connects us to nature. This grounding in personal relationships and connection to the earth provides essential balance to the intensity of entrepreneurial pursuits while building a foundation for sustainable long-term success.",
+    description: "I'm happily married to a badass creative who brings artistic vision and design expertise to everything we do together. We've spent considerable time gardening, cultivating both plants and our relationship through shared projects and outdoor work. This grounding in personal relationships and connection to the earth provides essential balance to the intensity of entrepreneurial pursuits.",
     imageUrl: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Gardening and family life",
     status: "Active",
@@ -58,7 +58,7 @@ const chapters = [
   },
   {
     title: "Entre-curious",
-    description: "I'm interested in buying and operating antiquated businesses that have been overlooked by modern entrepreneurs but still serve essential market needs with established revenue streams. These established enterprises often have loyal customer bases, proven business models, and opportunities for operational improvements through technology integration and process automation. The challenge lies in preserving what works while modernizing systems and processes to unlock hidden value without disrupting core customer relationships or market position.",
+    description: "I'm interested in buying and operating antiquated businesses that have been overlooked by modern entrepreneurs but still serve essential market needs. These established enterprises often have loyal customer bases, proven business models, and opportunities for operational improvements through technology integration. The challenge lies in preserving what works while modernizing systems and processes to unlock hidden value.",
     imageUrl: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Curiosity and entrepreneurial mindset",
     status: "Active",

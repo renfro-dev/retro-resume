@@ -34,7 +34,7 @@ export default function ChapterRhombus({ title, description, imageUrl, imageAlt,
         </div>
         <div className="w-full">
           <div className="text-[var(--terminal-gray)] text-xs font-mono leading-tight mb-3">
-            {description.length > 120 ? description.substring(0, 120) + '...' : description}
+            {description}
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
