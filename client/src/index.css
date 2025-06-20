@@ -460,12 +460,12 @@
 }
 
 .galaga-ship.left {
-  left: 50px;
+  left: 150px;
   top: 200px;
 }
 
 .galaga-ship.right {
-  right: 50px;
+  right: 150px;
   top: 200px;
 }
 
