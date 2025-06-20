@@ -8,12 +8,12 @@ import ReportModal from "@/components/report-modal";
 
 const chapters = [
   {
-    title: "Time mgmt",
+    title: "Hustle",
     description: "Built a six figure business at 19 while attending university full time.",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Business growth and time management",
     status: "Complete",
-    reportContent: "Placeholder content for Time mgmt report."
+    reportContent: "Placeholder content for Hustle report."
   },
   {
     title: "Velocity",
