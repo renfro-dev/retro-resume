@@ -20,7 +20,7 @@ export default function ChapterRhombus({ title, description, imageUrl, imageAlt,
         delay: index * 0.1,
         ease: [0.4, 0, 0.2, 1]
       }}
-      className="workflow-card w-72 h-32 cursor-pointer group relative overflow-hidden"
+      className="workflow-card w-80 h-40 cursor-pointer group relative overflow-hidden"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.98 }}
     >
@@ -34,7 +34,7 @@ export default function ChapterRhombus({ title, description, imageUrl, imageAlt,
         </div>
         <div className="w-full">
           <div className="text-[var(--terminal-gray)] text-xs font-mono leading-tight mb-3">
-            {description.length > 70 ? description.substring(0, 70) + '...' : description}
+            {description.length > 120 ? description.substring(0, 120) + '...' : description}
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
