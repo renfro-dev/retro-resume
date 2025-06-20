@@ -52,24 +52,8 @@ const chapters = [
     description: "Found product market fit in the legal space.",
     imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Product market fit and legal technology",
-    status: "Complete",
+    status: "Active",
     reportContent: "Placeholder content for PMF report."
-  },
-  {
-    title: "Roots",
-    description: "I'm happily married to a badass creative who brings artistic vision and design expertise to everything we do together. We've spent considerable time gardening, cultivating both plants and our relationship through shared projects and outdoor work. This grounding in personal relationships and connection to the earth provides essential balance to the intensity of entrepreneurial pursuits.",
-    imageUrl: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "Gardening and family life",
-    status: "Active",
-    reportContent: "Placeholder content for Roots report."
-  },
-  {
-    title: "Entre-curious",
-    description: "I'm interested in buying and operating antiquated businesses that have been overlooked by modern entrepreneurs but still serve essential market needs. These established enterprises often have loyal customer bases, proven business models, and opportunities for operational improvements through technology integration. The challenge lies in preserving what works while modernizing systems and processes to unlock hidden value.",
-    imageUrl: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "Curiosity and entrepreneurial mindset",
-    status: "Active",
-    reportContent: "Placeholder content for Entre-curious report."
   }
 ];
 
