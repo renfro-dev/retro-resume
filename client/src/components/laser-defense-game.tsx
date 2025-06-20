@@ -15,6 +15,13 @@ interface Laser {
   fromPlayer: boolean;
 }
 
+interface Explosion {
+  id: string;
+  x: number;
+  y: number;
+  frame: number;
+}
+
 interface LaserDefenseGameProps {
   isOpen: boolean;
   onClose: () => void;
@@ -27,6 +34,7 @@ export default function LaserDefenseGame({ isOpen, onClose, onWin }: LaserDefens
   const [lives, setLives] = useState(3);
   const [enemies, setEnemies] = useState<Enemy[]>([]);
   const [lasers, setLasers] = useState<Laser[]>([]);
+  const [explosions, setExplosions] = useState<Explosion[]>([]);
   const [playerPosition, setPlayerPosition] = useState(50); // percentage from left
   const [wave, setWave] = useState(1);
   const [enemiesDestroyed, setEnemiesDestroyed] = useState(0);
@@ -38,11 +46,11 @@ export default function LaserDefenseGame({ isOpen, onClose, onWin }: LaserDefens
 
   const GAME_WIDTH = 800;
   const GAME_HEIGHT = 600;
-  const PLAYER_SPEED = 3;
+  const PLAYER_SPEED = 1.5; // Reduced from 3 for less sensitive movement
   const LASER_SPEED = 8;
   const ENEMY_SPEED = 1;
-  const ENEMIES_PER_WAVE = 5;
-  const WIN_CONDITION = 15; // enemies to destroy to win
+  const ENEMIES_PER_WAVE = 3; // Reduced from 5
+  const WIN_CONDITION = 8; // Reduced from 15 to make easier
 
   // Generate enemy wave
   const generateEnemies = useCallback((waveNum: number) => {
@@ -143,6 +151,16 @@ export default function LaserDefenseGame({ isOpen, onClose, onWin }: LaserDefens
               if (laser.fromPlayer &&
                   Math.abs(laser.x - (enemy.x + 20)) < 30 &&
                   Math.abs(laser.y - (enemy.y + 20)) < 30) {
+                
+                // Create explosion at enemy position
+                const explosion: Explosion = {
+                  id: `explosion-${Date.now()}-${i}`,
+                  x: enemy.x + 10,
+                  y: enemy.y + 10,
+                  frame: 0
+                };
+                setExplosions(prevExplosions => [...prevExplosions, explosion]);
+                
                 remainingEnemies.splice(i, 1);
                 remainingLasers.splice(j, 1);
                 setScore(prev => prev + 100);
@@ -157,6 +175,12 @@ export default function LaserDefenseGame({ isOpen, onClose, onWin }: LaserDefens
         
         return remainingEnemies;
       });
+
+      // Update explosions
+      setExplosions(prev => prev.map(explosion => ({
+        ...explosion,
+        frame: explosion.frame + 1
+      })).filter(explosion => explosion.frame < 10)); // Remove after 10 frames
 
       // Check if enemies reached bottom (player hit)
       setEnemies(prev => {
@@ -300,6 +324,26 @@ export default function LaserDefenseGame({ isOpen, onClose, onWin }: LaserDefens
                   top: laser.y,
                   background: laser.fromPlayer ? '#00ff00' : '#ff0000',
                   boxShadow: `0 0 10px ${laser.fromPlayer ? '#00ff00' : '#ff0000'}`
+                }}
+              />
+            ))}
+
+            {/* Explosions */}
+            {explosions.map(explosion => (
+              <div
+                key={explosion.id}
+                className="absolute w-8 h-8 pointer-events-none"
+                style={{
+                  left: explosion.x,
+                  top: explosion.y,
+                  background: `radial-gradient(circle, 
+                    ${explosion.frame < 3 ? '#ffffff' : explosion.frame < 6 ? '#ffff00' : '#ff6600'} 0%, 
+                    ${explosion.frame < 3 ? '#ffff00' : explosion.frame < 6 ? '#ff6600' : '#ff0000'} 50%, 
+                    transparent 100%)`,
+                  borderRadius: '50%',
+                  transform: `scale(${0.5 + (explosion.frame * 0.15)})`,
+                  opacity: 1 - (explosion.frame * 0.1),
+                  boxShadow: `0 0 ${explosion.frame * 2}px ${explosion.frame < 5 ? '#ffff00' : '#ff0000'}`
                 }}
               />
             ))}
