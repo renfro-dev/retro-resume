@@ -77,6 +77,8 @@ export default function Home() {
   const [buttonText, setButtonText] = useState("workflow loading...");
   const [buttonFlashing, setButtonFlashing] = useState(true);
   const [loadingSequenceCompleted, setLoadingSequenceCompleted] = useState(false);
+  const [arcadeLoading, setArcadeLoading] = useState(true);
+  const [arcadeLoadingStep, setArcadeLoadingStep] = useState(0);
   const galagaShipsRef = useRef<{ left: HTMLDivElement | null; right: HTMLDivElement | null }>({ left: null, right: null });
 
   const openModal = (workflow: typeof chapters[0]) => {
@@ -90,6 +92,44 @@ export default function Home() {
   };
 
 
+
+  // Arcade loading sequence effect
+  useEffect(() => {
+    if (!arcadeLoading) return;
+
+    const arcadeSequence = [
+      { text: "SYSTEM INITIALIZING...", delay: 500 },
+      { text: "LOADING GALAGA ENGINE v1.0", delay: 800 },
+      { text: "CHECKING MEMORY... OK", delay: 600 },
+      { text: "LOADING SOUND CHIP... OK", delay: 700 },
+      { text: "INITIALIZING GRAPHICS... OK", delay: 900 },
+      { text: "SPAWNING ENEMY FLEET...", delay: 800 },
+      { text: "READY PLAYER ONE", delay: 1000 },
+      { text: "PRESS START TO BEGIN", delay: 0 }
+    ];
+
+    let currentStep = 0;
+    
+    const runSequence = () => {
+      if (currentStep < arcadeSequence.length) {
+        setArcadeLoadingStep(currentStep);
+        
+        setTimeout(() => {
+          currentStep++;
+          if (currentStep < arcadeSequence.length) {
+            runSequence();
+          } else {
+            // Final step - show blinking "PRESS START"
+            setTimeout(() => {
+              setArcadeLoading(false);
+            }, 2000);
+          }
+        }, arcadeSequence[currentStep].delay);
+      }
+    };
+
+    runSequence();
+  }, [arcadeLoading]);
 
   useEffect(() => {
     const shootLaser = (ship: HTMLDivElement) => {
@@ -398,20 +438,79 @@ export default function Home() {
 
   return (
     <div className="font-mono bg-terminal pattern-grid min-h-screen">
-      {/* Pac-Man Game Border */}
-      <div className="retro-border-container">
-        {/* Dynamic dots container */}
-        <div ref={dotsContainerRef} className="dots-container"></div>
-        
-        {/* Corner power pellets */}
-        <div className="retro-corner top-left"></div>
-        <div className="retro-corner top-right"></div>
-        <div className="retro-corner bottom-left"></div>
-        <div className="retro-corner bottom-right"></div>
-        
-        {/* Pac-Man */}
-        <div className="pacman"></div>
-      </div>
+      {/* Arcade Loading Screen */}
+      {arcadeLoading && (
+        <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
+          <div className="arcade-loading-container">
+            <div className="text-center">
+              {/* Retro Game Title */}
+              <div className="arcade-title mb-8">
+                <div className="text-4xl font-bold text-[var(--terminal-yellow)] mb-2 pixel-font">
+                  JOSHUA RENFRO
+                </div>
+                <div className="text-lg text-[var(--terminal-cyan)] pixel-font">
+                  WORKFLOW SYSTEM
+                </div>
+              </div>
+              
+              {/* Loading Messages */}
+              <div className="arcade-loading-text h-16 flex items-center justify-center">
+                {arcadeLoadingStep < 7 ? (
+                  <div className="text-[var(--terminal-green)] text-lg pixel-font loading-dots">
+                    {["SYSTEM INITIALIZING...", "LOADING GALAGA ENGINE v1.0", "CHECKING MEMORY... OK", "LOADING SOUND CHIP... OK", "INITIALIZING GRAPHICS... OK", "SPAWNING ENEMY FLEET...", "READY PLAYER ONE"][arcadeLoadingStep]}
+                  </div>
+                ) : (
+                  <div className="text-[var(--terminal-yellow)] text-xl pixel-font blink-animation">
+                    PRESS START TO BEGIN
+                  </div>
+                )}
+              </div>
+              
+              {/* Progress Bar */}
+              {arcadeLoadingStep < 7 && (
+                <div className="arcade-progress-container mt-8">
+                  <div className="arcade-progress-bar">
+                    <div 
+                      className="arcade-progress-fill"
+                      style={{ width: `${(arcadeLoadingStep / 6) * 100}%` }}
+                    ></div>
+                  </div>
+                  <div className="text-[var(--terminal-gray)] text-sm mt-2 pixel-font">
+                    {Math.round((arcadeLoadingStep / 6) * 100)}% COMPLETE
+                  </div>
+                </div>
+              )}
+              
+              {/* Start Button (when ready) */}
+              {arcadeLoadingStep === 7 && (
+                <button 
+                  onClick={() => setArcadeLoading(false)}
+                  className="mt-8 px-8 py-4 bg-[var(--terminal-yellow)] text-black font-bold text-xl pixel-font hover:bg-[var(--terminal-green)] transition-colors arcade-button"
+                >
+                  START GAME
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Main Content (hidden during arcade loading) */}
+      <div className={arcadeLoading ? 'invisible' : 'visible'}>
+        {/* Pac-Man Game Border */}
+        <div className="retro-border-container">
+          {/* Dynamic dots container */}
+          <div ref={dotsContainerRef} className="dots-container"></div>
+          
+          {/* Corner power pellets */}
+          <div className="retro-corner top-left"></div>
+          <div className="retro-corner top-right"></div>
+          <div className="retro-corner bottom-left"></div>
+          <div className="retro-corner bottom-right"></div>
+          
+          {/* Pac-Man */}
+          <div className="pacman"></div>
+        </div>
 
       {/* Galaga Battleships */}
       <div 
@@ -522,13 +621,14 @@ export default function Home() {
         <Footer />
       </main>
 
-      {/* Report Modal */}
-      <ReportModal
-        isOpen={modalOpen}
-        onClose={closeModal}
-        title={selectedWorkflow?.title || ""}
-        content={selectedWorkflow?.reportContent || ""}
-      />
+        {/* Report Modal */}
+        <ReportModal
+          isOpen={modalOpen}
+          onClose={closeModal}
+          title={selectedWorkflow?.title || ""}
+          content={selectedWorkflow?.reportContent || ""}
+        />
+      </div>
     </div>
   );
 }
