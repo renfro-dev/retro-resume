@@ -31,14 +31,7 @@ const chapters = [
     status: "Complete",
     reportContent: "Placeholder content for Grit report."
   },
-  {
-    title: "Perspective",
-    description: "Spent over a year in the developing world.",
-    imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "Global perspective and travel",
-    status: "Complete",
-    reportContent: "Placeholder content for Perspective report."
-  },
+
   {
     title: "Humility",
     description: "Ran an operation valued at >$1B that was destroyed by the govt.",
@@ -65,7 +58,7 @@ const chapters = [
   },
   {
     title: "Entre-curious",
-    description: "When you have an itch, but you prob shouldn't scratch it, just vibe.",
+    description: "I'm interested in buying and operating antiquated businesses.",
     imageUrl: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Curiosity and entrepreneurial mindset",
     status: "Active",
