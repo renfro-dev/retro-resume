@@ -76,6 +76,7 @@ export default function Home() {
   const [buttonReady, setButtonReady] = useState(false);
   const [buttonText, setButtonText] = useState("workflow loading...");
   const [buttonFlashing, setButtonFlashing] = useState(true);
+  const [loadingSequenceCompleted, setLoadingSequenceCompleted] = useState(false);
 
   const openModal = (workflow: typeof chapters[0]) => {
     setSelectedWorkflow(workflow);
@@ -294,7 +295,7 @@ export default function Home() {
     // Workflow loading sequence for lifecycle card
     const initializeWorkflowSequence = () => {
       const loadingElement = document.getElementById('workflow-loading');
-      if (!loadingElement) return;
+      if (!loadingElement || loadingSequenceCompleted) return;
 
       // 1 second delay, then show "uploading Joshua Renfro" with flashing
       setTimeout(() => {
@@ -306,7 +307,7 @@ export default function Home() {
           loadingElement.classList.remove('workflow-loading-flash');
           loadingElement.innerHTML = '';
           
-          // Show each line after 2 second delays
+          // Show each line after 1 second delays
           const lines = [
             '/lifecycle_stage=FTE', 
             '/psychographic=entrepreneur',
@@ -325,6 +326,11 @@ export default function Home() {
               loadingElement.appendChild(lineDiv);
             }, index * 1000);
           });
+          
+          // Mark loading sequence as completed
+          setTimeout(() => {
+            setLoadingSequenceCompleted(true);
+          }, lines.length * 1000);
         }, 3000);
       }, 1000);
     };
