@@ -443,20 +443,56 @@
   animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Galaga battleships */
+/* Galaga battleships - Pure CSS pixel art with no background */
 .galaga-ship {
   position: fixed;
   width: 60px;
   height: 60px;
-  background-image: url('@assets/galaga_1750407447824.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
   z-index: 100;
   transition: transform 0.3s ease;
+}
+
+.galaga-ship::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background:
+    /* Main body outline - black pixels */
+    linear-gradient(to right, transparent 28px, #000 28px, #000 32px, transparent 32px),
+    linear-gradient(to bottom, transparent 8px, #000 8px, #000 12px, transparent 12px),
+    linear-gradient(to right, transparent 24px, #000 24px, #000 36px, transparent 36px),
+    linear-gradient(to bottom, transparent 12px, #000 12px, #000 16px, transparent 16px),
+    /* Wing outlines */
+    linear-gradient(to right, transparent 16px, #000 16px, #000 20px, transparent 20px),
+    linear-gradient(to right, transparent 40px, #000 40px, #000 44px, transparent 44px),
+    linear-gradient(to bottom, transparent 16px, #000 16px, #000 24px, transparent 24px),
+    /* Wing tips */
+    linear-gradient(to right, transparent 8px, #000 8px, #000 12px, transparent 12px),
+    linear-gradient(to right, transparent 48px, #000 48px, #000 52px, transparent 52px),
+    linear-gradient(to bottom, transparent 20px, #000 20px, #000 28px, transparent 28px),
+    /* Bottom engines */
+    linear-gradient(to right, transparent 20px, #000 20px, #000 24px, transparent 24px),
+    linear-gradient(to right, transparent 36px, #000 36px, #000 40px, transparent 40px),
+    linear-gradient(to bottom, transparent 32px, #000 32px, #000 40px, transparent 40px),
+    /* Red wing sections */
+    linear-gradient(to right, transparent 17px, #ff0000 17px, #ff0000 19px, transparent 19px),
+    linear-gradient(to right, transparent 41px, #ff0000 41px, #ff0000 43px, transparent 43px),
+    linear-gradient(to bottom, transparent 17px, #ff0000 17px, #ff0000 23px, transparent 23px),
+    /* Red engine sections */
+    linear-gradient(to right, transparent 21px, #ff0000 21px, #ff0000 23px, transparent 23px),
+    linear-gradient(to right, transparent 37px, #ff0000 37px, #ff0000 39px, transparent 39px),
+    linear-gradient(to bottom, transparent 33px, #ff0000 33px, #ff0000 39px, transparent 39px),
+    /* Blue accent pixels */
+    linear-gradient(to right, transparent 25px, #0066ff 25px, #0066ff 27px, transparent 27px),
+    linear-gradient(to right, transparent 33px, #0066ff 33px, #0066ff 35px, transparent 35px),
+    linear-gradient(to bottom, transparent 18px, #0066ff 18px, #0066ff 22px, transparent 22px),
+    /* White body fill */
+    linear-gradient(to right, transparent 25px, #ffffff 25px, #ffffff 35px, transparent 35px),
+    linear-gradient(to bottom, transparent 9px, #ffffff 9px, #ffffff 31px, transparent 31px);
+  background-size: 60px 60px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .galaga-ship.left {
