@@ -82,14 +82,14 @@ export default function Home() {
   const galagaShipsRef = useRef<{ left: HTMLDivElement | null; right: HTMLDivElement | null }>({ left: null, right: null });
 
   const arcadeSequence = [
-    { text: "uploading Joshua Renfro", delay: 1000, flash: true },
-    { text: "/lifecycle_stage=FTE", delay: 1000 },
-    { text: "/psychographic=entrepreneur", delay: 1000 },
-    { text: "/experience=16_years", delay: 1000 },
-    { text: "/founder_roles=3", delay: 1000 },
-    { text: "/current_industry=legal_tech", delay: 1000 },
-    { text: "/location=33.0644° N, 117.3017° W", delay: 1000 },
-    { text: "/re-enrollment=disabled", delay: 1000 },
+    { text: "uploading Joshua Renfro", delay: 1250, flash: true },
+    { text: "/lifecycle_stage=FTE", delay: 1250 },
+    { text: "/psychographic=entrepreneur", delay: 1250 },
+    { text: "/experience=16_years", delay: 1250 },
+    { text: "/founder_roles=3", delay: 1250 },
+    { text: "/current_industry=legal_tech", delay: 1250 },
+    { text: "/location=33.0644° N, 117.3017° W", delay: 1250 },
+    { text: "/re-enrollment=disabled", delay: 1250 },
     { text: "PRESS START TO BEGIN", delay: 0 }
   ];
 
@@ -120,10 +120,7 @@ export default function Home() {
           if (currentStep < arcadeSequence.length) {
             runSequence();
           } else {
-            // Final step - show blinking "PRESS START"
-            setTimeout(() => {
-              setArcadeLoading(false);
-            }, 2000);
+            // Final step - show blinking "PRESS START" and wait for user input
           }
         }, arcadeSequence[currentStep].delay);
       }
