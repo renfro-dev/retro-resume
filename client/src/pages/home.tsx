@@ -77,7 +77,7 @@ export default function Home() {
   const [buttonText, setButtonText] = useState("workflow loading...");
   const [buttonFlashing, setButtonFlashing] = useState(true);
   const [loadingSequenceCompleted, setLoadingSequenceCompleted] = useState(false);
-  const [arcadeLoading, setArcadeLoading] = useState(true);
+  const [arcadeLoading, setArcadeLoading] = useState(false);
   const [arcadeLoadingStep, setArcadeLoadingStep] = useState(0);
   const galagaShipsRef = useRef<{ left: HTMLDivElement | null; right: HTMLDivElement | null }>({ left: null, right: null });
 
