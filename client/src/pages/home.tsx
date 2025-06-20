@@ -365,51 +365,7 @@ export default function Home() {
     const dots = generateDots();
     const interval = animatePacMan();
     addCornerFlash();
-    
-    // Workflow loading sequence for lifecycle card
-    const initializeWorkflowSequence = () => {
-      const loadingElement = document.getElementById('workflow-loading');
-      if (!loadingElement || loadingSequenceCompleted) return;
 
-      // 1 second delay, then show "uploading Joshua Renfro" with flashing
-      setTimeout(() => {
-        loadingElement.innerHTML = 'uploading Joshua Renfro';
-        loadingElement.classList.add('workflow-loading-flash');
-        
-        // After 3 seconds, stop flashing and show data sequence
-        setTimeout(() => {
-          loadingElement.classList.remove('workflow-loading-flash');
-          loadingElement.innerHTML = '';
-          
-          // Show each line after 1 second delays
-          const lines = [
-            '/lifecycle_stage=FTE', 
-            '/psychographic=entrepreneur',
-            '/experience=16_years',
-            '/founder_roles=3',
-            '/current_industry=legal_tech',
-            '/location=33.0644° N, 117.3017° W',
-            '/re-enrollment=disabled'
-          ];
-          
-          lines.forEach((line, index) => {
-            setTimeout(() => {
-              const lineDiv = document.createElement('div');
-              lineDiv.textContent = line;
-              lineDiv.style.marginBottom = '4px';
-              loadingElement.appendChild(lineDiv);
-            }, index * 1000);
-          });
-          
-          // Mark loading sequence as completed
-          setTimeout(() => {
-            setLoadingSequenceCompleted(true);
-          }, lines.length * 1000);
-        }, 3000);
-      }, 1000);
-    };
-    
-    initializeWorkflowSequence();
 
     // Regenerate dots and power pellets every 16 seconds (one full cycle)
     const regenerateInterval = setInterval(() => {
@@ -528,14 +484,7 @@ export default function Home() {
         <div className="relative z-10 max-w-7xl mx-auto px-12 sm:px-16 lg:px-20 py-24">
           
 
-          {/* Workflow Loading Sequence */}
-          <div className="flex justify-center mb-8">
-            <div className="workflow-card w-72 h-48 p-4">
-              <div id="workflow-loading" className="font-mono text-xs text-[var(--terminal-green)] h-full flex flex-col justify-center">
-                {/* Content will be populated by JavaScript */}
-              </div>
-            </div>
-          </div>
+
           
           {/* Call to Action Button */}
           <div className="flex justify-center mb-16">
