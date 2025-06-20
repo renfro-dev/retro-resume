@@ -484,9 +484,13 @@
     opacity: 1;
     transform: translateY(0);
   }
+  80% {
+    opacity: 1;
+    transform: translateY(-100vh);
+  }
   100% {
     opacity: 0;
-    transform: translateY(-200px);
+    transform: translateY(-100vh);
   }
 }
 
