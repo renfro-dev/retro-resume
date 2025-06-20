@@ -448,12 +448,15 @@
   position: fixed;
   width: 60px;
   height: 60px;
+  background-image: url('@assets/galaga_1750407447824.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   z-index: 100;
   transition: transform 0.3s ease;
-  /* Temporary solid background to test visibility */
-  background: linear-gradient(45deg, #ff0000, #ffffff, #0066ff);
-  border: 3px solid yellow;
-  border-radius: 50%;
 }
 
 .galaga-ship.left {
