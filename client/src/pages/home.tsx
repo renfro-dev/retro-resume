@@ -8,7 +8,7 @@ import ReportModal from "@/components/report-modal";
 
 const chapters = [
   {
-    title: "Time mgmt",
+    title: "Hustle",
     description: "Built a six figure business at 19 while attending university full time.",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Business growth and time management",
@@ -32,14 +32,6 @@ const chapters = [
     reportContent: "Placeholder content for Grit report."
   },
   {
-    title: "Perspective",
-    description: "Spent over a year in the developing world.",
-    imageUrl: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
-    imageAlt: "International experience and perspective",
-    status: "Complete",
-    reportContent: "Placeholder content for Perspective report."
-  },
-  {
     title: "Humility",
     description: "Ran an operation valued at >$1B that was destroyed by the govt.",
     imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
@@ -54,6 +46,22 @@ const chapters = [
     imageAlt: "Product market fit and legal technology",
     status: "Active",
     reportContent: "Placeholder content for PMF report."
+  },
+  {
+    title: "Roots",
+    description: "Happily married to a badass creative. We garden together.",
+    imageUrl: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
+    imageAlt: "Gardening and family life",
+    status: "Active",
+    reportContent: "Placeholder content for Roots report."
+  },
+  {
+    title: "Entre-curious",
+    description: "Interested in buying and operating antiquated businesses.",
+    imageUrl: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
+    imageAlt: "Business acquisition and operations",
+    status: "Active",
+    reportContent: "Placeholder content for Entre-curious report."
   }
 ];
 
