@@ -77,6 +77,7 @@ export default function Home() {
   const [buttonText, setButtonText] = useState("workflow loading...");
   const [buttonFlashing, setButtonFlashing] = useState(true);
   const [loadingSequenceCompleted, setLoadingSequenceCompleted] = useState(false);
+  const galagaShipsRef = useRef<{ left: HTMLDivElement | null; right: HTMLDivElement | null }>({ left: null, right: null });
 
   const openModal = (workflow: typeof chapters[0]) => {
     setSelectedWorkflow(workflow);
@@ -88,12 +89,47 @@ export default function Home() {
     setSelectedWorkflow(null);
   };
 
+
+
   useEffect(() => {
+    const shootLaser = (ship: HTMLDivElement) => {
+      const laser = document.createElement('div');
+      laser.className = 'galaga-laser';
+      laser.style.left = '50%';
+      laser.style.top = '-20px';
+      laser.style.transform = 'translateX(-50%)';
+      ship.appendChild(laser);
+      
+      // Remove laser after animation completes
+      setTimeout(() => {
+        if (laser.parentNode) {
+          laser.parentNode.removeChild(laser);
+        }
+      }, 1500);
+    };
+
     const handleScroll = () => {
       if (mainRef.current) {
         const scrolled = window.scrollY;
         const rate = scrolled * -0.5;
         mainRef.current.style.transform = `translateY(${rate}px)`;
+      }
+      
+      // Update Galaga ship positions and trigger shooting
+      const scrollProgress = window.scrollY;
+      const ships = galagaShipsRef.current;
+      
+      if (ships.left && ships.right) {
+        // Position ships based on scroll
+        const shipY = Math.max(200, window.innerHeight - 100 - scrollProgress * 0.3);
+        ships.left.style.top = `${shipY}px`;
+        ships.right.style.top = `${shipY}px`;
+        
+        // Trigger shooting every 100px of scroll
+        if (scrollProgress > 0 && scrollProgress % 100 < 10) {
+          shootLaser(ships.left);
+          shootLaser(ships.right);
+        }
       }
     };
 
@@ -376,6 +412,18 @@ export default function Home() {
         {/* Pac-Man */}
         <div className="pacman"></div>
       </div>
+
+      {/* Galaga Battleships */}
+      <div 
+        ref={(el) => { galagaShipsRef.current.left = el; }}
+        className="galaga-ship left"
+        style={{ top: `${window.innerHeight - 100}px` }}
+      ></div>
+      <div 
+        ref={(el) => { galagaShipsRef.current.right = el; }}
+        className="galaga-ship right"
+        style={{ top: `${window.innerHeight - 100}px` }}
+      ></div>
       
       <Header />
       
