@@ -90,7 +90,7 @@ export default function Home() {
     { text: "/current_industry=legal_tech", delay: 1250 },
     { text: "/location=33.0644° N, 117.3017° W", delay: 1250 },
     { text: "/re-enrollment=disabled", delay: 1250 },
-    { text: "PRESS START TO BEGIN", delay: 0 }
+    { text: "PROFILE LOADED", delay: 0 }
   ];
 
   const openModal = (workflow: typeof chapters[0]) => {
@@ -447,7 +447,7 @@ export default function Home() {
                   JOSHUA RENFRO
                 </div>
                 <div className="text-lg text-[var(--terminal-cyan)] pixel-font">
-                  WORKFLOW SYSTEM
+                  DIGITAL PROFILE
                 </div>
               </div>
               
@@ -459,7 +459,7 @@ export default function Home() {
                   </div>
                 ) : (
                   <div className="text-[var(--terminal-yellow)] text-xl pixel-font blink-animation">
-                    PRESS START TO BEGIN
+                    PROFILE LOADED
                   </div>
                 )}
               </div>
@@ -485,7 +485,7 @@ export default function Home() {
                   onClick={() => setArcadeLoading(false)}
                   className="mt-8 px-8 py-4 bg-[var(--terminal-yellow)] text-black font-bold text-xl pixel-font hover:bg-[var(--terminal-green)] transition-colors arcade-button"
                 >
-                  START GAME
+                  ACTIVATE
                 </button>
               )}
             </div>
