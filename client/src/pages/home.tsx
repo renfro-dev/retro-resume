@@ -178,7 +178,7 @@ export default function Home() {
     // Button transition sequence
     const timer = setTimeout(() => {
       setButtonFlashing(false);
-      setButtonText("activate workflow");
+      setButtonText("activate workflow and engage battleships");
       setButtonReady(true);
     }, 5000);
 
