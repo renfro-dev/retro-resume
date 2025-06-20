@@ -486,26 +486,28 @@ export default function Home() {
 
 
           
-          {/* Call to Action Button */}
-          <div className="flex justify-center mb-16">
-            <button 
-              onClick={buttonReady ? () => {
-                setWorkflowsVisible(true);
-                // Show tech stack button after all workflows have appeared
-                // Last workflow (index 7) appears after 8.75 seconds + animation duration
-                setTimeout(() => {
-                  setTechStackVisible(true);
-                }, (chapters.length - 1) * 1250 + 600);
-              } : undefined}
-              className={`px-6 py-3 font-mono text-sm transition-all duration-300 ease-in-out border-2 ${
-                buttonReady 
-                  ? 'bg-[var(--terminal-yellow)] border-[var(--terminal-yellow)] text-black hover:bg-transparent hover:text-[var(--terminal-yellow)] hover:shadow-lg hover:shadow-yellow-500/25' 
-                  : 'bg-black border-[var(--terminal-yellow)] text-[var(--terminal-yellow)] cursor-default'
-              }`}
-              disabled={!buttonReady}
-            >
-              {buttonText}
-            </button>
+          {/* Call to Action Button - Aligned with Galaga Ships */}
+          <div className="relative mb-16" style={{ paddingLeft: '150px', paddingRight: '150px' }}>
+            <div className="flex justify-center">
+              <button 
+                onClick={buttonReady ? () => {
+                  setWorkflowsVisible(true);
+                  // Show tech stack button after all workflows have appeared
+                  // Last workflow (index 7) appears after 8.75 seconds + animation duration
+                  setTimeout(() => {
+                    setTechStackVisible(true);
+                  }, (chapters.length - 1) * 1250 + 600);
+                } : undefined}
+                className={`px-6 py-3 font-mono text-sm transition-all duration-300 ease-in-out border-2 ${
+                  buttonReady 
+                    ? 'bg-[var(--terminal-yellow)] border-[var(--terminal-yellow)] text-black hover:bg-transparent hover:text-[var(--terminal-yellow)] hover:shadow-lg hover:shadow-yellow-500/25' 
+                    : 'bg-black border-[var(--terminal-yellow)] text-[var(--terminal-yellow)] cursor-default'
+                }`}
+                disabled={!buttonReady}
+              >
+                {buttonText}
+              </button>
+            </div>
           </div>
           
           {/* Workflow Steps */}
