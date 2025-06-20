@@ -448,23 +448,22 @@
   position: fixed;
   width: 60px;
   height: 60px;
-  background-image: url('@assets/Screenshot 2025-06-20 at 10.11.36 AM_1750407099771.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-  z-index: 10;
+  z-index: 100;
   transition: transform 0.3s ease;
+  /* Temporary solid background to test visibility */
+  background: linear-gradient(45deg, #ff0000, #ffffff, #0066ff);
+  border: 3px solid yellow;
+  border-radius: 50%;
 }
 
 .galaga-ship.left {
   left: 50px;
+  top: 200px;
 }
 
 .galaga-ship.right {
   right: 50px;
+  top: 200px;
 }
 
 .galaga-laser {

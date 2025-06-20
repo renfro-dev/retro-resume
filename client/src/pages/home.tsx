@@ -417,12 +417,10 @@ export default function Home() {
       <div 
         ref={(el) => { galagaShipsRef.current.left = el; }}
         className="galaga-ship left"
-        style={{ top: '400px' }}
       ></div>
       <div 
         ref={(el) => { galagaShipsRef.current.right = el; }}
         className="galaga-ship right"
-        style={{ top: '400px' }}
       ></div>
       
       <Header />
