@@ -401,10 +401,10 @@ export default function Home() {
               onClick={buttonReady ? () => {
                 setWorkflowsVisible(true);
                 // Show tech stack button after all workflows have appeared
-                // Last workflow (index 7) appears after 7 seconds + animation duration
+                // Last workflow (index 7) appears after 8.75 seconds + animation duration
                 setTimeout(() => {
                   setTechStackVisible(true);
-                }, (chapters.length - 1) * 1000 + 600);
+                }, (chapters.length - 1) * 1250 + 600);
               } : undefined}
               className={`px-6 py-3 font-mono text-sm transition-all duration-300 ease-in-out border-2 ${
                 buttonReady 
@@ -428,7 +428,7 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ 
                     duration: 0.6,
-                    delay: index * 1.0,
+                    delay: index * 1.25,
                     ease: "easeOut"
                   }}
                 >
