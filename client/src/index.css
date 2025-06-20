@@ -574,6 +574,15 @@
   51%, 100% { opacity: 0.3; }
 }
 
+.arcade-flash {
+  animation: arcade-flash 0.5s infinite;
+}
+
+@keyframes arcade-flash {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
 .loading-dots::after {
   content: '';
   animation: dots 1.5s infinite;

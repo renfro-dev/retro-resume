@@ -81,6 +81,18 @@ export default function Home() {
   const [arcadeLoadingStep, setArcadeLoadingStep] = useState(0);
   const galagaShipsRef = useRef<{ left: HTMLDivElement | null; right: HTMLDivElement | null }>({ left: null, right: null });
 
+  const arcadeSequence = [
+    { text: "uploading Joshua Renfro", delay: 1000, flash: true },
+    { text: "/lifecycle_stage=FTE", delay: 1000 },
+    { text: "/psychographic=entrepreneur", delay: 1000 },
+    { text: "/experience=16_years", delay: 1000 },
+    { text: "/founder_roles=3", delay: 1000 },
+    { text: "/current_industry=legal_tech", delay: 1000 },
+    { text: "/location=33.0644° N, 117.3017° W", delay: 1000 },
+    { text: "/re-enrollment=disabled", delay: 1000 },
+    { text: "PRESS START TO BEGIN", delay: 0 }
+  ];
+
   const openModal = (workflow: typeof chapters[0]) => {
     setSelectedWorkflow(workflow);
     setModalOpen(true);
@@ -96,17 +108,6 @@ export default function Home() {
   // Arcade loading sequence effect
   useEffect(() => {
     if (!arcadeLoading) return;
-
-    const arcadeSequence = [
-      { text: "SYSTEM INITIALIZING...", delay: 500 },
-      { text: "LOADING GALAGA ENGINE v1.0", delay: 800 },
-      { text: "CHECKING MEMORY... OK", delay: 600 },
-      { text: "LOADING SOUND CHIP... OK", delay: 700 },
-      { text: "INITIALIZING GRAPHICS... OK", delay: 900 },
-      { text: "SPAWNING ENEMY FLEET...", delay: 800 },
-      { text: "READY PLAYER ONE", delay: 1000 },
-      { text: "PRESS START TO BEGIN", delay: 0 }
-    ];
 
     let currentStep = 0;
     
@@ -455,9 +456,9 @@ export default function Home() {
               
               {/* Loading Messages */}
               <div className="arcade-loading-text h-16 flex items-center justify-center">
-                {arcadeLoadingStep < 7 ? (
-                  <div className="text-[var(--terminal-green)] text-lg pixel-font loading-dots">
-                    {["SYSTEM INITIALIZING...", "LOADING GALAGA ENGINE v1.0", "CHECKING MEMORY... OK", "LOADING SOUND CHIP... OK", "INITIALIZING GRAPHICS... OK", "SPAWNING ENEMY FLEET...", "READY PLAYER ONE"][arcadeLoadingStep]}
+                {arcadeLoadingStep < 8 ? (
+                  <div className={`text-[var(--terminal-green)] text-lg pixel-font ${arcadeLoadingStep === 0 ? 'arcade-flash' : ''}`}>
+                    {arcadeSequence[arcadeLoadingStep]?.text}
                   </div>
                 ) : (
                   <div className="text-[var(--terminal-yellow)] text-xl pixel-font blink-animation">
@@ -467,22 +468,22 @@ export default function Home() {
               </div>
               
               {/* Progress Bar */}
-              {arcadeLoadingStep < 7 && (
+              {arcadeLoadingStep < 8 && (
                 <div className="arcade-progress-container mt-8">
                   <div className="arcade-progress-bar">
                     <div 
                       className="arcade-progress-fill"
-                      style={{ width: `${(arcadeLoadingStep / 6) * 100}%` }}
+                      style={{ width: `${(arcadeLoadingStep / 7) * 100}%` }}
                     ></div>
                   </div>
                   <div className="text-[var(--terminal-gray)] text-sm mt-2 pixel-font">
-                    {Math.round((arcadeLoadingStep / 6) * 100)}% COMPLETE
+                    {Math.round((arcadeLoadingStep / 7) * 100)}% COMPLETE
                   </div>
                 </div>
               )}
               
               {/* Start Button (when ready) */}
-              {arcadeLoadingStep === 7 && (
+              {arcadeLoadingStep === 8 && (
                 <button 
                   onClick={() => setArcadeLoading(false)}
                   className="mt-8 px-8 py-4 bg-[var(--terminal-yellow)] text-black font-bold text-xl pixel-font hover:bg-[var(--terminal-green)] transition-colors arcade-button"
