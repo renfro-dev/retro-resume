@@ -5,7 +5,7 @@ import ChapterRhombus from "@/components/chapter-rhombus";
 import BackgroundDecorations from "@/components/background-decorations";
 import Footer from "@/components/footer";
 import ReportModal from "@/components/report-modal";
-import LaserDefenseGame from "@/components/laser-defense-game";
+import PongGame from "@/components/pong-game";
 import ContactInfo from "@/components/contact-info";
 
 const chapters = [
@@ -579,8 +579,8 @@ export default function Home() {
         <Footer />
       </main>
 
-        {/* Laser Defense Game */}
-        <LaserDefenseGame
+        {/* Pong Game */}
+        <PongGame
           isOpen={gameOpen}
           onClose={() => setGameOpen(false)}
           onWin={() => setContactUnlocked(true)}
