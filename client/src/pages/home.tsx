@@ -82,7 +82,7 @@ export default function Home() {
   const [arcadeLoadingStep, setArcadeLoadingStep] = useState(0);
   const [gameOpen, setGameOpen] = useState(false);
   const [contactUnlocked, setContactUnlocked] = useState(false);
-
+  const galagaShipsRef = useRef<{ left: HTMLDivElement | null; right: HTMLDivElement | null }>({ left: null, right: null });
 
   const arcadeSequence = [
     { text: "uploading Joshua Renfro", delay: 1250, flash: true },
@@ -133,11 +133,44 @@ export default function Home() {
   }, [arcadeLoading]);
 
   useEffect(() => {
+    const shootLaser = (ship: HTMLDivElement) => {
+      const laser = document.createElement('div');
+      laser.className = 'galaga-laser';
+      laser.style.left = '50%';
+      laser.style.top = '-20px';
+      laser.style.transform = 'translateX(-50%)';
+      ship.appendChild(laser);
+      
+      // Remove laser after animation completes
+      setTimeout(() => {
+        if (laser.parentNode) {
+          laser.parentNode.removeChild(laser);
+        }
+      }, 1500);
+    };
+
     const handleScroll = () => {
       if (mainRef.current) {
         const scrolled = window.scrollY;
         const rate = scrolled * -0.5;
         mainRef.current.style.transform = `translateY(${rate}px)`;
+      }
+      
+      // Update Galaga ship positions and trigger shooting
+      const scrollProgress = window.scrollY;
+      const ships = galagaShipsRef.current;
+      
+      if (ships.left && ships.right) {
+        // Position ships based on scroll
+        const shipY = Math.max(200, window.innerHeight - 100 - scrollProgress * 0.3);
+        ships.left.style.top = `${shipY}px`;
+        ships.right.style.top = `${shipY}px`;
+        
+        // Trigger shooting every 100px of scroll
+        if (scrollProgress > 0 && scrollProgress % 100 < 10) {
+          shootLaser(ships.left);
+          shootLaser(ships.right);
+        }
       }
     };
 
@@ -149,7 +182,7 @@ export default function Home() {
     // Button transition sequence
     const timer = setTimeout(() => {
       setButtonFlashing(false);
-      setButtonText("activate workflow");
+      setButtonText("activate workflow and engage battleships");
       setButtonReady(true);
     }, 5000);
 
@@ -436,7 +469,15 @@ export default function Home() {
           <div className="pacman"></div>
         </div>
 
-
+      {/* Galaga Battleships */}
+      <div 
+        ref={(el) => { galagaShipsRef.current.left = el; }}
+        className="galaga-ship left"
+      ></div>
+      <div 
+        ref={(el) => { galagaShipsRef.current.right = el; }}
+        className="galaga-ship right"
+      ></div>
       
       <Header />
       
@@ -448,8 +489,8 @@ export default function Home() {
 
 
           
-          {/* Call to Action Button */}
-          <div className="relative mb-16">
+          {/* Call to Action Button - Aligned with Galaga Ships */}
+          <div className="relative mb-16" style={{ paddingLeft: '150px', paddingRight: '150px' }}>
             <div className="flex justify-center">
               <button 
                 onClick={buttonReady ? () => {
