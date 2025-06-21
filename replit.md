@@ -102,3 +102,9 @@ Changelog:
   - Integrated with existing Galaga battleship theme
   - Added contact information display component
   - Maintains arcade aesthetic with pixel art styling
+- June 21, 2025. Replaced space invaders with Pong game
+  - Implemented classic Pong gameplay with AI opponent
+  - Added progressive email reveal feature (joshua@renfro.dev)
+  - Each paddle hit reveals next letter of email address
+  - First to 5 points wins to unlock contact information
+  - Enhanced terminal aesthetic with glowing effects

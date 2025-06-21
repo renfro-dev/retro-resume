@@ -35,7 +35,7 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
   const PADDLE_SPEED = 6;
   const WIN_SCORE = 5; // First to 5 wins
   const AI_SPEED = 4; // Slightly slower than player for fairness
-  const EMAIL_ADDRESS = "hello@yourname.com"; // Will be revealed letter by letter
+  const EMAIL_ADDRESS = "joshua@renfro.dev"; // Will be revealed letter by letter
 
   // Reset ball to center with random direction
   const resetBall = useCallback(() => {
