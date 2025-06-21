@@ -105,6 +105,10 @@
     background-size: 120px 30px;
   }
 
+  .drop-shadow-glow {
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  }
+
   /* Retro Animated Borders */
   .retro-border-container {
     position: fixed;

@@ -21,6 +21,7 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
   const [ball, setBall] = useState<Ball>({ x: 400, y: 300, dx: 4, dy: 3 });
   const [playerPaddle, setPlayerPaddle] = useState(250); // Y position
   const [aiPaddle, setAiPaddle] = useState(250);
+  const [emailLettersRevealed, setEmailLettersRevealed] = useState(0);
   
   const gameAreaRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number>();
@@ -34,6 +35,7 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
   const PADDLE_SPEED = 6;
   const WIN_SCORE = 5; // First to 5 wins
   const AI_SPEED = 4; // Slightly slower than player for fairness
+  const EMAIL_ADDRESS = "hello@yourname.com"; // Will be revealed letter by letter
 
   // Reset ball to center with random direction
   const resetBall = useCallback(() => {
@@ -51,6 +53,7 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
     if (isOpen && gameState === 'playing') {
       setPlayerScore(0);
       setAiScore(0);
+      setEmailLettersRevealed(0);
       setPlayerPaddle(GAME_HEIGHT / 2 - PADDLE_HEIGHT / 2);
       setAiPaddle(GAME_HEIGHT / 2 - PADDLE_HEIGHT / 2);
       resetBall();
@@ -124,6 +127,9 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
           // Add spin based on where ball hits paddle
           const hitPosition = (newY + BALL_SIZE/2 - playerPaddle) / PADDLE_HEIGHT - 0.5;
           newDy += hitPosition * 2;
+          
+          // Reveal next letter of email address
+          setEmailLettersRevealed(prev => Math.min(prev + 1, EMAIL_ADDRESS.length));
         }
 
         // Ball collision with AI paddle (right side)
@@ -217,6 +223,26 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
 
           <div className="absolute top-16 left-1/2 transform -translate-x-1/2 text-[var(--terminal-yellow)] font-mono text-sm z-10">
             <div>First to {WIN_SCORE} wins • W/S or ↑/↓ to move • ESC to exit</div>
+          </div>
+
+          {/* Email Reveal Display */}
+          <div className="absolute top-32 left-1/2 transform -translate-x-1/2 z-10">
+            <div className="text-center">
+              <div className="text-[var(--terminal-gray)] font-mono text-xs mb-1">
+                Email revealed by paddle hits:
+              </div>
+              <div className="font-mono text-lg tracking-wider">
+                <span className="text-[var(--terminal-green)] drop-shadow-glow">
+                  {EMAIL_ADDRESS.substring(0, emailLettersRevealed)}
+                </span>
+                <span className="text-[var(--terminal-gray)] opacity-30">
+                  {EMAIL_ADDRESS.substring(emailLettersRevealed).replace(/./g, '_')}
+                </span>
+              </div>
+              <div className="text-[var(--terminal-yellow)] font-mono text-xs mt-1">
+                {emailLettersRevealed}/{EMAIL_ADDRESS.length} letters revealed
+              </div>
+            </div>
           </div>
 
           {/* Game Area */}
