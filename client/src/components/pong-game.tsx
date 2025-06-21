@@ -225,7 +225,25 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
             <div>First to {WIN_SCORE} wins • W/S or ↑/↓ to move • ESC to exit</div>
           </div>
 
-
+          {/* Email Reveal Display */}
+          <div className="absolute top-32 left-1/2 transform -translate-x-1/2 z-10">
+            <div className="text-center">
+              <div className="text-[var(--terminal-gray)] font-mono text-xs mb-1">
+                Email revealed by paddle hits:
+              </div>
+              <div className="font-mono text-lg tracking-wider">
+                <span className="text-[var(--terminal-green)] drop-shadow-glow">
+                  {EMAIL_ADDRESS.substring(0, emailLettersRevealed)}
+                </span>
+                <span className="text-[var(--terminal-gray)] opacity-30">
+                  {EMAIL_ADDRESS.substring(emailLettersRevealed).replace(/./g, '_')}
+                </span>
+              </div>
+              <div className="text-[var(--terminal-yellow)] font-mono text-xs mt-1">
+                {emailLettersRevealed}/{EMAIL_ADDRESS.length} letters revealed
+              </div>
+            </div>
+          </div>
 
           {/* Game Area */}
           <div
