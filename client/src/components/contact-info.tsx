@@ -27,7 +27,7 @@ export default function ContactInfo({ isVisible }: ContactInfoProps) {
 
         <div className="space-y-4">
           <motion.a
-            href="mailto:joshua@example.com"
+            href="mailto:joshua@renfro.dev"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
@@ -35,7 +35,7 @@ export default function ContactInfo({ isVisible }: ContactInfoProps) {
           >
             <Mail className="w-5 h-5 text-[var(--terminal-green)] group-hover:text-[var(--terminal-yellow)]" />
             <span className="font-mono text-[var(--terminal-green)] group-hover:text-[var(--terminal-yellow)]">
-              joshua@yourcompany.com
+              joshua@renfro.dev
             </span>
           </motion.a>
 
