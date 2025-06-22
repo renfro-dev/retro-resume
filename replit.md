@@ -93,8 +93,21 @@ This is a full-stack web application showcasing a personal brand journey through
 ## User Preferences
 Preferred communication style: Simple, everyday language.
 
+## Development Standards
+
+### Naming Convention
+The project follows a comprehensive naming convention for maintainability and clarity:
+
+- **Components**: PascalCase (e.g., `PongGame`, `ChapterRhombus`)
+- **Files**: kebab-case.tsx (e.g., `pong-game.tsx`, `contact-info.tsx`)
+- **Props**: `[ComponentName]Props` (e.g., `PongGameProps`)
+- **State**: camelCase descriptive (e.g., `emailLettersRevealed`, `contactUnlocked`)
+- **Constants**: SCREAMING_SNAKE_CASE (e.g., `GAME_WIDTH`, `WIN_SCORE`)
+- **CSS Classes**: kebab-case (e.g., `.terminal-glow`, `.drop-shadow-glow`)
+
+See `NAMING_CONVENTION.md` for complete guidelines.
+
 ## Changelog
-Changelog:
 - June 14, 2025. Initial setup
 - June 20, 2025. Added laser defense game integration
   - Created interactive laser defense game component
@@ -102,3 +115,9 @@ Changelog:
   - Integrated with existing Galaga battleship theme
   - Added contact information display component
   - Maintains arcade aesthetic with pixel art styling
+- June 21, 2025. Replaced laser defense with Pong game
+  - Implemented classic Pong game with AI opponent
+  - Added progressive email reveal feature (letters appear with each paddle hit)
+  - Updated button text to "Engage battleships."
+  - Established comprehensive naming convention standards
+  - Enhanced terminal aesthetic with glowing text effects
