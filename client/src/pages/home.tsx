@@ -162,13 +162,16 @@ export default function Home() {
       const ships = galagaShipsRef.current;
       
       if (ships.left && ships.right) {
-        // Position ships based on scroll
-        const shipY = Math.max(200, window.innerHeight - 100 - scrollProgress * 0.3);
-        ships.left.style.top = `${shipY}px`;
-        ships.right.style.top = `${shipY}px`;
+        // Only update position if battleships are not engaged
+        if (!battleshipsEngaged) {
+          // Position ships based on scroll
+          const shipY = Math.max(200, window.innerHeight - 100 - scrollProgress * 0.3);
+          ships.left.style.top = `${shipY}px`;
+          ships.right.style.top = `${shipY}px`;
+        }
         
-        // Trigger shooting every 100px of scroll
-        if (scrollProgress > 0 && scrollProgress % 100 < 10) {
+        // Trigger shooting every 100px of scroll (only when engaged)
+        if (battleshipsEngaged && scrollProgress > 0 && scrollProgress % 100 < 10) {
           shootLaser(ships.left);
           shootLaser(ships.right);
         }
@@ -177,7 +180,7 @@ export default function Home() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [battleshipsEngaged]);
 
   // Effect to handle battleship engagement
   useEffect(() => {
