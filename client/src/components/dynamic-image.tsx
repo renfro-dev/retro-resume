@@ -12,8 +12,23 @@ export default function DynamicImage({ filename, alt, className }: DynamicImageP
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    setImageSrc(`/api/assets/${encodeURIComponent(filename)}`);
-    setLoading(false);
+    const loadImage = async () => {
+      try {
+        const response = await fetch(`/api/assets/${encodeURIComponent(filename)}`);
+        if (response.ok) {
+          const data = await response.json();
+          setImageSrc(data.dataUrl);
+        } else {
+          setError(true);
+        }
+      } catch (err) {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadImage();
   }, [filename]);
 
   if (loading) {
