@@ -71,6 +71,7 @@ export default function Home() {
   const mainRef = useRef<HTMLElement>(null);
   const dotsContainerRef = useRef<HTMLDivElement>(null);
   const [workflowsVisible, setWorkflowsVisible] = useState(false);
+  const [visibleWorkflowCount, setVisibleWorkflowCount] = useState(0);
   const [techStackVisible, setTechStackVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedWorkflow, setSelectedWorkflow] = useState<typeof chapters[0] | null>(null);
@@ -193,10 +194,25 @@ export default function Home() {
     const timer = setTimeout(() => {
       setWorkflowsVisible(true);
       setBattleshipsEngaged(true);
+      setVisibleWorkflowCount(1); // Show first workflow immediately
+      
+      // Progressive workflow reveal with 1.5s delays
+      const workflowTimers: NodeJS.Timeout[] = [];
+      for (let i = 1; i < chapters.length; i++) {
+        const workflowTimer = setTimeout(() => {
+          setVisibleWorkflowCount(i + 1);
+        }, i * 1500);
+        workflowTimers.push(workflowTimer);
+      }
+      
       // Show tech stack button after all workflows have appeared
       setTimeout(() => {
         setTechStackVisible(true);
       }, (chapters.length - 1) * 1500 + 600);
+      
+      return () => {
+        workflowTimers.forEach(timer => clearTimeout(timer));
+      };
     }, 5000);
 
     return () => clearTimeout(timer);
@@ -507,7 +523,7 @@ export default function Home() {
           {/* Workflow Steps */}
           {workflowsVisible && (
             <div className="relative flex flex-col items-center">
-              {chapters.map((chapter, index) => (
+              {chapters.slice(0, visibleWorkflowCount).map((chapter, index) => (
                 <motion.div 
                   key={index} 
                   className="relative mb-16"
@@ -515,7 +531,7 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ 
                     duration: 0.6,
-                    delay: index * 1.5,
+                    delay: 0, // Remove delay since we're controlling visibility with state
                     ease: "easeOut"
                   }}
                 >
