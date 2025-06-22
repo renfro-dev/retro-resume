@@ -27,7 +27,7 @@ export default function ReportModal({ isOpen, onClose, title, content }: ReportM
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
-          className="relative workflow-card w-96 max-h-96 p-6 overflow-y-auto"
+          className="relative workflow-card w-full max-w-4xl max-h-[80vh] p-6 overflow-y-auto"
         >
           {/* Header */}
           <div className="flex justify-between items-center mb-4">
@@ -43,9 +43,10 @@ export default function ReportModal({ isOpen, onClose, title, content }: ReportM
           </div>
           
           {/* Content */}
-          <div className="text-[var(--terminal-gray)] font-mono text-sm leading-relaxed whitespace-pre-wrap">
-            {content}
-          </div>
+          <div 
+            className="text-[var(--terminal-gray)] font-mono text-sm leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
         </motion.div>
       </div>
     </AnimatePresence>
