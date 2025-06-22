@@ -74,9 +74,7 @@ export default function Home() {
   const [techStackVisible, setTechStackVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedWorkflow, setSelectedWorkflow] = useState<typeof chapters[0] | null>(null);
-  const [buttonReady, setButtonReady] = useState(false);
-  const [buttonText, setButtonText] = useState("workflow loading...");
-  const [buttonFlashing, setButtonFlashing] = useState(true);
+
   const [loadingSequenceCompleted, setLoadingSequenceCompleted] = useState(false);
   const [arcadeLoading, setArcadeLoading] = useState(true);
   const [arcadeLoadingStep, setArcadeLoadingStep] = useState(0);
@@ -193,7 +191,6 @@ export default function Home() {
   useEffect(() => {
     // Auto-load workflows and engage battleships after loading sequence
     const timer = setTimeout(() => {
-      setButtonFlashing(false);
       setWorkflowsVisible(true);
       setBattleshipsEngaged(true);
       // Show tech stack button after all workflows have appeared
@@ -505,29 +502,7 @@ export default function Home() {
 
 
           
-          {/* Call to Action Button - Aligned with Galaga Ships */}
-          <div className="relative mb-16" style={{ paddingLeft: '150px', paddingRight: '150px' }}>
-            <div className="flex justify-center">
-              <button 
-                onClick={buttonReady ? () => {
-                  setWorkflowsVisible(true);
-                  // Show tech stack button after all workflows have appeared
-                  // Last workflow (index 7) appears after 8.75 seconds + animation duration
-                  setTimeout(() => {
-                    setTechStackVisible(true);
-                  }, (chapters.length - 1) * 1250 + 600);
-                } : undefined}
-                className={`px-6 py-3 font-mono text-sm transition-all duration-300 ease-in-out border-2 ${
-                  buttonReady 
-                    ? 'bg-[var(--terminal-yellow)] border-[var(--terminal-yellow)] text-black hover:bg-transparent hover:text-[var(--terminal-yellow)] hover:shadow-lg hover:shadow-yellow-500/25' 
-                    : 'bg-black border-[var(--terminal-yellow)] text-[var(--terminal-yellow)] cursor-default'
-                }`}
-                disabled={!buttonReady}
-              >
-                {buttonText}
-              </button>
-            </div>
-          </div>
+
           
           {/* Workflow Steps */}
           {workflowsVisible && (
@@ -577,10 +552,7 @@ export default function Home() {
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
               <button 
-                onClick={() => {
-                  setBattleshipsEngaged(true);
-                  setGameOpen(true);
-                }}
+                onClick={() => setGameOpen(true)}
                 className="px-8 py-4 font-mono text-lg bg-transparent border-2 border-[var(--terminal-yellow)] text-[var(--terminal-yellow)] hover:bg-[var(--terminal-yellow)] hover:text-black transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-500/25"
               >
                 {contactUnlocked ? "contact information unlocked" : "Engage battleships."}
