@@ -6,14 +6,27 @@ import path from "path";
 import fs from "fs";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // API route to serve images as base64 data URLs
-  app.get('/api/image/:filename', (req, res) => {
+  // API route to list available images
+  app.get('/api/images', (req, res) => {
     try {
-      const filename = req.params.filename;
+      const attachedAssetsPath = path.join(process.cwd(), 'attached_assets');
+      const files = fs.readdirSync(attachedAssetsPath).filter(file => 
+        file.endsWith('.png') || file.endsWith('.jpg') || file.endsWith('.jpeg')
+      );
+      res.json({ files });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to list images' });
+    }
+  });
+
+  // API route to serve images as base64 data URLs
+  app.get('/api/image/:filename(*)', (req, res) => {
+    try {
+      const filename = decodeURIComponent(req.params.filename);
       const filePath = path.join(process.cwd(), 'attached_assets', filename);
       
       if (!fs.existsSync(filePath)) {
-        return res.status(404).json({ error: 'File not found' });
+        return res.status(404).json({ error: 'File not found', requestedFile: filename });
       }
       
       const imageBuffer = fs.readFileSync(filePath);
@@ -23,7 +36,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json({ dataUrl });
     } catch (error) {
-      res.status(500).json({ error: 'Failed to read image' });
+      res.status(500).json({ error: 'Failed to read image', details: error.message });
     }
   });
 
