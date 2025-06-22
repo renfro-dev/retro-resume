@@ -40,6 +40,28 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Add static asset serving BEFORE other routes
+  app.get('/api/assets/:filename', (req, res) => {
+    try {
+      const filename = decodeURIComponent(req.params.filename);
+      const filePath = path.join(process.cwd(), 'attached_assets', filename);
+      
+      if (!require('fs').existsSync(filePath)) {
+        return res.status(404).send('File not found');
+      }
+      
+      if (filename.endsWith('.png')) {
+        res.setHeader('Content-Type', 'image/png');
+      } else if (filename.endsWith('.jpg') || filename.endsWith('.jpeg')) {
+        res.setHeader('Content-Type', 'image/jpeg');
+      }
+      
+      res.sendFile(filePath);
+    } catch (error) {
+      res.status(500).send('Error serving file');
+    }
+  });
+
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

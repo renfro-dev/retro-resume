@@ -6,37 +6,27 @@ import path from "path";
 import fs from "fs";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // API route to list available images
-  app.get('/api/images', (req, res) => {
-    try {
-      const attachedAssetsPath = path.join(process.cwd(), 'attached_assets');
-      const files = fs.readdirSync(attachedAssetsPath).filter(file => 
-        file.endsWith('.png') || file.endsWith('.jpg') || file.endsWith('.jpeg')
-      );
-      res.json({ files });
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to list images' });
-    }
-  });
-
-  // API route to serve images as base64 data URLs
-  app.get('/api/image/:filename(*)', (req, res) => {
+  // API route to serve images directly with proper headers
+  app.get('/api/assets/:filename', (req, res) => {
     try {
       const filename = decodeURIComponent(req.params.filename);
-      const filePath = path.join(process.cwd(), 'attached_assets', filename);
+      const fullPath = path.join(process.cwd(), 'attached_assets', filename);
       
-      if (!fs.existsSync(filePath)) {
-        return res.status(404).json({ error: 'File not found', requestedFile: filename });
+      if (!fs.existsSync(fullPath)) {
+        return res.status(404).send('File not found');
       }
       
-      const imageBuffer = fs.readFileSync(filePath);
-      const base64Image = imageBuffer.toString('base64');
-      const mimeType = filename.endsWith('.png') ? 'image/png' : 'image/jpeg';
-      const dataUrl = `data:${mimeType};base64,${base64Image}`;
+      // Set proper content type
+      if (filename.endsWith('.png')) {
+        res.setHeader('Content-Type', 'image/png');
+      } else if (filename.endsWith('.jpg') || filename.endsWith('.jpeg')) {
+        res.setHeader('Content-Type', 'image/jpeg');
+      }
       
-      res.json({ dataUrl });
+      // Send file directly
+      res.sendFile(fullPath);
     } catch (error) {
-      res.status(500).json({ error: 'Failed to read image', details: error.message });
+      res.status(500).send('Error serving file');
     }
   });
 
