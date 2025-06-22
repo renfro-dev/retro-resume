@@ -196,7 +196,7 @@ export default function Home() {
       // Show tech stack button after all workflows have appeared
       setTimeout(() => {
         setTechStackVisible(true);
-      }, (chapters.length - 1) * 1250 + 600);
+      }, (chapters.length - 1) * 1500 + 600);
     }, 5000);
 
     return () => clearTimeout(timer);
@@ -515,7 +515,7 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ 
                     duration: 0.6,
-                    delay: index * 1.25,
+                    delay: index * 1.5,
                     ease: "easeOut"
                   }}
                 >
