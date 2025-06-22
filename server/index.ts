@@ -40,9 +40,6 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  // Serve static assets BEFORE setting up routes
-  app.use('/attached_assets', express.static(path.join(process.cwd(), 'attached_assets')));
-  
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

@@ -51,17 +51,17 @@ const chapters = [
         
         <div class="grid gap-4">
           <div class="border border-[var(--terminal-gray)] p-4">
-            <img src="/attached_assets/Screenshot 2025-06-22 at 10.52.41 AM_1750582610366.png" alt="Hemp operation news coverage" class="w-full mb-2" />
+            <img src="/api/assets/Screenshot 2025-06-22 at 10.52.41 AM_1750582610366.png" alt="Hemp operation news coverage" class="w-full mb-2" />
             <p class="text-[var(--terminal-gray)] text-xs">Initial media coverage highlighting the scale of operations</p>
           </div>
           
           <div class="border border-[var(--terminal-gray)] p-4">
-            <img src="/attached_assets/Screenshot 2025-06-22 at 10.54.44 AM_1750582622434.png" alt="Legal proceedings coverage" class="w-full mb-2" />
+            <img src="/api/assets/Screenshot 2025-06-22 at 10.54.44 AM_1750582622434.png" alt="Legal proceedings coverage" class="w-full mb-2" />
             <p class="text-[var(--terminal-gray)] text-xs">Follow-up investigation and legal proceedings</p>
           </div>
           
           <div class="border border-[var(--terminal-gray)] p-4">
-            <img src="/attached_assets/Screenshot 2025-06-22 at 10.55.08 AM_1750582622435.png" alt="Federal lawsuit documentation" class="w-full mb-2" />
+            <img src="/api/assets/Screenshot 2025-06-22 at 10.55.08 AM_1750582622435.png" alt="Federal lawsuit documentation" class="w-full mb-2" />
             <p class="text-[var(--terminal-gray)] text-xs">Federal lawsuit alleging rights violations and improper destruction</p>
           </div>
         </div>
