@@ -191,11 +191,15 @@ export default function Home() {
   }, [battleshipsEngaged]);
 
   useEffect(() => {
-    // Button transition sequence
+    // Auto-load workflows and engage battleships after loading sequence
     const timer = setTimeout(() => {
       setButtonFlashing(false);
-      setButtonText("Engage battleships.");
-      setButtonReady(true);
+      setWorkflowsVisible(true);
+      setBattleshipsEngaged(true);
+      // Show tech stack button after all workflows have appeared
+      setTimeout(() => {
+        setTechStackVisible(true);
+      }, (chapters.length - 1) * 1250 + 600);
     }, 5000);
 
     return () => clearTimeout(timer);
