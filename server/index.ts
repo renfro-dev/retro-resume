@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import path from "path";
+import { readFileSync, existsSync } from "fs";
 
 const app = express();
 app.use(express.json());
@@ -42,23 +43,23 @@ app.use((req, res, next) => {
 (async () => {
   // Add static asset serving BEFORE other routes
   app.get('/api/assets/:filename', (req, res) => {
-    const fs = require('fs');
     try {
       const filename = decodeURIComponent(req.params.filename);
-      const filePath = path.resolve(process.cwd(), 'attached_assets', filename);
+      const filePath = path.join(process.cwd(), 'attached_assets', filename);
       
-      if (!fs.existsSync(filePath)) {
-        return res.status(404).send('File not found');
+      if (!existsSync(filePath)) {
+        return res.status(404).json({ error: 'File not found' });
       }
       
       // Read file and convert to base64 data URL
-      const imageBuffer = fs.readFileSync(filePath);
+      const imageBuffer = readFileSync(filePath);
       const base64Image = imageBuffer.toString('base64');
       const mimeType = filename.endsWith('.png') ? 'image/png' : 'image/jpeg';
       const dataUrl = `data:${mimeType};base64,${base64Image}`;
       
       res.json({ dataUrl });
     } catch (error) {
+      console.error('Error serving image:', error);
       res.status(500).json({ error: 'Failed to serve image' });
     }
   });
