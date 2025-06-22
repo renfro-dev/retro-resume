@@ -41,23 +41,29 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  // Add static asset serving BEFORE other routes
-  app.get('/api/assets/:filename', (req, res) => {
+  // Add static asset serving with proper URL decoding
+  app.get('/api/assets/:filename(*)', (req, res) => {
     try {
       const filename = decodeURIComponent(req.params.filename);
       const filePath = path.join(process.cwd(), 'attached_assets', filename);
       
+      console.log('Requested file:', filename);
+      console.log('File path:', filePath);
+      
       if (!existsSync(filePath)) {
+        console.log('File not found at path:', filePath);
         return res.status(404).json({ error: 'File not found' });
       }
       
-      // Read file and convert to base64 data URL
-      const imageBuffer = readFileSync(filePath);
-      const base64Image = imageBuffer.toString('base64');
-      const mimeType = filename.endsWith('.png') ? 'image/png' : 'image/jpeg';
-      const dataUrl = `data:${mimeType};base64,${base64Image}`;
+      // Set proper content type
+      if (filename.endsWith('.png')) {
+        res.setHeader('Content-Type', 'image/png');
+      } else if (filename.endsWith('.jpg') || filename.endsWith('.jpeg')) {
+        res.setHeader('Content-Type', 'image/jpeg');
+      }
       
-      res.json({ dataUrl });
+      // Serve the file directly
+      res.sendFile(filePath);
     } catch (error) {
       console.error('Error serving image:', error);
       res.status(500).json({ error: 'Failed to serve image' });
