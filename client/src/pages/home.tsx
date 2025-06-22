@@ -195,28 +195,35 @@ export default function Home() {
       setWorkflowsVisible(true);
       setBattleshipsEngaged(true);
       setVisibleWorkflowCount(1); // Show first workflow immediately
-      
-      // Progressive workflow reveal with 1.5s delays
-      const workflowTimers: NodeJS.Timeout[] = [];
-      for (let i = 1; i < chapters.length; i++) {
-        const workflowTimer = setTimeout(() => {
-          setVisibleWorkflowCount(i + 1);
-        }, i * 1500);
-        workflowTimers.push(workflowTimer);
-      }
-      
-      // Show tech stack button after all workflows have appeared
-      setTimeout(() => {
-        setTechStackVisible(true);
-      }, (chapters.length - 1) * 1500 + 600);
-      
-      return () => {
-        workflowTimers.forEach(timer => clearTimeout(timer));
-      };
     }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
+
+  // Separate effect for progressive workflow reveal
+  useEffect(() => {
+    if (!workflowsVisible) return;
+
+    const workflowTimers: NodeJS.Timeout[] = [];
+    
+    // Progressive workflow reveal with 1.5s delays
+    for (let i = 1; i < chapters.length; i++) {
+      const workflowTimer = setTimeout(() => {
+        setVisibleWorkflowCount(prev => Math.max(prev, i + 1));
+      }, i * 1500);
+      workflowTimers.push(workflowTimer);
+    }
+    
+    // Show tech stack button after all workflows have appeared
+    const techStackTimer = setTimeout(() => {
+      setTechStackVisible(true);
+    }, (chapters.length - 1) * 1500 + 600);
+    
+    return () => {
+      workflowTimers.forEach(timer => clearTimeout(timer));
+      clearTimeout(techStackTimer);
+    };
+  }, [workflowsVisible]);
 
   useEffect(() => {
     // Generate dots around the border
@@ -523,18 +530,20 @@ export default function Home() {
           {/* Workflow Steps */}
           {workflowsVisible && (
             <div className="relative flex flex-col items-center">
-              {chapters.slice(0, visibleWorkflowCount).map((chapter, index) => (
-                <motion.div 
-                  key={index} 
-                  className="relative mb-16"
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ 
-                    duration: 0.6,
-                    delay: 0, // Remove delay since we're controlling visibility with state
-                    ease: "easeOut"
-                  }}
-                >
+              {chapters.map((chapter, index) => {
+                if (index >= visibleWorkflowCount) return null;
+                
+                return (
+                  <motion.div 
+                    key={index}
+                    className="relative mb-16"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ 
+                      duration: 0.6,
+                      ease: "easeOut"
+                    }}
+                  >
                   {/* Workflow Card */}
                   <div className="flex justify-center">
                     <ChapterRhombus
@@ -555,7 +564,8 @@ export default function Home() {
                     </div>
                   )}
                 </motion.div>
-              ))}
+                );
+              })}
             </div>
           )}
           
