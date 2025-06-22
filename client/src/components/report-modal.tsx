@@ -4,7 +4,7 @@ interface ReportModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  content: string;
+  content: React.ReactNode;
 }
 
 export default function ReportModal({ isOpen, onClose, title, content }: ReportModalProps) {
@@ -43,10 +43,9 @@ export default function ReportModal({ isOpen, onClose, title, content }: ReportM
           </div>
           
           {/* Content */}
-          <div 
-            className="text-[var(--terminal-gray)] font-mono text-sm leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: content }}
-          />
+          <div className="text-[var(--terminal-gray)] font-mono text-sm leading-relaxed">
+            {content}
+          </div>
         </motion.div>
       </div>
     </AnimatePresence>

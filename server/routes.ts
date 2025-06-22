@@ -3,25 +3,28 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import express from "express";
 import path from "path";
+import fs from "fs";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // API route to serve attached assets
-  app.get('/api/assets/:filename', (req, res) => {
-    const filename = req.params.filename;
-    const filePath = path.join(process.cwd(), 'attached_assets', filename);
-    
-    // Set appropriate content type
-    if (filename.endsWith('.png')) {
-      res.setHeader('Content-Type', 'image/png');
-    } else if (filename.endsWith('.jpg') || filename.endsWith('.jpeg')) {
-      res.setHeader('Content-Type', 'image/jpeg');
-    }
-    
-    res.sendFile(filePath, (err) => {
-      if (err) {
-        res.status(404).json({ error: 'File not found' });
+  // API route to serve images as base64 data URLs
+  app.get('/api/image/:filename', (req, res) => {
+    try {
+      const filename = req.params.filename;
+      const filePath = path.join(process.cwd(), 'attached_assets', filename);
+      
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ error: 'File not found' });
       }
-    });
+      
+      const imageBuffer = fs.readFileSync(filePath);
+      const base64Image = imageBuffer.toString('base64');
+      const mimeType = filename.endsWith('.png') ? 'image/png' : 'image/jpeg';
+      const dataUrl = `data:${mimeType};base64,${base64Image}`;
+      
+      res.json({ dataUrl });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to read image' });
+    }
   });
 
   // put application routes here
