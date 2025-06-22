@@ -189,24 +189,17 @@ export default function Home() {
     }
   }, [battleshipsEngaged]);
 
+  // Start workflow progression when arcade loading completes
   useEffect(() => {
-    // Auto-load workflows and engage battleships after loading sequence
-    const timer = setTimeout(() => {
-      setWorkflowsVisible(true);
-      setBattleshipsEngaged(true);
-      setVisibleWorkflowCount(1); // Show first workflow immediately
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Separate effect for progressive workflow reveal
-  useEffect(() => {
-    if (!workflowsVisible) return;
-
-    const workflowTimers: NodeJS.Timeout[] = [];
+    if (arcadeLoading) return; // Don't start until arcade loading is done
+    
+    // Start the workflow progression
+    setWorkflowsVisible(true);
+    setBattleshipsEngaged(true);
+    setVisibleWorkflowCount(1); // Show first workflow immediately
     
     // Progressive workflow reveal with 1.5s delays
+    const workflowTimers: NodeJS.Timeout[] = [];
     for (let i = 1; i < chapters.length; i++) {
       const workflowTimer = setTimeout(() => {
         setVisibleWorkflowCount(prev => Math.max(prev, i + 1));
@@ -223,7 +216,7 @@ export default function Home() {
       workflowTimers.forEach(timer => clearTimeout(timer));
       clearTimeout(techStackTimer);
     };
-  }, [workflowsVisible]);
+  }, [arcadeLoading]); // Trigger when arcadeLoading changes to false
 
   useEffect(() => {
     // Generate dots around the border
