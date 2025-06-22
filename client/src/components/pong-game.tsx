@@ -63,6 +63,10 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
   // Keyboard controls
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
       keysPressed.current.add(e.key.toLowerCase());
     };
 
