@@ -28,11 +28,13 @@ const chapters = [
   },
   {
     title: "Grit",
-    description: "Started two software companies that ultimately failed. Raised >$2M.",
+    description: "Funded and launched project on Ethereum to tokenize brand ambassador programs.",
     imageUrl: "https://images.unsplash.com/photo-1558655146-d09347e92766?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Software company founding and fundraising",
     status: "Complete",
-    reportContent: "Placeholder content for Grit report."
+    reportContent: null,
+    externalLink: "https://medium.com/ostdotcom/how-tribecoin-will-revolutionize-influencer-marketing-with-a-tokenized-ambassador-program-90245987257f",
+    buttonText: "Read it on Medium"
   },
   {
     title: "Humility",
