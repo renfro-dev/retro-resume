@@ -38,7 +38,7 @@ const chapters = [
     status: "Complete",
     reportContent: null,
     externalLink: "https://medium.com/ostdotcom/how-tribecoin-will-revolutionize-influencer-marketing-with-a-tokenized-ambassador-program-90245987257f",
-    buttonText: "Read it on Medium"
+    buttonText: "Medium"
   },
   {
     title: "Humility",
