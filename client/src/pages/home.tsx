@@ -32,7 +32,7 @@ const chapters = [
   },
   {
     title: "Grit",
-    description: "Funded and launched project on Ethereum to tokenize brand ambassador programs.",
+    description: "Funded and launched project on Ethereum to tokenize brand ambassador programs. Managed programs for brands like Lyft, Airbnb, Fanduel, and DoorDash.",
     imageUrl: "https://images.unsplash.com/photo-1558655146-d09347e92766?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Software company founding and fundraising",
     status: "Complete",
@@ -63,11 +63,13 @@ const chapters = [
   },
   {
     title: "Roots",
-    description: "Happily married to a badass creative. We garden together.",
+    description: "I spend most of my freetime managing my garden. Happily married to a photographer/videographer.",
     imageUrl: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Gardening and family life",
     status: "Active",
-    reportContent: "Placeholder content for Roots report."
+    reportContent: null,
+    externalLink: "https://layseahughes.com/",
+    buttonText: "Meet Laysea"
   },
   {
     title: "Entre-curious",
