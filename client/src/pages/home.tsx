@@ -44,7 +44,7 @@ const chapters = [
     status: "Complete",
     reportContent: null,
     externalLink: "https://www.forbes.com/sites/dariosabaghi/2021/11/02/a-hemp-company-uses-crypto-tokens-to-crowdfund-lawsuit/",
-    buttonText: "Read it in Forbes"
+    buttonText: "Forbes"
   },
   {
     title: "PMF",
