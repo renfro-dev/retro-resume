@@ -10,9 +10,10 @@ interface ChapterRhombusProps {
   onReportClick?: () => void;
   externalLink?: string;
   buttonText?: string;
+  externalLinks?: Array<{ url: string; text: string; }>;
 }
 
-export default function ChapterRhombus({ title, description, imageUrl, imageAlt, index, status = "Complete", onReportClick, externalLink, buttonText = "Report" }: ChapterRhombusProps) {
+export default function ChapterRhombus({ title, description, imageUrl, imageAlt, index, status = "Complete", onReportClick, externalLink, buttonText = "Report", externalLinks }: ChapterRhombusProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -51,7 +52,21 @@ export default function ChapterRhombus({ title, description, imageUrl, imageAlt,
             </div>
             <div className="flex items-center space-x-2">
               <div className="text-[var(--terminal-green)] text-xs font-mono">{status === "Complete" ? "✓" : "◯"}</div>
-              {externalLink ? (
+              {externalLinks ? (
+                <div className="flex space-x-1">
+                  {externalLinks.map((link, idx) => (
+                    <a 
+                      key={idx}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-2 py-1 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300"
+                    >
+                      {link.text}
+                    </a>
+                  ))}
+                </div>
+              ) : externalLink ? (
                 <a 
                   href={externalLink}
                   target="_blank"
