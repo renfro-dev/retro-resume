@@ -37,10 +37,8 @@ const chapters = [
     imageAlt: "Software company founding and fundraising",
     status: "Complete",
     reportContent: null,
-    externalLinks: [
-      { url: "https://medium.com/ostdotcom/how-tribecoin-will-revolutionize-influencer-marketing-with-a-tokenized-ambassador-program-90245987257f", text: "Read it on Medium" },
-      { url: "https://cointelegraph.com/news/hemp-grower-crowdfunds-court-case-tokenizes-shares-in-settlement", text: "Cointelegraph" }
-    ]
+    externalLink: "https://medium.com/ostdotcom/how-tribecoin-will-revolutionize-influencer-marketing-with-a-tokenized-ambassador-program-90245987257f",
+    buttonText: "Read it on Medium"
   },
   {
     title: "Humility",
@@ -51,7 +49,8 @@ const chapters = [
     reportContent: null,
     externalLinks: [
       { url: "https://www.forbes.com/sites/dariosabaghi/2021/11/02/a-hemp-company-uses-crypto-tokens-to-crowdfund-lawsuit/", text: "Forbes" },
-      { url: "https://caselaw.findlaw.com/court/us-dis-crt-e-d-cal/2170945.html", text: "Findlaw" }
+      { url: "https://caselaw.findlaw.com/court/us-dis-crt-e-d-cal/2170945.html", text: "Findlaw" },
+      { url: "https://cointelegraph.com/news/hemp-grower-crowdfunds-court-case-tokenizes-shares-in-settlement", text: "Cointelegraph" }
     ]
   },
   {
