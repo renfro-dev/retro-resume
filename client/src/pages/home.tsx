@@ -588,7 +588,7 @@ export default function Home() {
                 onClick={() => setGameOpen(true)}
                 className="px-8 py-4 font-mono text-lg bg-transparent border-2 border-[var(--terminal-yellow)] text-[var(--terminal-yellow)] hover:bg-[var(--terminal-yellow)] hover:text-black transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-500/25"
               >
-                {contactUnlocked ? "contact information unlocked" : "Engage battleships."}
+                {contactUnlocked ? "contact information unlocked" : "retrieve phone number"}
               </button>
             </motion.div>
           )}
