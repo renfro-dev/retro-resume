@@ -54,8 +54,8 @@ const chapters = [
     ]
   },
   {
-    title: "PMF",
-    description: "Found product market fit in the legal space.",
+    title: "Stability",
+    description: "Higher highs and lower lows eventually seek linear trendlines. I've been in the legal space for ",
     imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Product market fit and legal technology",
     status: "Active",

@@ -121,3 +121,9 @@ See `NAMING_CONVENTION.md` for complete guidelines.
   - Updated button text to "Engage battleships."
   - Established comprehensive naming convention standards
   - Enhanced terminal aesthetic with glowing text effects
+- June 22, 2025. External link integration and UI improvements
+  - Added flexible external link system for workflow cards
+  - Integrated multiple external links (Forbes, Findlaw, Medium, Cointelegraph, LinkedIn)
+  - Updated workflow CTAs with external sources instead of internal modals
+  - Increased workflow container size by 10% for better content display
+  - Changed game button text from "Engage battleships" to "retrieve phone number"
