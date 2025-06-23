@@ -23,7 +23,7 @@ export default function ChapterRhombus({ title, description, imageUrl, imageAlt,
         delay: index * 0.1,
         ease: [0.4, 0, 0.2, 1]
       }}
-      className="workflow-card w-80 h-40 cursor-pointer group relative overflow-hidden"
+      className="workflow-card w-[21rem] h-40 cursor-pointer group relative overflow-hidden"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.98 }}
     >
