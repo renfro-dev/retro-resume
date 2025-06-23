@@ -60,7 +60,7 @@ export default function ChapterRhombus({ title, description, imageUrl, imageAlt,
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-2 py-1 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300"
+                      className="bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-1.5 py-0.5 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300 scale-90"
                     >
                       {link.text}
                     </a>
@@ -71,14 +71,14 @@ export default function ChapterRhombus({ title, description, imageUrl, imageAlt,
                   href={externalLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-2 py-1 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300"
+                  className="bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-1.5 py-0.5 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300 scale-90"
                 >
                   {buttonText}
                 </a>
               ) : (
                 <button 
                   onClick={onReportClick}
-                  className="bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-2 py-1 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300"
+                  className="bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-1.5 py-0.5 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300 scale-90"
                 >
                   {buttonText}
                 </button>
