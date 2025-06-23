@@ -43,20 +43,8 @@ const chapters = [
     imageAlt: "Large scale operations management",
     status: "Complete",
     reportContent: null,
-    externalLinks: [
-      {
-        url: "https://www.forbes.com/sites/dariosabaghi/2021/11/02/a-hemp-company-uses-crypto-tokens-to-crowdfund-lawsuit/",
-        text: "Forbes"
-      },
-      {
-        url: "https://caselaw.findlaw.com/court/us-dis-crt-e-d-cal/2170945.html",
-        text: "Findlaw"
-      },
-      {
-        url: "https://cointelegraph.com/news/hemp-grower-crowdfunds-court-case-tokenizes-shares-in-settlement",
-        text: "Cointelegraph"
-      }
-    ]
+    externalLink: "https://www.forbes.com/sites/dariosabaghi/2021/11/02/a-hemp-company-uses-crypto-tokens-to-crowdfund-lawsuit/",
+    buttonText: "Read it in Forbes"
   },
   {
     title: "PMF",
