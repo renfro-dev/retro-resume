@@ -37,8 +37,10 @@ const chapters = [
     imageAlt: "Software company founding and fundraising",
     status: "Complete",
     reportContent: null,
-    externalLink: "https://medium.com/ostdotcom/how-tribecoin-will-revolutionize-influencer-marketing-with-a-tokenized-ambassador-program-90245987257f",
-    buttonText: "Read it on Medium"
+    externalLinks: [
+      { url: "https://medium.com/ostdotcom/how-tribecoin-will-revolutionize-influencer-marketing-with-a-tokenized-ambassador-program-90245987257f", text: "Read it on Medium" },
+      { url: "https://cointelegraph.com/news/hemp-grower-crowdfunds-court-case-tokenizes-shares-in-settlement", text: "Cointelegraph" }
+    ]
   },
   {
     title: "Humility",
