@@ -8,9 +8,11 @@ interface ChapterRhombusProps {
   index: number;
   status?: string;
   onReportClick?: () => void;
+  externalLink?: string;
+  buttonText?: string;
 }
 
-export default function ChapterRhombus({ title, description, imageUrl, imageAlt, index, status = "Complete", onReportClick }: ChapterRhombusProps) {
+export default function ChapterRhombus({ title, description, imageUrl, imageAlt, index, status = "Complete", onReportClick, externalLink, buttonText = "Report" }: ChapterRhombusProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -49,12 +51,23 @@ export default function ChapterRhombus({ title, description, imageUrl, imageAlt,
             </div>
             <div className="flex items-center space-x-2">
               <div className="text-[var(--terminal-green)] text-xs font-mono">{status === "Complete" ? "✓" : "◯"}</div>
-              <button 
-                onClick={onReportClick}
-                className="bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-2 py-1 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300"
-              >
-                Report
-              </button>
+              {externalLink ? (
+                <a 
+                  href={externalLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-2 py-1 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300"
+                >
+                  {buttonText}
+                </a>
+              ) : (
+                <button 
+                  onClick={onReportClick}
+                  className="bg-transparent border border-[var(--terminal-green)] text-[var(--terminal-green)] px-2 py-1 font-mono text-xs hover:bg-[var(--terminal-green)] hover:text-black transition-all duration-300"
+                >
+                  {buttonText}
+                </button>
+              )}
             </div>
           </div>
         </div>

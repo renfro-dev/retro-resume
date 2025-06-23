@@ -36,55 +36,13 @@ const chapters = [
   },
   {
     title: "Humility",
-    description: "Ran an operation valued at >$1B that was destroyed by the govt.",
+    description: "Controversy over startup destruction by govt leads to innovation in the legal and crypto space.",
     imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Large scale operations management",
     status: "Complete",
-    reportContent: (
-      <div className="space-y-6">
-        <div className="text-[var(--terminal-green)] font-mono text-sm">
-          <h3 className="text-[var(--terminal-yellow)] text-lg mb-4">Operation Overview</h3>
-          <p className="mb-4">Built and operated a large-scale agricultural operation in California's Central Valley that was valued at over $1 billion. The operation covered thousands of acres and employed hundreds of workers.</p>
-          
-          <h3 className="text-[var(--terminal-yellow)] text-lg mb-4 mt-6">Media Coverage & Legal Challenges</h3>
-          <p className="mb-4">The operation faced significant regulatory challenges and media scrutiny, ultimately leading to government intervention and destruction of the entire operation.</p>
-        </div>
-        
-        <div className="grid gap-4">
-          <div className="border border-[var(--terminal-gray)] p-4">
-            <DynamicImage 
-              filename="Screenshot 2025-06-22 at 10.52.41 AM_1750582610366.png" 
-              alt="Hemp operation news coverage" 
-              className="w-full mb-2" 
-            />
-            <p className="text-[var(--terminal-gray)] text-xs">Initial media coverage highlighting the scale of operations</p>
-          </div>
-          
-          <div className="border border-[var(--terminal-gray)] p-4">
-            <DynamicImage 
-              filename="Screenshot 2025-06-22 at 10.54.44 AM_1750582622434.png" 
-              alt="Legal proceedings coverage" 
-              className="w-full mb-2" 
-            />
-            <p className="text-[var(--terminal-gray)] text-xs">Follow-up investigation and legal proceedings</p>
-          </div>
-          
-          <div className="border border-[var(--terminal-gray)] p-4">
-            <DynamicImage 
-              filename="Screenshot 2025-06-22 at 10.55.08 AM_1750582622435.png" 
-              alt="Federal lawsuit documentation" 
-              className="w-full mb-2" 
-            />
-            <p className="text-[var(--terminal-gray)] text-xs">Federal lawsuit alleging rights violations and improper destruction</p>
-          </div>
-        </div>
-        
-        <div className="text-[var(--terminal-green)] font-mono text-sm">
-          <h3 className="text-[var(--terminal-yellow)] text-lg mb-4">Lessons Learned</h3>
-          <p>This experience taught valuable lessons about regulatory compliance, government relations, and the importance of building operations that can withstand legal and political challenges. The complete loss of the operation, despite its economic value, demonstrated the critical importance of humility when working within complex regulatory frameworks.</p>
-        </div>
-      </div>
-    )
+    reportContent: null,
+    externalLink: "https://www.forbes.com/sites/dariosabaghi/2021/11/02/a-hemp-company-uses-crypto-tokens-to-crowdfund-lawsuit/",
+    buttonText: "Read it in Forbes"
   },
   {
     title: "PMF",
@@ -592,6 +550,8 @@ export default function Home() {
                       index={index}
                       status={chapter.status}
                       onReportClick={() => openModal(chapter)}
+                      externalLink={chapter.externalLink}
+                      buttonText={chapter.buttonText}
                     />
                   </div>
                   
