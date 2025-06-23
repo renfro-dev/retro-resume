@@ -43,8 +43,10 @@ const chapters = [
     imageAlt: "Large scale operations management",
     status: "Complete",
     reportContent: null,
-    externalLink: "https://www.forbes.com/sites/dariosabaghi/2021/11/02/a-hemp-company-uses-crypto-tokens-to-crowdfund-lawsuit/",
-    buttonText: "Forbes"
+    externalLinks: [
+      { url: "https://www.forbes.com/sites/dariosabaghi/2021/11/02/a-hemp-company-uses-crypto-tokens-to-crowdfund-lawsuit/", text: "Forbes" },
+      { url: "https://caselaw.findlaw.com/court/us-dis-crt-e-d-cal/2170945.html", text: "Findlaw" }
+    ]
   },
   {
     title: "PMF",
@@ -554,6 +556,7 @@ export default function Home() {
                       onReportClick={() => openModal(chapter)}
                       externalLink={chapter.externalLink}
                       buttonText={chapter.buttonText}
+                      externalLinks={chapter.externalLinks}
                     />
                   </div>
                   
