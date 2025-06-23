@@ -68,8 +68,10 @@ const chapters = [
     imageAlt: "Gardening and family life",
     status: "Active",
     reportContent: null,
-    externalLink: "https://layseahughes.com/",
-    buttonText: "Meet Laysea"
+    externalLinks: [
+      { url: "https://layseahughes.com/", text: "Meet Laysea" },
+      { url: "#", text: "Garden Tour" }
+    ]
   },
   {
     title: "Entre-curious",
