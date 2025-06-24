@@ -121,3 +121,11 @@ See `NAMING_CONVENTION.md` for complete guidelines.
   - Updated button text to "Engage battleships."
   - Established comprehensive naming convention standards
   - Enhanced terminal aesthetic with glowing text effects
+- June 24, 2025. External links and deployment preparation
+  - Added external links to workflow chapters (Forbes, Medium, LinkedIn, Cointelegraph, Findlaw)
+  - Updated Pong game to reveal phone number (619-629-8452) instead of email
+  - Implemented multiple CTA buttons per workflow with 15% size reduction
+  - Increased workflow card width by 5% for better content display
+  - Removed footer automation engine component for cleaner layout
+  - Updated contact reveal button text to "retrieve phone number"
+  - Prepared application for deployment to renfro.dev domain
