@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Mail, Linkedin, Twitter, Globe } from 'lucide-react';
+import { Phone, Linkedin, Twitter, Globe } from 'lucide-react';
 
 interface ContactInfoProps {
   isVisible: boolean;
@@ -27,15 +27,15 @@ export default function ContactInfo({ isVisible }: ContactInfoProps) {
 
         <div className="space-y-4">
           <motion.a
-            href="mailto:joshua@renfro.dev"
+            href="tel:6196298452"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
             className="flex items-center gap-3 p-3 border border-[var(--terminal-gray)] hover:border-[var(--terminal-yellow)] transition-colors group"
           >
-            <Mail className="w-5 h-5 text-[var(--terminal-green)] group-hover:text-[var(--terminal-yellow)]" />
+            <Phone className="w-5 h-5 text-[var(--terminal-green)] group-hover:text-[var(--terminal-yellow)]" />
             <span className="font-mono text-[var(--terminal-green)] group-hover:text-[var(--terminal-yellow)]">
-              joshua@renfro.dev
+              619-629-8452
             </span>
           </motion.a>
 

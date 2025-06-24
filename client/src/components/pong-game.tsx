@@ -21,7 +21,7 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
   const [ball, setBall] = useState<Ball>({ x: 400, y: 300, dx: 4, dy: 3 });
   const [playerPaddle, setPlayerPaddle] = useState(250); // Y position
   const [aiPaddle, setAiPaddle] = useState(250);
-  const [emailLettersRevealed, setEmailLettersRevealed] = useState(0);
+  const [phoneDigitsRevealed, setPhoneDigitsRevealed] = useState(0);
   
   const gameAreaRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number>();
@@ -35,7 +35,7 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
   const PADDLE_SPEED = 6;
   const WIN_SCORE = 5; // First to 5 wins
   const AI_SPEED = 4; // Slightly slower than player for fairness
-  const EMAIL_ADDRESS = "joshua@renfro.dev"; // Will be revealed letter by letter
+  const PHONE_NUMBER = "619-629-8452"; // Will be revealed digit by digit
 
   // Reset ball to center with random direction
   const resetBall = useCallback(() => {
@@ -53,7 +53,7 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
     if (isOpen && gameState === 'playing') {
       setPlayerScore(0);
       setAiScore(0);
-      setEmailLettersRevealed(0);
+      setPhoneDigitsRevealed(0);
       setPlayerPaddle(GAME_HEIGHT / 2 - PADDLE_HEIGHT / 2);
       setAiPaddle(GAME_HEIGHT / 2 - PADDLE_HEIGHT / 2);
       resetBall();
@@ -132,8 +132,8 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
           const hitPosition = (newY + BALL_SIZE/2 - playerPaddle) / PADDLE_HEIGHT - 0.5;
           newDy += hitPosition * 2;
           
-          // Reveal next letter of email address
-          setEmailLettersRevealed(prev => Math.min(prev + 1, EMAIL_ADDRESS.length));
+          // Reveal next digit of phone number
+          setPhoneDigitsRevealed(prev => Math.min(prev + 1, PHONE_NUMBER.length));
         }
 
         // Ball collision with AI paddle (right side)
@@ -229,22 +229,22 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
             <div>First to {WIN_SCORE} wins • W/S or ↑/↓ to move • ESC to exit</div>
           </div>
 
-          {/* Email Reveal Display */}
+          {/* Phone Number Reveal Display */}
           <div className="absolute top-32 left-1/2 transform -translate-x-1/2 z-10">
             <div className="text-center">
               <div className="text-[var(--terminal-gray)] font-mono text-xs mb-1">
-                Email revealed by paddle hits:
+                Phone number revealed by paddle hits:
               </div>
               <div className="font-mono text-lg tracking-wider">
                 <span className="text-[var(--terminal-green)] drop-shadow-glow">
-                  {EMAIL_ADDRESS.substring(0, emailLettersRevealed)}
+                  {PHONE_NUMBER.substring(0, phoneDigitsRevealed)}
                 </span>
                 <span className="text-[var(--terminal-gray)] opacity-30">
-                  {EMAIL_ADDRESS.substring(emailLettersRevealed).replace(/./g, '_')}
+                  {PHONE_NUMBER.substring(phoneDigitsRevealed).replace(/./g, '_')}
                 </span>
               </div>
               <div className="text-[var(--terminal-yellow)] font-mono text-xs mt-1">
-                {emailLettersRevealed}/{EMAIL_ADDRESS.length} letters revealed
+                {phoneDigitsRevealed}/{PHONE_NUMBER.length} characters revealed
               </div>
             </div>
           </div>
