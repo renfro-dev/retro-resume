@@ -55,7 +55,7 @@ const chapters = [
   },
   {
     title: "Stability",
-    description: "I work at a law firm. Innovating within established margins is less stressful.",
+    description: "I push boundaries at the nexus of people x product as an exec at a large law firm.",
     imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Product market fit and legal technology",
     status: "Active",
@@ -68,10 +68,8 @@ const chapters = [
     imageAlt: "Gardening and family life",
     status: "Active",
     reportContent: null,
-    externalLinks: [
-      { url: "https://layseahughes.com/", text: "Meet Laysea" },
-      { url: "#", text: "Garden Tour" }
-    ]
+    externalLink: "https://layseahughes.com/",
+    buttonText: "Meet Laysea"
   },
   {
     title: "Entre-curious",
