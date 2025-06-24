@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Header from "@/components/header";
 import ChapterRhombus from "@/components/chapter-rhombus";
 import BackgroundDecorations from "@/components/background-decorations";
-import Footer from "@/components/footer";
+
 import ReportModal from "@/components/report-modal";
 import PongGame from "@/components/pong-game";
 import ContactInfo from "@/components/contact-info";
@@ -12,7 +12,7 @@ import DynamicImage from "@/components/dynamic-image";
 const chapters = [
   {
     title: "Hustle",
-    description: "Built a six figure business at 19 while attending university full time.",
+    description: "Built a six figure business at 19 while attending university.",
     imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Business growth and time management",
     status: "Complete",
@@ -22,7 +22,7 @@ const chapters = [
   },
   {
     title: "Velocity",
-    description: "First 100 employees at one of the fastest growing companies in the world.",
+    description: "First 100 employees at Lyft, one of the fastest growing startups in the world.",
     imageUrl: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Fast growing company scaling",
     status: "Complete",
@@ -32,7 +32,7 @@ const chapters = [
   },
   {
     title: "Grit",
-    description: "Funded and launched project on Ethereum to tokenize brand ambassador programs. Managed programs for brands like Lyft, Airbnb, Fanduel, and DoorDash.",
+    description: "Funded and launched project on Ethereum to tokenize brand ambassador programs.",
     imageUrl: "https://images.unsplash.com/photo-1558655146-d09347e92766?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Software company founding and fundraising",
     status: "Complete",
@@ -42,7 +42,7 @@ const chapters = [
   },
   {
     title: "Humility",
-    description: "Controversy over startup destruction by govt leads to innovation in the legal and crypto space.",
+    description: "Startup destruction by govt leads to innovation in the legal and crypto space.",
     imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Large scale operations management",
     status: "Complete",
@@ -54,8 +54,8 @@ const chapters = [
     ]
   },
   {
-    title: "PMF",
-    description: "Found product market fit in the legal space.",
+    title: "Stability",
+    description: "I work at a law firm. Innovating within established margins is less stressful.",
     imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Product market fit and legal technology",
     status: "Active",
@@ -63,7 +63,7 @@ const chapters = [
   },
   {
     title: "Roots",
-    description: "I spend most of my freetime managing my garden. Happily married to a photographer/videographer.",
+    description: "My entire family lives in SD. I actively garden and surf to detech and destress.",
     imageUrl: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Gardening and family life",
     status: "Active",
@@ -75,7 +75,7 @@ const chapters = [
   },
   {
     title: "Entre-curious",
-    description: "Interested in buying and operating antiquated businesses.",
+    description: "I'm interested in buying and operating antiquated businesses.",
     imageUrl: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Business acquisition and operations",
     status: "Active",
@@ -605,7 +605,7 @@ export default function Home() {
 
         </div>
         
-        <Footer />
+
       </main>
 
         {/* Pong Game */}
