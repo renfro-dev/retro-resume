@@ -292,10 +292,10 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
               <div className="text-center flex-1 mx-4">
                 <div className="text-xs sm:text-sm">Phone revealed by paddle hits:</div>
                 <div className="text-sm sm:text-lg font-bold">
-                  {PHONE_NUMBER.substring(0, phoneDigitsRevealed)}
+                  {phoneDigitsRevealed > 0 ? PHONE_NUMBER.substring(0, phoneDigitsRevealed) : ''}
                   {phoneDigitsRevealed < PHONE_NUMBER.length && (
                     <span className="text-[var(--terminal-gray)]">
-                      {PHONE_NUMBER.substring(phoneDigitsRevealed)}
+                      {'█'.repeat(PHONE_NUMBER.length - phoneDigitsRevealed)}
                     </span>
                   )}
                 </div>
