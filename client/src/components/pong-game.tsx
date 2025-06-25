@@ -256,6 +256,20 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
     }
   }, [playerScore, aiScore]);
 
+  // Reset game function
+  const resetGame = useCallback(() => {
+    setGameState('playing');
+    setPlayerScore(0);
+    setAiScore(0);
+    setPhoneDigitsRevealed(0);
+    const dimensions = getGameDimensions();
+    const centerY = dimensions.height / 2 - dimensions.paddleHeight / 2;
+    setPlayerPaddle(centerY);
+    setAiPaddle(centerY);
+    paddleTargetY.current = centerY;
+    resetBall();
+  }, [resetBall]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -370,17 +384,27 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
                           Phone number fully revealed!
                         </div>
                       )}
-                      <button
-                        onClick={() => {
-                          if (gameState === 'won') {
-                            onWin();
-                          }
-                          onClose();
-                        }}
-                        className="px-6 py-2 bg-[var(--terminal-cyan)] text-black font-mono hover:bg-[var(--terminal-yellow)] transition-colors"
-                      >
-                        {gameState === 'won' ? 'CLAIM VICTORY' : 'TRY AGAIN'}
-                      </button>
+                      <div className="flex gap-4 justify-center">
+                        <button
+                          onClick={() => {
+                            if (gameState === 'won') {
+                              onWin();
+                            }
+                            onClose();
+                          }}
+                          className="px-6 py-2 bg-[var(--terminal-cyan)] text-black font-mono hover:bg-[var(--terminal-yellow)] transition-colors"
+                        >
+                          {gameState === 'won' ? 'CLAIM VICTORY' : 'EXIT'}
+                        </button>
+                        {gameState === 'lost' && (
+                          <button
+                            onClick={resetGame}
+                            className="px-6 py-2 bg-[var(--terminal-green)] text-black font-mono hover:bg-[var(--terminal-yellow)] transition-colors"
+                          >
+                            PLAY AGAIN
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 )}
