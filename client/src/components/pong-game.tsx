@@ -19,48 +19,82 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
   const [playerScore, setPlayerScore] = useState(0);
   const [aiScore, setAiScore] = useState(0);
   const [ball, setBall] = useState<Ball>({ x: 400, y: 300, dx: 4, dy: 3 });
-  const [playerPaddle, setPlayerPaddle] = useState(250); // Y position
+  const [playerPaddle, setPlayerPaddle] = useState(250);
   const [aiPaddle, setAiPaddle] = useState(250);
   const [phoneDigitsRevealed, setPhoneDigitsRevealed] = useState(0);
   
   const gameAreaRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number>();
   const keysPressed = useRef<Set<string>>(new Set());
+  const touchStartY = useRef<number>(0);
+  const paddleTargetY = useRef<number>(250);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const GAME_WIDTH = 800;
-  const GAME_HEIGHT = 600;
-  const PADDLE_WIDTH = 20;
-  const PADDLE_HEIGHT = 100;
-  const BALL_SIZE = 20;
-  const PADDLE_SPEED = 6;
-  const WIN_SCORE = 5; // First to 5 wins
-  const AI_SPEED = 4; // Slightly slower than player for fairness
-  const PHONE_NUMBER = "619-629-8452"; // Will be revealed digit by digit
+  // Responsive game dimensions
+  const getGameDimensions = () => {
+    const isMobileDevice = window.innerWidth < 768;
+    return {
+      width: isMobileDevice ? Math.min(window.innerWidth - 40, 400) : 800,
+      height: isMobileDevice ? Math.min(window.innerHeight - 200, 500) : 600,
+      paddleWidth: isMobileDevice ? 15 : 20,
+      paddleHeight: isMobileDevice ? 80 : 100,
+      ballSize: isMobileDevice ? 15 : 20,
+      paddleSpeed: isMobileDevice ? 8 : 6,
+      aiSpeed: isMobileDevice ? 5 : 4
+    };
+  };
+
+  const [gameDimensions, setGameDimensions] = useState(getGameDimensions());
+  const WIN_SCORE = 5;
+  const PHONE_NUMBER = "619-629-8452";
 
   // Reset ball to center with random direction
   const resetBall = useCallback(() => {
     const direction = Math.random() > 0.5 ? 1 : -1;
+    const dimensions = getGameDimensions();
     setBall({
-      x: GAME_WIDTH / 2,
-      y: GAME_HEIGHT / 2,
-      dx: direction * (3 + Math.random() * 2), // Random speed 3-5
-      dy: (Math.random() - 0.5) * 4 // Random vertical direction
+      x: dimensions.width / 2,
+      y: dimensions.height / 2,
+      dx: direction * (3 + Math.random() * 2),
+      dy: (Math.random() - 0.5) * 4
     });
+  }, []);
+
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      const newDimensions = getGameDimensions();
+      setGameDimensions(newDimensions);
+      setIsMobile(window.innerWidth < 768);
+      
+      // Reset paddle positions for new dimensions
+      const centerY = newDimensions.height / 2 - newDimensions.paddleHeight / 2;
+      setPlayerPaddle(centerY);
+      setAiPaddle(centerY);
+      paddleTargetY.current = centerY;
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // Initialize game
   useEffect(() => {
     if (isOpen && gameState === 'playing') {
+      const dimensions = getGameDimensions();
       setPlayerScore(0);
       setAiScore(0);
       setPhoneDigitsRevealed(0);
-      setPlayerPaddle(GAME_HEIGHT / 2 - PADDLE_HEIGHT / 2);
-      setAiPaddle(GAME_HEIGHT / 2 - PADDLE_HEIGHT / 2);
+      const centerY = dimensions.height / 2 - dimensions.paddleHeight / 2;
+      setPlayerPaddle(centerY);
+      setAiPaddle(centerY);
+      paddleTargetY.current = centerY;
       resetBall();
     }
   }, [isOpen, gameState, resetBall]);
 
-  // Keyboard controls
+  // Keyboard and touch controls
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -74,113 +108,131 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
       keysPressed.current.delete(e.key.toLowerCase());
     };
 
+    const handleTouchStart = (e: TouchEvent) => {
+      e.preventDefault();
+      touchStartY.current = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault();
+      if (!gameAreaRef.current) return;
+      
+      const rect = gameAreaRef.current.getBoundingClientRect();
+      const touchY = e.touches[0].clientY - rect.top;
+      const dimensions = gameDimensions;
+      
+      // Convert touch position to paddle position
+      const paddleY = Math.max(0, Math.min(dimensions.height - dimensions.paddleHeight, touchY - dimensions.paddleHeight / 2));
+      paddleTargetY.current = paddleY;
+    };
+
     if (isOpen) {
       window.addEventListener('keydown', handleKeyDown);
       window.addEventListener('keyup', handleKeyUp);
+      
+      if (gameAreaRef.current) {
+        gameAreaRef.current.addEventListener('touchstart', handleTouchStart, { passive: false });
+        gameAreaRef.current.addEventListener('touchmove', handleTouchMove, { passive: false });
+      }
     }
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
+      
+      if (gameAreaRef.current) {
+        gameAreaRef.current.removeEventListener('touchstart', handleTouchStart);
+        gameAreaRef.current.removeEventListener('touchmove', handleTouchMove);
+      }
     };
-  }, [isOpen]);
+  }, [isOpen, gameDimensions]);
 
   // Game loop
   useEffect(() => {
     if (!isOpen || gameState !== 'playing') return;
 
     const gameLoop = () => {
-      // Move player paddle
-      if (keysPressed.current.has('arrowup') || keysPressed.current.has('w')) {
-        setPlayerPaddle(prev => Math.max(0, prev - PADDLE_SPEED));
-      }
-      if (keysPressed.current.has('arrowdown') || keysPressed.current.has('s')) {
-        setPlayerPaddle(prev => Math.min(GAME_HEIGHT - PADDLE_HEIGHT, prev + PADDLE_SPEED));
-      }
-
-      // AI paddle movement (simple AI that follows the ball)
+      const dimensions = gameDimensions;
+      
       setBall(prevBall => {
-        const ballCenterY = prevBall.y + BALL_SIZE / 2;
-        const aiPaddleCenterY = aiPaddle + PADDLE_HEIGHT / 2;
+        const newBall = { ...prevBall };
         
-        if (ballCenterY < aiPaddleCenterY - 10) {
-          setAiPaddle(prev => Math.max(0, prev - AI_SPEED));
-        } else if (ballCenterY > aiPaddleCenterY + 10) {
-          setAiPaddle(prev => Math.min(GAME_HEIGHT - PADDLE_HEIGHT, prev + AI_SPEED));
-        }
-
         // Move ball
-        let newX = prevBall.x + prevBall.dx;
-        let newY = prevBall.y + prevBall.dy;
-        let newDx = prevBall.dx;
-        let newDy = prevBall.dy;
-
+        newBall.x += newBall.dx;
+        newBall.y += newBall.dy;
+        
         // Ball collision with top/bottom walls
-        if (newY <= 0 || newY >= GAME_HEIGHT - BALL_SIZE) {
-          newDy = -newDy;
-          newY = newY <= 0 ? 0 : GAME_HEIGHT - BALL_SIZE;
+        if (newBall.y <= 0 || newBall.y >= dimensions.height - dimensions.ballSize) {
+          newBall.dy = -newBall.dy;
         }
-
-        // Ball collision with player paddle (left side)
-        if (newX <= PADDLE_WIDTH && 
-            newY + BALL_SIZE >= playerPaddle && 
-            newY <= playerPaddle + PADDLE_HEIGHT &&
-            prevBall.dx < 0) {
-          newDx = -newDx;
-          newX = PADDLE_WIDTH;
-          // Add spin based on where ball hits paddle
-          const hitPosition = (newY + BALL_SIZE/2 - playerPaddle) / PADDLE_HEIGHT - 0.5;
-          newDy += hitPosition * 2;
+        
+        // Ball collision with paddles
+        // Left paddle (player) collision
+        if (newBall.x <= dimensions.paddleWidth && 
+            newBall.y >= playerPaddle && 
+            newBall.y <= playerPaddle + dimensions.paddleHeight) {
+          newBall.dx = Math.abs(newBall.dx);
+          newBall.dy += (Math.random() - 0.5) * 2;
           
-          // Reveal next digit of phone number
+          // Progressive phone number reveal
           setPhoneDigitsRevealed(prev => Math.min(prev + 1, PHONE_NUMBER.length));
         }
-
-        // Ball collision with AI paddle (right side)
-        if (newX + BALL_SIZE >= GAME_WIDTH - PADDLE_WIDTH && 
-            newY + BALL_SIZE >= aiPaddle && 
-            newY <= aiPaddle + PADDLE_HEIGHT &&
-            prevBall.dx > 0) {
-          newDx = -newDx;
-          newX = GAME_WIDTH - PADDLE_WIDTH - BALL_SIZE;
-          // Add spin based on where ball hits paddle
-          const hitPosition = (newY + BALL_SIZE/2 - aiPaddle) / PADDLE_HEIGHT - 0.5;
-          newDy += hitPosition * 2;
+        
+        // Right paddle (AI) collision  
+        if (newBall.x >= dimensions.width - dimensions.paddleWidth - dimensions.ballSize && 
+            newBall.y >= aiPaddle && 
+            newBall.y <= aiPaddle + dimensions.paddleHeight) {
+          newBall.dx = -Math.abs(newBall.dx);
+          newBall.dy += (Math.random() - 0.5) * 2;
         }
-
-        // Ball goes off left side (AI scores)
-        if (newX < 0) {
-          setAiScore(prev => {
-            const newScore = prev + 1;
-            if (newScore >= WIN_SCORE) {
-              setGameState('lost');
-            } else {
-              setTimeout(resetBall, 1000);
-            }
-            return newScore;
-          });
-          return { x: GAME_WIDTH / 2, y: GAME_HEIGHT / 2, dx: 0, dy: 0 };
+        
+        // Ball goes off screen (scoring)
+        if (newBall.x < 0) {
+          setAiScore(prev => prev + 1);
+          resetBall();
+        } else if (newBall.x > dimensions.width) {
+          setPlayerScore(prev => prev + 1);
+          resetBall();
         }
+        
+        return newBall;
+      });
 
-        // Ball goes off right side (Player scores)
-        if (newX > GAME_WIDTH) {
-          setPlayerScore(prev => {
-            const newScore = prev + 1;
-            if (newScore >= WIN_SCORE) {
-              setGameState('won');
-            } else {
-              setTimeout(resetBall, 1000);
-            }
-            return newScore;
-          });
-          return { x: GAME_WIDTH / 2, y: GAME_HEIGHT / 2, dx: 0, dy: 0 };
+      // Update paddles
+      setPlayerPaddle(prevPos => {
+        let newPos = prevPos;
+        
+        // Keyboard controls
+        if (keysPressed.current.has('w') || keysPressed.current.has('arrowup')) {
+          newPos = Math.max(0, newPos - dimensions.paddleSpeed);
         }
+        if (keysPressed.current.has('s') || keysPressed.current.has('arrowdown')) {
+          newPos = Math.min(dimensions.height - dimensions.paddleHeight, newPos + dimensions.paddleSpeed);
+        }
+        
+        // Touch controls - smooth movement towards target
+        if (isMobile) {
+          const diff = paddleTargetY.current - prevPos;
+          if (Math.abs(diff) > 2) {
+            newPos = prevPos + Math.sign(diff) * Math.min(Math.abs(diff) * 0.1, dimensions.paddleSpeed);
+          }
+        }
+        
+        return newPos;
+      });
 
-        // Limit ball speed
-        newDx = Math.max(-8, Math.min(8, newDx));
-        newDy = Math.max(-6, Math.min(6, newDy));
-
-        return { x: newX, y: newY, dx: newDx, dy: newDy };
+      setAiPaddle(prevPos => {
+        // Simple AI: follow the ball
+        const ballCenterY = ball.y + dimensions.ballSize / 2;
+        const paddleCenterY = prevPos + dimensions.paddleHeight / 2;
+        
+        if (ballCenterY < paddleCenterY - 10) {
+          return Math.max(0, prevPos - dimensions.aiSpeed);
+        } else if (ballCenterY > paddleCenterY + 10) {
+          return Math.min(dimensions.height - dimensions.paddleHeight, prevPos + dimensions.aiSpeed);
+        }
+        
+        return prevPos;
       });
 
       animationFrameRef.current = requestAnimationFrame(gameLoop);
@@ -193,157 +245,155 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [isOpen, gameState, playerPaddle, aiPaddle, resetBall]);
+  }, [isOpen, gameState, ball, playerPaddle, aiPaddle, resetBall, gameDimensions, isMobile]);
 
-  // Handle game won
+  // Check win conditions
   useEffect(() => {
-    if (gameState === 'won') {
-      setTimeout(() => {
-        onWin();
-        onClose();
-      }, 2000);
+    if (playerScore >= WIN_SCORE) {
+      setGameState('won');
+    } else if (aiScore >= WIN_SCORE) {
+      setGameState('lost');
     }
-  }, [gameState, onWin, onClose]);
-
-  if (!isOpen) return null;
+  }, [playerScore, aiScore]);
 
   return (
     <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center"
-      >
-        <div className="relative">
-          {/* Game UI */}
-          <div className="absolute top-4 left-4 text-[var(--terminal-green)] font-mono text-lg z-10">
-            <div>Player: {playerScore}</div>
-          </div>
-
-          <div className="absolute top-4 right-4 text-[var(--terminal-green)] font-mono text-lg z-10">
-            <div>AI: {aiScore}</div>
-          </div>
-
-          <div className="absolute top-16 left-1/2 transform -translate-x-1/2 text-[var(--terminal-yellow)] font-mono text-sm z-10">
-            <div>First to {WIN_SCORE} wins • W/S or ↑/↓ to move • ESC to exit</div>
-          </div>
-
-          {/* Phone Number Reveal Display */}
-          <div className="absolute top-32 left-1/2 transform -translate-x-1/2 z-10">
-            <div className="text-center">
-              <div className="text-[var(--terminal-gray)] font-mono text-xs mb-1">
-                Phone number revealed by paddle hits:
-              </div>
-              <div className="font-mono text-lg tracking-wider">
-                <span className="text-[var(--terminal-green)] drop-shadow-glow">
-                  {PHONE_NUMBER.substring(0, phoneDigitsRevealed)}
-                </span>
-                <span className="text-[var(--terminal-gray)] opacity-30">
-                  {PHONE_NUMBER.substring(phoneDigitsRevealed).replace(/./g, '_')}
-                </span>
-              </div>
-              <div className="text-[var(--terminal-yellow)] font-mono text-xs mt-1">
-                {phoneDigitsRevealed}/{PHONE_NUMBER.length} characters revealed
-              </div>
-            </div>
-          </div>
-
-          {/* Game Area */}
-          <div
-            ref={gameAreaRef}
-            className="relative bg-black border-2 border-[var(--terminal-green)] overflow-hidden"
-            style={{ width: GAME_WIDTH, height: GAME_HEIGHT }}
-            onKeyDown={(e) => {
-              if (e.key === 'Escape') {
-                onClose();
-              }
-            }}
-            tabIndex={0}
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0.8 }}
+            className="bg-black border-2 border-[var(--terminal-cyan)] rounded-lg p-4 w-full max-w-4xl"
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* Center line */}
-            <div
-              className="absolute bg-[var(--terminal-gray)] opacity-50"
-              style={{
-                left: GAME_WIDTH / 2 - 1,
-                top: 0,
-                width: 2,
-                height: GAME_HEIGHT,
-                background: 'repeating-linear-gradient(to bottom, var(--terminal-gray) 0px, var(--terminal-gray) 20px, transparent 20px, transparent 40px)'
-              }}
-            />
+            {/* Game Header */}
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl sm:text-2xl font-mono text-[var(--terminal-cyan)] terminal-glow">
+                PONG CHALLENGE
+              </h2>
+              <button
+                onClick={onClose}
+                className="text-[var(--terminal-red)] hover:text-[var(--terminal-yellow)] text-xl font-mono"
+              >
+                [X]
+              </button>
+            </div>
 
-            {/* Player Paddle (Left) */}
-            <div
-              className="absolute bg-[var(--terminal-green)]"
-              style={{
-                left: 0,
-                top: playerPaddle,
-                width: PADDLE_WIDTH,
-                height: PADDLE_HEIGHT,
-                boxShadow: '0 0 10px var(--terminal-green)'
-              }}
-            />
-
-            {/* AI Paddle (Right) */}
-            <div
-              className="absolute bg-[var(--terminal-green)]"
-              style={{
-                right: 0,
-                top: aiPaddle,
-                width: PADDLE_WIDTH,
-                height: PADDLE_HEIGHT,
-                boxShadow: '0 0 10px var(--terminal-green)'
-              }}
-            />
-
-            {/* Ball */}
-            <div
-              className="absolute bg-[var(--terminal-yellow)] rounded-full"
-              style={{
-                left: ball.x,
-                top: ball.y,
-                width: BALL_SIZE,
-                height: BALL_SIZE,
-                boxShadow: '0 0 15px var(--terminal-yellow)'
-              }}
-            />
-
-            {/* Game Over Overlay */}
-            {gameState !== 'playing' && (
-              <div className="absolute inset-0 bg-black bg-opacity-80 flex items-center justify-center">
-                <div className="text-center">
-                  {gameState === 'won' ? (
-                    <div>
-                      <div className="text-[var(--terminal-green)] text-4xl font-bold mb-4 pixel-font">
-                        VICTORY!
-                      </div>
-                      <div className="text-[var(--terminal-yellow)] text-xl font-mono">
-                        Unlocking Contact Information...
-                      </div>
-                    </div>
-                  ) : (
-                    <div>
-                      <div className="text-red-500 text-4xl font-bold mb-4 pixel-font">
-                        GAME OVER
-                      </div>
-                      <div className="text-[var(--terminal-gray)] text-lg font-mono mb-6">
-                        AI wins {aiScore}-{playerScore}
-                      </div>
-                      <button
-                        onClick={() => setGameState('playing')}
-                        className="px-6 py-3 bg-[var(--terminal-yellow)] text-black font-mono hover:bg-[var(--terminal-green)] transition-colors"
-                      >
-                        Try Again
-                      </button>
-                    </div>
+            {/* Score and Progress */}
+            <div className="flex justify-between items-center mb-4 text-[var(--terminal-green)] font-mono text-sm sm:text-base">
+              <div>PLAYER: {playerScore}</div>
+              <div className="text-center flex-1 mx-4">
+                <div className="text-xs sm:text-sm">Phone revealed by paddle hits:</div>
+                <div className="text-sm sm:text-lg font-bold">
+                  {PHONE_NUMBER.substring(0, phoneDigitsRevealed)}
+                  {phoneDigitsRevealed < PHONE_NUMBER.length && (
+                    <span className="text-[var(--terminal-gray)]">
+                      {PHONE_NUMBER.substring(phoneDigitsRevealed)}
+                    </span>
                   )}
                 </div>
+                <div className="text-xs">
+                  {phoneDigitsRevealed}/{PHONE_NUMBER.length} characters
+                </div>
               </div>
-            )}
-          </div>
-        </div>
-      </motion.div>
+              <div>AI: {aiScore}</div>
+            </div>
+
+            {/* Game Area */}
+            <div className="flex justify-center">
+              <div 
+                ref={gameAreaRef}
+                className="relative bg-black border border-[var(--terminal-gray)] touch-none"
+                style={{
+                  width: `${gameDimensions.width}px`,
+                  height: `${gameDimensions.height}px`
+                }}
+              >
+                {/* Center line */}
+                <div 
+                  className="absolute border-l border-dashed border-[var(--terminal-gray)] opacity-50"
+                  style={{
+                    left: `${gameDimensions.width / 2}px`,
+                    height: '100%'
+                  }}
+                />
+
+                {/* Player paddle */}
+                <div
+                  className="absolute bg-[var(--terminal-green)] rounded-sm"
+                  style={{
+                    left: '0px',
+                    top: `${playerPaddle}px`,
+                    width: `${gameDimensions.paddleWidth}px`,
+                    height: `${gameDimensions.paddleHeight}px`
+                  }}
+                />
+
+                {/* AI paddle */}
+                <div
+                  className="absolute bg-[var(--terminal-red)] rounded-sm"
+                  style={{
+                    right: '0px',
+                    top: `${aiPaddle}px`,
+                    width: `${gameDimensions.paddleWidth}px`,
+                    height: `${gameDimensions.paddleHeight}px`
+                  }}
+                />
+
+                {/* Ball */}
+                <div
+                  className="absolute bg-[var(--terminal-yellow)] rounded-full"
+                  style={{
+                    left: `${ball.x}px`,
+                    top: `${ball.y}px`,
+                    width: `${gameDimensions.ballSize}px`,
+                    height: `${gameDimensions.ballSize}px`
+                  }}
+                />
+
+                {/* Game over overlay */}
+                {gameState !== 'playing' && (
+                  <div className="absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="text-2xl sm:text-3xl font-mono text-[var(--terminal-yellow)] mb-4">
+                        {gameState === 'won' ? 'VICTORY!' : 'GAME OVER'}
+                      </div>
+                      {gameState === 'won' && (
+                        <div className="text-sm sm:text-lg font-mono text-[var(--terminal-green)] mb-4">
+                          Phone number fully revealed!
+                        </div>
+                      )}
+                      <button
+                        onClick={() => {
+                          if (gameState === 'won') {
+                            onWin();
+                          }
+                          onClose();
+                        }}
+                        className="px-6 py-2 bg-[var(--terminal-cyan)] text-black font-mono hover:bg-[var(--terminal-yellow)] transition-colors"
+                      >
+                        {gameState === 'won' ? 'CLAIM VICTORY' : 'TRY AGAIN'}
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Controls */}
+            <div className="mt-4 text-center text-[var(--terminal-gray)] font-mono text-xs sm:text-sm">
+              {isMobile ? 'Touch and drag to move paddle' : 'Use W/S or Arrow Keys to move paddle'} • First to {WIN_SCORE} wins • ESC to close
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </AnimatePresence>
   );
 }
