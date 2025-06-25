@@ -189,10 +189,14 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
         // Ball goes off screen (scoring)
         if (newBall.x < 0) {
           setAiScore(prev => prev + 1);
-          resetBall();
+          // Return current ball position to prevent further updates this frame
+          setTimeout(resetBall, 100);
+          return prevBall;
         } else if (newBall.x > dimensions.width) {
           setPlayerScore(prev => prev + 1);
-          resetBall();
+          // Return current ball position to prevent further updates this frame
+          setTimeout(resetBall, 100);
+          return prevBall;
         }
         
         return newBall;
