@@ -563,17 +563,27 @@
 /* Arcade Loading Screen Styles */
 .arcade-loading-container {
   background: radial-gradient(circle at center, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
-  padding: 4rem;
+  padding: 2rem;
   border-radius: 1rem;
   border: 2px solid var(--terminal-cyan);
   box-shadow: 
     0 0 20px var(--terminal-cyan),
     inset 0 0 20px rgba(0, 255, 255, 0.1);
-  min-height: 400px;
-  width: 500px;
+  height: 400px;
+  width: 90vw;
+  max-width: 500px;
+  min-width: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .arcade-loading-container {
+    height: 350px;
+    width: 95vw;
+    padding: 1.5rem;
+  }
 }
 
 .pixel-font {

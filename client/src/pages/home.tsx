@@ -442,32 +442,32 @@ export default function Home() {
       {arcadeLoading && (
         <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
           <div className="arcade-loading-container">
-            <div className="text-center w-96">
+            <div className="text-center w-full max-w-sm mx-auto px-4">
               {/* Retro Game Title */}
-              <div className="arcade-title mb-8">
-                <div className="text-4xl font-bold text-[var(--terminal-yellow)] mb-2 pixel-font">
+              <div className="arcade-title mb-6">
+                <div className="text-2xl sm:text-4xl font-bold text-[var(--terminal-yellow)] mb-2 pixel-font">
                   JOSHUA RENFRO
                 </div>
-                <div className="text-lg text-[var(--terminal-cyan)] pixel-font">
+                <div className="text-sm sm:text-lg text-[var(--terminal-cyan)] pixel-font">
                   DIGITAL PROFILE
                 </div>
               </div>
               
               {/* Loading Messages - Fixed Height */}
-              <div className="arcade-loading-text h-20 flex items-center justify-center mb-8">
+              <div className="arcade-loading-text h-16 sm:h-20 flex items-center justify-center mb-6">
                 {arcadeLoadingStep < 8 ? (
-                  <div className={`text-[var(--terminal-green)] text-lg pixel-font ${arcadeLoadingStep === 0 ? 'arcade-flash' : ''}`}>
+                  <div className={`text-[var(--terminal-green)] text-sm sm:text-lg pixel-font text-center px-2 ${arcadeLoadingStep === 0 ? 'arcade-flash' : ''}`}>
                     {arcadeSequence[arcadeLoadingStep]?.text}
                   </div>
                 ) : (
-                  <div className="text-[var(--terminal-yellow)] text-xl pixel-font blink-animation">
+                  <div className="text-[var(--terminal-yellow)] text-lg sm:text-xl pixel-font blink-animation">
                     PROFILE LOADED
                   </div>
                 )}
               </div>
               
               {/* Progress/Action Area - Fixed Height */}
-              <div className="h-24 flex flex-col items-center justify-center">
+              <div className="h-20 sm:h-24 flex flex-col items-center justify-center">
                 {/* Progress Bar */}
                 {arcadeLoadingStep < 8 && (
                   <div className="arcade-progress-container">
