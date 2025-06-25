@@ -174,8 +174,8 @@ export default function Home() {
       const scrollProgress = window.scrollY;
       const ships = galagaShipsRef.current;
       
-      if (ships.left && ships.right && !battleshipsEngaged) {
-        // Only move ships during scroll if not engaged
+      if (ships.left && ships.right) {
+        // Position ships based on scroll
         const shipY = Math.max(200, window.innerHeight - 100 - scrollProgress * 0.3);
         ships.left.style.top = `${shipY}px`;
         ships.right.style.top = `${shipY}px`;
