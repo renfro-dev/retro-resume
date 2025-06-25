@@ -442,7 +442,7 @@ export default function Home() {
       {arcadeLoading && (
         <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
           <div className="arcade-loading-container">
-            <div className="text-center">
+            <div className="text-center w-96">
               {/* Retro Game Title */}
               <div className="arcade-title mb-8">
                 <div className="text-4xl font-bold text-[var(--terminal-yellow)] mb-2 pixel-font">
@@ -453,8 +453,8 @@ export default function Home() {
                 </div>
               </div>
               
-              {/* Loading Messages */}
-              <div className="arcade-loading-text h-16 flex items-center justify-center">
+              {/* Loading Messages - Fixed Height */}
+              <div className="arcade-loading-text h-20 flex items-center justify-center mb-8">
                 {arcadeLoadingStep < 8 ? (
                   <div className={`text-[var(--terminal-green)] text-lg pixel-font ${arcadeLoadingStep === 0 ? 'arcade-flash' : ''}`}>
                     {arcadeSequence[arcadeLoadingStep]?.text}
@@ -466,30 +466,33 @@ export default function Home() {
                 )}
               </div>
               
-              {/* Progress Bar */}
-              {arcadeLoadingStep < 8 && (
-                <div className="arcade-progress-container mt-8">
-                  <div className="arcade-progress-bar">
-                    <div 
-                      className="arcade-progress-fill"
-                      style={{ width: `${(arcadeLoadingStep / 7) * 100}%` }}
-                    ></div>
+              {/* Progress/Action Area - Fixed Height */}
+              <div className="h-24 flex flex-col items-center justify-center">
+                {/* Progress Bar */}
+                {arcadeLoadingStep < 8 && (
+                  <div className="arcade-progress-container">
+                    <div className="arcade-progress-bar">
+                      <div 
+                        className="arcade-progress-fill"
+                        style={{ width: `${(arcadeLoadingStep / 7) * 100}%` }}
+                      ></div>
+                    </div>
+                    <div className="text-[var(--terminal-gray)] text-sm mt-2 pixel-font">
+                      {Math.round((arcadeLoadingStep / 7) * 100)}% COMPLETE
+                    </div>
                   </div>
-                  <div className="text-[var(--terminal-gray)] text-sm mt-2 pixel-font">
-                    {Math.round((arcadeLoadingStep / 7) * 100)}% COMPLETE
-                  </div>
-                </div>
-              )}
-              
-              {/* Start Button (when ready) */}
-              {arcadeLoadingStep === 8 && (
-                <button 
-                  onClick={() => setArcadeLoading(false)}
-                  className="mt-8 px-8 py-4 bg-[var(--terminal-yellow)] text-black font-bold text-xl pixel-font hover:bg-[var(--terminal-green)] transition-colors arcade-button"
-                >
-                  ACTIVATE
-                </button>
-              )}
+                )}
+                
+                {/* Start Button (when ready) */}
+                {arcadeLoadingStep === 8 && (
+                  <button 
+                    onClick={() => setArcadeLoading(false)}
+                    className="px-8 py-4 bg-[var(--terminal-yellow)] text-black font-bold text-xl pixel-font hover:bg-[var(--terminal-green)] transition-colors arcade-button"
+                  >
+                    ACTIVATE
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
