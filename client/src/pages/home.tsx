@@ -59,7 +59,17 @@ const chapters = [
     imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Product market fit and legal technology",
     status: "Active",
-    reportContent: "Placeholder content for PMF report."
+    reportContent: (
+      <div className="space-y-4">
+        <p className="text-[var(--terminal-green)] font-mono">
+          As the Director of Revenue Operations at Cage & Miles, I build custom tools that empower the sales, marketing, and service orgs with technology, and leadership with the data that guides strategy and resource allocation.
+        </p>
+        <p className="text-[var(--terminal-green)] font-mono">
+          I build and manage resilient teams that can scale, and hold them accountable to a culture of continuous improvement.
+        </p>
+      </div>
+    ),
+    buttonText: "RevOps"
   },
   {
     title: "Roots",
