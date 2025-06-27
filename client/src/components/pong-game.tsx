@@ -49,6 +49,8 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
   const WIN_SCORE = 5;
   const PHONE_NUMBER = "619-629-8452";
 
+
+
   // Reset ball to center with random direction
   const resetBall = useCallback(() => {
     const direction = Math.random() > 0.5 ? 1 : -1;
@@ -80,20 +82,23 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Initialize game
+  // Initialize game - reset everything when modal opens
   useEffect(() => {
-    if (isOpen && gameState === 'playing') {
+    if (isOpen) {
       const dimensions = getGameDimensions();
+      setGameState('playing');
       setPlayerScore(0);
       setAiScore(0);
-      setPhoneDigitsRevealed(0);
+      setPhoneDigitsRevealed(0); // Force reset to 0
+      setIsDragging(false);
       const centerY = dimensions.height / 2 - dimensions.paddleHeight / 2;
       setPlayerPaddle(centerY);
       setAiPaddle(centerY);
       paddleTargetY.current = centerY;
       resetBall();
+      console.log('Game initialized - phone digits reset to 0');
     }
-  }, [isOpen, gameState, resetBall]);
+  }, [isOpen, resetBall]);
 
   // Keyboard and touch controls
   useEffect(() => {
@@ -357,13 +362,14 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
               <div className="text-center flex-1 mx-4">
                 <div className="text-xs sm:text-sm">Phone revealed by paddle hits:</div>
                 <div className="text-sm sm:text-lg font-bold">
-                  {phoneDigitsRevealed > 0 ? PHONE_NUMBER.substring(0, phoneDigitsRevealed) : ''}
+                  {phoneDigitsRevealed > 0 && phoneDigitsRevealed <= PHONE_NUMBER.length ? 
+                    <span className="text-[var(--terminal-cyan)]">{PHONE_NUMBER.substring(0, phoneDigitsRevealed)}</span> : ''}
                   <span className="text-[var(--terminal-gray)]">
-                    {'█'.repeat(PHONE_NUMBER.length - phoneDigitsRevealed)}
+                    {'█'.repeat(PHONE_NUMBER.length - Math.max(0, phoneDigitsRevealed))}
                   </span>
                 </div>
                 <div className="text-xs">
-                  {phoneDigitsRevealed}/{PHONE_NUMBER.length} characters
+                  {phoneDigitsRevealed}/{PHONE_NUMBER.length} characters revealed
                 </div>
               </div>
               <div>AI: {aiScore}</div>
