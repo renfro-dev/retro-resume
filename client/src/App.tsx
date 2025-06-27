@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/home";
 import NotFound from "@/pages/not-found";
+import { useEffect } from "react";
 
 function Router() {
   return (
@@ -16,6 +17,26 @@ function Router() {
 }
 
 function App() {
+  // Force title persistence throughout app lifecycle
+  useEffect(() => {
+    document.title = "Retro Resume";
+    
+    // Create observer to watch for any title changes and revert them
+    const titleObserver = new MutationObserver(() => {
+      if (document.title !== "Retro Resume") {
+        document.title = "Retro Resume";
+      }
+    });
+    
+    titleObserver.observe(document.querySelector('title') || document.head, {
+      childList: true,
+      characterData: true,
+      subtree: true
+    });
+    
+    return () => titleObserver.disconnect();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
