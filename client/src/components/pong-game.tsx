@@ -85,18 +85,19 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
   // Initialize game - reset everything when modal opens
   useEffect(() => {
     if (isOpen) {
-      const dimensions = getGameDimensions();
+      // Force complete reset of all game state
       setGameState('playing');
       setPlayerScore(0);
       setAiScore(0);
-      setPhoneDigitsRevealed(0); // Force reset to 0
+      setPhoneDigitsRevealed(0);
       setIsDragging(false);
+      
+      const dimensions = getGameDimensions();
       const centerY = dimensions.height / 2 - dimensions.paddleHeight / 2;
       setPlayerPaddle(centerY);
       setAiPaddle(centerY);
       paddleTargetY.current = centerY;
       resetBall();
-      console.log('Game initialized - phone digits reset to 0');
     }
   }, [isOpen, resetBall]);
 
