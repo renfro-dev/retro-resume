@@ -29,6 +29,7 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
   const touchStartY = useRef<number>(0);
   const paddleTargetY = useRef<number>(250);
   const [isMobile, setIsMobile] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   // Responsive game dimensions
   const getGameDimensions = () => {
@@ -110,7 +111,16 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
 
     const handleTouchStart = (e: TouchEvent) => {
       e.preventDefault();
-      touchStartY.current = e.touches[0].clientY;
+      if (!gameAreaRef.current) return;
+      
+      const rect = gameAreaRef.current.getBoundingClientRect();
+      const touchY = e.touches[0].clientY - rect.top;
+      touchStartY.current = touchY;
+      
+      // Immediately set paddle position to touch location
+      const dimensions = gameDimensions;
+      const paddleY = Math.max(0, Math.min(dimensions.height - dimensions.paddleHeight, touchY - dimensions.paddleHeight / 2));
+      paddleTargetY.current = paddleY;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
@@ -126,23 +136,59 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
       paddleTargetY.current = paddleY;
     };
 
+    const handleMouseDown = (e: MouseEvent) => {
+      e.preventDefault();
+      if (!gameAreaRef.current) return;
+      
+      setIsDragging(true);
+      const rect = gameAreaRef.current.getBoundingClientRect();
+      const mouseY = e.clientY - rect.top;
+      const dimensions = gameDimensions;
+      
+      const paddleY = Math.max(0, Math.min(dimensions.height - dimensions.paddleHeight, mouseY - dimensions.paddleHeight / 2));
+      paddleTargetY.current = paddleY;
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      e.preventDefault();
+      if (!isDragging || !gameAreaRef.current) return;
+      
+      const rect = gameAreaRef.current.getBoundingClientRect();
+      const mouseY = e.clientY - rect.top;
+      const dimensions = gameDimensions;
+      
+      const paddleY = Math.max(0, Math.min(dimensions.height - dimensions.paddleHeight, mouseY - dimensions.paddleHeight / 2));
+      paddleTargetY.current = paddleY;
+    };
+
+    const handleMouseUp = (e: MouseEvent) => {
+      e.preventDefault();
+      setIsDragging(false);
+    };
+
     if (isOpen) {
       window.addEventListener('keydown', handleKeyDown);
       window.addEventListener('keyup', handleKeyUp);
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
       
       if (gameAreaRef.current) {
         gameAreaRef.current.addEventListener('touchstart', handleTouchStart, { passive: false });
         gameAreaRef.current.addEventListener('touchmove', handleTouchMove, { passive: false });
+        gameAreaRef.current.addEventListener('mousedown', handleMouseDown, { passive: false });
       }
     }
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
       
       if (gameAreaRef.current) {
         gameAreaRef.current.removeEventListener('touchstart', handleTouchStart);
         gameAreaRef.current.removeEventListener('touchmove', handleTouchMove);
+        gameAreaRef.current.removeEventListener('mousedown', handleMouseDown);
       }
     };
   }, [isOpen, gameDimensions, onClose]);
@@ -214,11 +260,12 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
           newPos = Math.min(dimensions.height - dimensions.paddleHeight, newPos + dimensions.paddleSpeed);
         }
         
-        // Touch controls - smooth movement towards target
+        // Touch/Mouse controls - immediate movement for better responsiveness
         const diff = paddleTargetY.current - prevPos;
-        if (Math.abs(diff) > 1) {
-          newPos = prevPos + Math.sign(diff) * Math.min(Math.abs(diff) * 0.3, dimensions.paddleSpeed * 1.5);
-        } else if (Math.abs(diff) > 0.1) {
+        if (Math.abs(diff) > 0.5) {
+          // Faster movement for touch controls
+          newPos = prevPos + Math.sign(diff) * Math.min(Math.abs(diff) * 0.8, dimensions.paddleSpeed * 3);
+        } else {
           newPos = paddleTargetY.current;
         }
         
@@ -322,67 +369,20 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
               <div>AI: {aiScore}</div>
             </div>
 
-            {/* Mobile control buttons */}
-            {isMobile && (
-              <div className="flex justify-center gap-4 mb-4">
-                <button
-                  onTouchStart={(e) => {
-                    e.preventDefault();
-                    keysPressed.current.add('w');
-                  }}
-                  onTouchEnd={(e) => {
-                    e.preventDefault();
-                    keysPressed.current.delete('w');
-                  }}
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    keysPressed.current.add('w');
-                  }}
-                  onMouseUp={(e) => {
-                    e.preventDefault();
-                    keysPressed.current.delete('w');
-                  }}
-                  className="px-4 py-2 bg-[var(--terminal-green)] text-black font-mono text-sm rounded select-none active:bg-[var(--terminal-yellow)]"
-                >
-                  ↑ UP
-                </button>
-                <button
-                  onTouchStart={(e) => {
-                    e.preventDefault();
-                    keysPressed.current.add('s');
-                  }}
-                  onTouchEnd={(e) => {
-                    e.preventDefault();
-                    keysPressed.current.delete('s');
-                  }}
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    keysPressed.current.add('s');
-                  }}
-                  onMouseUp={(e) => {
-                    e.preventDefault();
-                    keysPressed.current.delete('s');
-                  }}
-                  className="px-4 py-2 bg-[var(--terminal-green)] text-black font-mono text-sm rounded select-none active:bg-[var(--terminal-yellow)]"
-                >
-                  ↓ DOWN
-                </button>
-              </div>
-            )}
-
             {/* Instructions */}
             <div className="text-center text-xs sm:text-sm text-[var(--terminal-gray)] mb-4 font-mono">
-              {isMobile ? "Touch buttons above or use W/S keys to move paddle" : "Use W/S or ↑/↓ keys to move paddle"}
+              {isMobile ? "Touch and drag anywhere on the game area to move your paddle" : "Use W/S or ↑/↓ keys to move paddle"}
             </div>
 
             {/* Game Area */}
             <div className="flex justify-center">
               <div 
                 ref={gameAreaRef}
-                className="relative bg-black border border-[var(--terminal-gray)] touch-none"
+                className="relative bg-black border border-[var(--terminal-gray)] touch-none cursor-none select-none"
                 style={{
                   width: `${gameDimensions.width}px`,
-                  height: `${gameDimensions.height}px`
+                  height: `${gameDimensions.height}px`,
+                  cursor: isDragging ? 'grabbing' : 'grab'
                 }}
               >
                 {/* Center line */}
