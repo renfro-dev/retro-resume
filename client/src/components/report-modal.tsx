@@ -29,11 +29,8 @@ export default function ReportModal({ isOpen, onClose, title, content }: ReportM
           exit={{ opacity: 0, scale: 0.8 }}
           className="relative workflow-card w-full max-w-4xl max-h-[80vh] p-6 overflow-y-auto"
         >
-          {/* Header */}
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-[var(--terminal-green)] font-mono text-lg font-bold terminal-glow">
-              {title}
-            </h2>
+          {/* Close Button */}
+          <div className="flex justify-end mb-4">
             <button
               onClick={onClose}
               className="text-[var(--terminal-red)] hover:text-[var(--terminal-yellow)] font-mono text-xl transition-colors duration-200"
