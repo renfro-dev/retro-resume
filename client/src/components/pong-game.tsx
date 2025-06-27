@@ -145,7 +145,7 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
         gameAreaRef.current.removeEventListener('touchmove', handleTouchMove);
       }
     };
-  }, [isOpen, gameDimensions]);
+  }, [isOpen, gameDimensions, onClose]);
 
   // Game loop
   useEffect(() => {
@@ -206,7 +206,7 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
       setPlayerPaddle(prevPos => {
         let newPos = prevPos;
         
-        // Keyboard controls
+        // Keyboard controls (works for both desktop and mobile)
         if (keysPressed.current.has('w') || keysPressed.current.has('arrowup')) {
           newPos = Math.max(0, newPos - dimensions.paddleSpeed);
         }
@@ -215,11 +215,11 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
         }
         
         // Touch controls - smooth movement towards target
-        if (isMobile) {
-          const diff = paddleTargetY.current - prevPos;
-          if (Math.abs(diff) > 2) {
-            newPos = prevPos + Math.sign(diff) * Math.min(Math.abs(diff) * 0.1, dimensions.paddleSpeed);
-          }
+        const diff = paddleTargetY.current - prevPos;
+        if (Math.abs(diff) > 1) {
+          newPos = prevPos + Math.sign(diff) * Math.min(Math.abs(diff) * 0.3, dimensions.paddleSpeed * 1.5);
+        } else if (Math.abs(diff) > 0.1) {
+          newPos = paddleTargetY.current;
         }
         
         return newPos;
@@ -320,6 +320,59 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
                 </div>
               </div>
               <div>AI: {aiScore}</div>
+            </div>
+
+            {/* Mobile control buttons */}
+            {isMobile && (
+              <div className="flex justify-center gap-4 mb-4">
+                <button
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    keysPressed.current.add('w');
+                  }}
+                  onTouchEnd={(e) => {
+                    e.preventDefault();
+                    keysPressed.current.delete('w');
+                  }}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    keysPressed.current.add('w');
+                  }}
+                  onMouseUp={(e) => {
+                    e.preventDefault();
+                    keysPressed.current.delete('w');
+                  }}
+                  className="px-4 py-2 bg-[var(--terminal-green)] text-black font-mono text-sm rounded select-none active:bg-[var(--terminal-yellow)]"
+                >
+                  ↑ UP
+                </button>
+                <button
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    keysPressed.current.add('s');
+                  }}
+                  onTouchEnd={(e) => {
+                    e.preventDefault();
+                    keysPressed.current.delete('s');
+                  }}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    keysPressed.current.add('s');
+                  }}
+                  onMouseUp={(e) => {
+                    e.preventDefault();
+                    keysPressed.current.delete('s');
+                  }}
+                  className="px-4 py-2 bg-[var(--terminal-green)] text-black font-mono text-sm rounded select-none active:bg-[var(--terminal-yellow)]"
+                >
+                  ↓ DOWN
+                </button>
+              </div>
+            )}
+
+            {/* Instructions */}
+            <div className="text-center text-xs sm:text-sm text-[var(--terminal-gray)] mb-4 font-mono">
+              {isMobile ? "Touch buttons above or use W/S keys to move paddle" : "Use W/S or ↑/↓ keys to move paddle"}
             </div>
 
             {/* Game Area */}
