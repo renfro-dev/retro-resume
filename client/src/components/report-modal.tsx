@@ -32,7 +32,7 @@ export default function ReportModal({ isOpen, onClose, title, content }: ReportM
           {/* Header */}
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-[var(--terminal-green)] font-mono text-lg font-bold terminal-glow">
-              {title} Report
+              {title}
             </h2>
             <button
               onClick={onClose}
