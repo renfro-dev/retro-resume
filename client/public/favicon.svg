@@ -1,18 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <defs>
-    <style>
-      .cursor {
-        fill: #00ff00;
-        animation: blink 1s infinite;
-      }
-      @keyframes blink {
-        0%, 50% { opacity: 1; }
-        51%, 100% { opacity: 0; }
-      }
-    </style>
-  </defs>
   <!-- Dark background -->
   <rect x="0" y="0" width="32" height="32" fill="#000000"/>
-  <!-- Terminal cursor -->
-  <rect x="8" y="8" width="3" height="16" class="cursor"/>
+  <!-- Terminal cursor (static - animations don't work in favicons) -->
+  <rect x="8" y="8" width="3" height="16" fill="#00ff00"/>
 </svg>
