@@ -1,8 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <!-- Black background -->
-  <rect width="100" height="100" fill="#000000"/>
-  <!-- Green terminal text "> " -->
-  <text x="10" y="65" font-family="monospace" font-size="45" fill="#00ff00" font-weight="bold">&gt;</text>
-  <!-- Green cursor block -->
-  <rect x="50" y="35" width="8" height="35" fill="#00ff00"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#000"/>
+  <rect x="4" y="4" width="24" height="24" fill="none" stroke="#00ff00" stroke-width="2"/>
+  <rect x="8" y="12" width="4" height="8" fill="#00ff00"/>
+  <rect x="14" y="8" width="4" height="4" fill="#00ff00"/>
+  <rect x="20" y="16" width="4" height="4" fill="#00ff00"/>
 </svg>
