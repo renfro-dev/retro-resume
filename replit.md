@@ -1,7 +1,7 @@
-# The Story of a Toolkit - Personal Brand Journey
+# Retro Resume - Interactive Personal Brand Journey
 
 ## Overview
-This is a full-stack web application showcasing a personal brand journey through an interactive storytelling experience. The application presents 8 chapters of technology adoption through rhombus-shaped visual elements on a colorful NFT-style background. Built as a modern web application using React frontend with Express backend, featuring a clean design system and responsive layout.
+This is a full-stack web application showcasing a personal brand journey through an interactive retro-themed resume experience. The application presents 8 chapters of technology adoption through rhombus-shaped visual elements on a colorful NFT-style background with terminal aesthetics. Built as a modern web application using React frontend with Express backend, featuring arcade-style gameplay elements and responsive layout.
 
 ## System Architecture
 
@@ -135,3 +135,8 @@ See `NAMING_CONVENTION.md` for complete guidelines.
   - Implemented progressive phone number reveal starting from completely hidden state
   - Phone number shows as block characters (█) until revealed through paddle hits
   - Enhanced mobile UI with appropriate text scaling and touch-friendly controls
+- June 27, 2025. Branding and favicon update
+  - Changed page title from "The Story of a Toolkit" to "Retro Resume"
+  - Added custom Pacman SVG favicon for retro gaming aesthetic
+  - Updated meta descriptions to reflect interactive resume theme
+  - Maintained arcade-style terminal interface branding

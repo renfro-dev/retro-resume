@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <circle cx="16" cy="16" r="14" fill="#FFFF00" stroke="#000" stroke-width="2"/>
+  <!-- Pacman mouth -->
+  <path d="M 16 16 L 30 16 A 14 14 0 0 1 23 27 Z" fill="#000"/>
+  <!-- Eye -->
+  <circle cx="12" cy="10" r="2" fill="#000"/>
+</svg>
