@@ -89,7 +89,7 @@ const chapters = [
     status: "Active",
     reportContent: "CSA Boss",
     externalLink: "https://www.linkedin.com/posts/joshuarenfro_replit-project-10-hour-milestone-activity-7344517801254010880-Xm9b?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAWtKSwBtM0WdUYcXCyRF_9ACl0MpPIp5xc",
-    buttonText: "LinkedIn"
+    buttonText: "Vibing"
   }
 ];
 
