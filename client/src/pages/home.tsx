@@ -87,7 +87,9 @@ const chapters = [
     imageUrl: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Business acquisition and operations",
     status: "Active",
-    reportContent: "Placeholder content for Entre-curious report."
+    reportContent: "CSA Boss",
+    externalLink: "https://www.linkedin.com/posts/joshuarenfro_replit-project-10-hour-milestone-activity-7344517801254010880-Xm9b?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAWtKSwBtM0WdUYcXCyRF_9ACl0MpPIp5xc",
+    buttonText: "LinkedIn"
   }
 ];
 
