@@ -83,7 +83,7 @@ const chapters = [
   },
   {
     title: "Vibe",
-    description: "Currently focused on turning words into code. I've never been as excited.",
+    description: "I'm a vibe coder, actively bridging people, business, and new tech.",
     imageUrl: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
     imageAlt: "Business acquisition and operations",
     status: "Active",
