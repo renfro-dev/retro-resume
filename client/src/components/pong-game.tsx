@@ -40,7 +40,7 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
       paddleWidth: isMobileDevice ? 15 : 20,
       paddleHeight: isMobileDevice ? 80 : 100,
       ballSize: isMobileDevice ? 15 : 20,
-      paddleSpeed: isMobileDevice ? 8 : 6,
+      paddleSpeed: isMobileDevice ? 8 : 3,
       aiSpeed: isMobileDevice ? 5 : 4
     };
   };
