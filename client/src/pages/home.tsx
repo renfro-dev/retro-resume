@@ -90,7 +90,8 @@ const chapters = [
     reportContent: "CSA Boss",
     externalLinks: [
       { url: "https://www.linkedin.com/posts/joshuarenfro_replit-project-10-hour-milestone-activity-7344517801254010880-Xm9b?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAWtKSwBtM0WdUYcXCyRF_9ACl0MpPIp5xc", text: "Vibing" },
-      { url: "https://drafter.legal/", text: "Drafter" }
+      { url: "https://drafter.legal/", text: "Drafter" },
+      { url: "https://www.linkedin.com/posts/joshuarenfro_sdx-cursor-openai-hack-day-recap-activity-7365813628828069888-bfmr?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAWtKSwBtM0WdUYcXCyRF_9ACl0MpPIp5xc", text: "Hackathons" }
     ]
   }
 ];
