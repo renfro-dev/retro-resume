@@ -257,22 +257,33 @@ export default function PongGame({ isOpen, onClose, onWin }: PongGameProps) {
       // Update paddles
       setPlayerPaddle(prevPos => {
         let newPos = prevPos;
+        let keyboardUsed = false;
         
         // Keyboard controls (works for both desktop and mobile)
         if (keysPressed.current.has('w') || keysPressed.current.has('arrowup')) {
           newPos = Math.max(0, newPos - dimensions.paddleSpeed);
+          keyboardUsed = true;
         }
         if (keysPressed.current.has('s') || keysPressed.current.has('arrowdown')) {
           newPos = Math.min(dimensions.height - dimensions.paddleHeight, newPos + dimensions.paddleSpeed);
+          keyboardUsed = true;
         }
         
-        // Touch/Mouse controls - immediate movement for better responsiveness
-        const diff = paddleTargetY.current - prevPos;
-        if (Math.abs(diff) > 0.5) {
-          // Faster movement for touch controls
-          newPos = prevPos + Math.sign(diff) * Math.min(Math.abs(diff) * 0.8, dimensions.paddleSpeed * 3);
-        } else {
-          newPos = paddleTargetY.current;
+        // If keyboard was used, update paddleTargetY to match and skip touch controls
+        if (keyboardUsed) {
+          paddleTargetY.current = newPos;
+          return newPos;
+        }
+        
+        // Touch/Mouse controls - only apply when actively dragging
+        if (isDragging || isMobile) {
+          const diff = paddleTargetY.current - prevPos;
+          if (Math.abs(diff) > 0.5) {
+            // Faster movement for touch controls
+            newPos = prevPos + Math.sign(diff) * Math.min(Math.abs(diff) * 0.8, dimensions.paddleSpeed * 3);
+          } else {
+            newPos = paddleTargetY.current;
+          }
         }
         
         return newPos;
