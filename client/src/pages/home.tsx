@@ -88,8 +88,10 @@ const chapters = [
     imageAlt: "Business acquisition and operations",
     status: "Active",
     reportContent: "CSA Boss",
-    externalLink: "https://www.linkedin.com/posts/joshuarenfro_replit-project-10-hour-milestone-activity-7344517801254010880-Xm9b?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAWtKSwBtM0WdUYcXCyRF_9ACl0MpPIp5xc",
-    buttonText: "Vibing"
+    externalLinks: [
+      { url: "https://www.linkedin.com/posts/joshuarenfro_replit-project-10-hour-milestone-activity-7344517801254010880-Xm9b?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAWtKSwBtM0WdUYcXCyRF_9ACl0MpPIp5xc", text: "Vibing" },
+      { url: "https://drafter.legal/", text: "Drafter" }
+    ]
   }
 ];
 
