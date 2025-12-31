@@ -46,26 +46,22 @@ app.use((req, res, next) => {
     try {
       const filename = decodeURIComponent(req.params.filename);
       const filePath = path.join(process.cwd(), 'attached_assets', filename);
-      
-      console.log('Requested file:', filename);
-      console.log('File path:', filePath);
-      
+
       if (!existsSync(filePath)) {
-        console.log('File not found at path:', filePath);
         return res.status(404).json({ error: 'File not found' });
       }
-      
+
       // Set proper content type
       if (filename.endsWith('.png')) {
         res.setHeader('Content-Type', 'image/png');
       } else if (filename.endsWith('.jpg') || filename.endsWith('.jpeg')) {
         res.setHeader('Content-Type', 'image/jpeg');
       }
-      
+
       // Serve the file directly
       res.sendFile(filePath);
     } catch (error) {
-      console.error('Error serving image:', error);
+      log(`Error serving asset ${req.params.filename}: ${error}`);
       res.status(500).json({ error: 'Failed to serve image' });
     }
   });
@@ -89,15 +85,9 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
+  // Serve the app on the configured port (default: 5000)
+  const port = parseInt(process.env.PORT || "5000", 10);
+  server.listen(port, "0.0.0.0", () => {
     log(`serving on port ${port}`);
   });
 })();

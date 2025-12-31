@@ -456,11 +456,13 @@ export default function Home() {
     <div className="font-mono bg-terminal pattern-grid min-h-screen">
       {/* Arcade Loading Screen */}
       {arcadeLoading && (
-        <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
-          <div className="arcade-loading-container">
-            <div className="text-center w-full max-w-sm mx-auto px-4">
-              {/* Retro Game Title */}
-              <div className="arcade-title mb-6">
+        <div className="fixed inset-0 bg-black z-50">
+          <Header />
+          <div className="flex items-center justify-center h-full">
+            <div className="arcade-loading-container">
+              <div className="text-center w-full max-w-sm mx-auto px-4">
+                {/* Retro Game Title */}
+                <div className="arcade-title mb-6">
                 <div className="text-2xl sm:text-4xl font-bold text-[var(--terminal-yellow)] mb-2 pixel-font">
                   JOSHUA RENFRO
                 </div>
@@ -508,6 +510,7 @@ export default function Home() {
                     ACTIVATE
                   </button>
                 )}
+              </div>
               </div>
             </div>
           </div>
@@ -643,3 +646,4 @@ export default function Home() {
     </div>
   );
 }
+
