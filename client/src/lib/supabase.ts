@@ -11,7 +11,7 @@ console.log('Using Supabase credentials:', !!supabaseUrl && !!supabaseAnonKey);
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Type definitions matching the actual weekly_briefs table structure
-export interface Article {
+export interface WeeklyBriefArticle {
   idx: number;
   id: string;
   week_start_date: string;
@@ -27,4 +27,37 @@ export interface Article {
   published_at: string | null;
   created_at: string;
   updated_at: string;
+}
+
+// Type definitions for context_orchestration_themes table
+export interface ContextOrchestrationArticle {
+  idx: number;
+  id: string;
+  period_start_date: string;
+  period_end_date: string;
+  period_type: string;
+  title: string;
+  essay_content: string;
+  citations: string;
+  source_document_ids: string[];
+  model_used: string;
+  prompt_version: string;
+  word_count: number;
+  reading_time_minutes: number;
+  created_at: string;
+  published_at: string | null;
+  metadata: string;
+}
+
+// Union type for all article types
+export type Article = WeeklyBriefArticle | ContextOrchestrationArticle;
+
+// Type guard to check if article is from weekly_briefs
+export function isWeeklyBrief(article: Article): article is WeeklyBriefArticle {
+  return 'week_start_date' in article;
+}
+
+// Type guard to check if article is from context_orchestration_themes
+export function isContextOrchestration(article: Article): article is ContextOrchestrationArticle {
+  return 'period_start_date' in article;
 }

@@ -2,28 +2,59 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import Header from "@/components/header";
-import { supabase, type Article } from "@/lib/supabase";
+import { supabase, type Article, isWeeklyBrief, isContextOrchestration } from "@/lib/supabase";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+type ResearchTheme = 'ai_evolution' | 'context_orchestration';
+
+const THEME_CONFIG = {
+  ai_evolution: {
+    label: 'AI Evolution',
+    table: 'weekly_briefs',
+    dateField: 'week_start_date',
+    loadingText: 'LOADING WEEKLY BRIEFS...',
+    notFoundText: 'NO WEEKLY BRIEFS FOUND',
+    foundText: 'WEEKLY BRIEF'
+  },
+  context_orchestration: {
+    label: 'Context Orchestration',
+    table: 'context_orchestration_briefs',
+    dateField: 'period_start_date',
+    loadingText: 'LOADING ARTICLES...',
+    notFoundText: 'NO ARTICLES FOUND',
+    foundText: 'ARTICLE'
+  }
+} as const;
 
 export default function Research() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedTheme, setSelectedTheme] = useState<ResearchTheme>('ai_evolution');
 
   useEffect(() => {
     async function fetchArticles() {
+      const config = THEME_CONFIG[selectedTheme];
       try {
         setLoading(true);
-        const { data, error } = await supabase
-          .from('weekly_briefs')
-          .select('*')
-          .order('week_start_date', { ascending: false });
+        setError(null);
 
-        if (error) throw error;
+        const { data, error } = await supabase
+          .from(config.table)
+          .select('*')
+          .order(config.dateField, { ascending: false });
+
+        if (error) {
+          console.error('Supabase error details:', error);
+          throw new Error(`Supabase error: ${error.message} (Code: ${error.code})`);
+        }
 
         setArticles(data || []);
       } catch (err) {
         console.error('Error fetching articles:', err);
+        console.error('Selected theme:', selectedTheme);
+        console.error('Table name:', config.table);
         setError(err instanceof Error ? err.message : 'Failed to load articles');
       } finally {
         setLoading(false);
@@ -31,7 +62,7 @@ export default function Research() {
     }
 
     fetchArticles();
-  }, []);
+  }, [selectedTheme]);
 
   return (
     <div className="font-mono bg-terminal pattern-grid min-h-screen">
@@ -45,7 +76,8 @@ export default function Research() {
             transition={{ duration: 0.6 }}
             className="terminal-card p-8 max-w-4xl mx-auto"
           >
-            <pre className="text-[var(--terminal-cyan)] text-xs mb-6 terminal-glow">
+            <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
+              <pre className="text-[var(--terminal-cyan)] text-xs terminal-glow">
 {`
  ██████╗ ███████╗███████╗███████╗ █████╗ ██████╗  ██████╗██╗  ██╗
  ██╔══██╗██╔════╝██╔════╝██╔════╝██╔══██╗██╔══██╗██╔════╝██║  ██║
@@ -54,7 +86,30 @@ export default function Research() {
  ██║  ██║███████╗███████║███████╗██║  ██║██║  ██║╚██████╗██║  ██║
  ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
 `}
-            </pre>
+              </pre>
+              <div className="flex items-center gap-2">
+                <span className="text-[var(--terminal-green)] text-xs font-mono">THEME:</span>
+                <Select value={selectedTheme} onValueChange={(value) => setSelectedTheme(value as ResearchTheme)}>
+                  <SelectTrigger className="w-[200px] bg-[var(--terminal-dark-gray)] border-[var(--terminal-cyan)] text-[var(--terminal-cyan)] font-mono text-xs hover:border-[var(--terminal-yellow)] focus:ring-[var(--terminal-yellow)]">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[var(--terminal-dark-gray)] border-[var(--terminal-cyan)] font-mono">
+                    <SelectItem
+                      value="ai_evolution"
+                      className="text-[var(--terminal-cyan)] text-xs focus:bg-[var(--terminal-cyan)] focus:text-[var(--terminal-dark-gray)] cursor-pointer"
+                    >
+                      AI Evolution
+                    </SelectItem>
+                    <SelectItem
+                      value="context_orchestration"
+                      className="text-[var(--terminal-cyan)] text-xs focus:bg-[var(--terminal-cyan)] focus:text-[var(--terminal-dark-gray)] cursor-pointer"
+                    >
+                      Context Orchestration
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
 
             {loading ? (
               <div className="space-y-3 text-[var(--terminal-green)] font-mono text-sm">
@@ -65,7 +120,7 @@ export default function Research() {
                 </p>
                 <p className="flex items-center gap-2">
                   <span className="text-[var(--terminal-yellow)]">&gt;</span>
-                  <span>LOADING WEEKLY BRIEFS...</span>
+                  <span>{THEME_CONFIG[selectedTheme].loadingText}</span>
                 </p>
               </div>
             ) : error ? (
@@ -82,7 +137,7 @@ export default function Research() {
               <div className="space-y-3 text-[var(--terminal-yellow)] font-mono text-sm">
                 <p className="flex items-center gap-2">
                   <span className="text-[var(--terminal-yellow)]">&gt;</span>
-                  <span>NO WEEKLY BRIEFS FOUND</span>
+                  <span>{THEME_CONFIG[selectedTheme].notFoundText}</span>
                 </p>
               </div>
             ) : (
@@ -90,7 +145,7 @@ export default function Research() {
                 <div className="text-[var(--terminal-green)] font-mono text-sm mb-4">
                   <p className="flex items-center gap-2">
                     <span className="text-[var(--terminal-yellow)]">&gt;</span>
-                    <span>FOUND {articles.length} WEEKLY BRIEF{articles.length !== 1 ? 'S' : ''}</span>
+                    <span>FOUND {articles.length} {THEME_CONFIG[selectedTheme].foundText}{articles.length !== 1 ? 'S' : ''}</span>
                   </p>
                 </div>
 
@@ -111,11 +166,20 @@ export default function Research() {
                             <div className="flex items-center justify-between gap-4">
                               <div className="flex items-center gap-2 text-xs text-[var(--terminal-gray)] uppercase">
                                 <span className="terminal-prompt-icon text-sm">[&gt;]</span>
-                                <span>Week of {new Date(article.week_start_date).toLocaleDateString('en-US', {
-                                  month: 'short',
-                                  day: 'numeric',
-                                  year: 'numeric'
-                                })}</span>
+                                <span>
+                                  {isWeeklyBrief(article) ? (
+                                    `Week of ${new Date(article.week_start_date).toLocaleDateString('en-US', {
+                                      month: 'short',
+                                      day: 'numeric',
+                                      year: 'numeric'
+                                    })}`
+                                  ) : isContextOrchestration(article) ? (
+                                    `${new Date(article.period_start_date).toLocaleDateString('en-US', {
+                                      month: 'short',
+                                      year: 'numeric'
+                                    })}`
+                                  ) : null}
+                                </span>
                               </div>
                               <div className="flex gap-4 text-xs text-[var(--terminal-gray)] whitespace-nowrap">
                                 {article.word_count && <span>{article.word_count.toLocaleString()} words</span>}
