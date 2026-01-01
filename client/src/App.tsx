@@ -3,10 +3,10 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import About from "@/pages/about";
 import Home from "@/pages/home";
 import Research from "@/pages/research";
 import ResearchTest from "@/pages/research-test";
-import Bio from "@/pages/bio";
 import Brands from "@/pages/brands";
 import NotFound from "@/pages/not-found";
 import { useEffect } from "react";
@@ -14,10 +14,10 @@ import { useEffect } from "react";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Home} />
+      <Route path="/" component={About} />
+      <Route path="/bio" component={Home} />
       <Route path="/research" component={Research} />
       <Route path="/research-test" component={ResearchTest} />
-      <Route path="/bio" component={Bio} />
       <Route path="/brands" component={Brands} />
       <Route component={NotFound} />
     </Switch>

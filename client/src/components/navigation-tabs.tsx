@@ -6,9 +6,10 @@ interface NavTab {
 }
 
 const tabs: NavTab[] = [
-  { path: "/", label: "BIO" },
+  { path: "/", label: "ABOUT" },
+  { path: "/bio", label: "BIO" },
   { path: "/research", label: "RESEARCH" },
-  { path: "/brands", label: "BRANDS" },
+  // { path: "/brands", label: "BRANDS" },
 ];
 
 export default function NavigationTabs() {

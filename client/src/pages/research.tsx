@@ -131,41 +131,41 @@ export default function Research() {
 
                         <AccordionContent className="pt-4 pb-6">
                           {article.essay_content && (
-                            <div className="text-[var(--terminal-green)] text-base leading-relaxed antialiased prose prose-sm prose-invert max-w-none">
+                            <div className="text-white text-base leading-relaxed antialiased prose prose-sm prose-invert max-w-none">
                         <ReactMarkdown
                           components={{
                             h1: ({ children }) => (
-                              <h1 className="text-[var(--terminal-cyan)] text-xl font-bold mb-4 mt-6 terminal-glow">
+                              <h1 className="text-[var(--terminal-yellow)] text-xl font-bold mb-4 mt-6">
                                 {children}
                               </h1>
                             ),
                             h2: ({ children }) => (
-                              <h2 className="text-[var(--terminal-cyan)] text-lg font-bold mb-3 mt-5 terminal-glow">
+                              <h2 className="text-[var(--terminal-yellow)] text-lg font-bold mb-3 mt-5">
                                 {children}
                               </h2>
                             ),
                             h3: ({ children }) => (
-                              <h3 className="text-[var(--terminal-cyan)] text-base font-bold mb-2 mt-4">
+                              <h3 className="text-[var(--terminal-yellow)] text-base font-bold mb-2 mt-4">
                                 {children}
                               </h3>
                             ),
                             p: ({ children }) => (
-                              <p className="text-[var(--terminal-bright-green)] mb-4 leading-relaxed">
+                              <p className="text-white mb-4 leading-relaxed">
                                 {children}
                               </p>
                             ),
                             ul: ({ children }) => (
-                              <ul className="list-disc list-inside mb-4 space-y-2 text-[var(--terminal-green)]">
+                              <ul className="list-disc list-inside mb-4 space-y-2 text-white">
                                 {children}
                               </ul>
                             ),
                             ol: ({ children }) => (
-                              <ol className="list-decimal list-inside mb-4 space-y-2 text-[var(--terminal-green)]">
+                              <ol className="list-decimal list-inside mb-4 space-y-2 text-white">
                                 {children}
                               </ol>
                             ),
                             li: ({ children }) => (
-                              <li className="mb-2 leading-relaxed">{children}</li>
+                              <li className="mb-2 leading-relaxed text-white">{children}</li>
                             ),
                             a: ({ href, children }) => (
                               <a
