@@ -168,7 +168,7 @@ export default function Research() {
                                 <span className="terminal-prompt-icon text-sm">[&gt;]</span>
                                 <span>
                                   {isWeeklyBrief(article) ? (
-                                    `Week of ${new Date(article.week_start_date).toLocaleDateString('en-US', {
+                                    `${new Date(article.week_start_date).toLocaleDateString('en-US', {
                                       month: 'short',
                                       day: 'numeric',
                                       year: 'numeric'
