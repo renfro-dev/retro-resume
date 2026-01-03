@@ -9,6 +9,7 @@ const tabs: NavTab[] = [
   { path: "/", label: "ABOUT" },
   { path: "/bio", label: "BIO" },
   { path: "/research", label: "RESEARCH" },
+  { path: "/vibetube", label: "VIBETUBE" },
   // { path: "/brands", label: "BRANDS" },
 ];
 

@@ -22,9 +22,8 @@ export default function About() {
               <p>
                 <span className="text-[var(--terminal-yellow)]">&gt;</span> I'm a{" "}
                 <span className="text-[var(--terminal-cyan)] font-bold">RevOps Leader</span>,{" "}
-                <span className="text-[var(--terminal-cyan)] font-bold">GTM Strategist</span>,{" "}
-                <span className="text-[var(--terminal-cyan)] font-bold">Vibe Coder</span>, and{" "}
-                <span className="text-[var(--terminal-cyan)] font-bold">Researcher</span>.
+                <span className="text-[var(--terminal-cyan)] font-bold">GTM Strategist</span>, and{" "}
+                <span className="text-[var(--terminal-cyan)] font-bold">Vibe Coder</span>.
               </p>
 
               <p>

@@ -8,6 +8,7 @@ import Home from "@/pages/home";
 import Research from "@/pages/research";
 import ResearchTest from "@/pages/research-test";
 import Brands from "@/pages/brands";
+import VibeTube from "@/pages/vibetube";
 import NotFound from "@/pages/not-found";
 import { useEffect } from "react";
 
@@ -19,6 +20,7 @@ function Router() {
       <Route path="/research" component={Research} />
       <Route path="/research-test" component={ResearchTest} />
       <Route path="/brands" component={Brands} />
+      <Route path="/vibetube" component={VibeTube} />
       <Route component={NotFound} />
     </Switch>
   );
