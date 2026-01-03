@@ -1,4 +1,5 @@
-const VIBETUBE_API_URL = import.meta.env.VITE_VIBETUBE_API_URL || 'http://localhost:3001';
+// VibeTube API is now integrated into the Express backend
+const VIBETUBE_API_URL = '';
 
 export const vibetubeApi = {
   async getNewsletters() {
