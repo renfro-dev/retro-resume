@@ -4,7 +4,7 @@ import { setupVite, serveStatic, log } from "./vite";
 import path from "path";
 import { readFileSync, existsSync } from "fs";
 
-export const app = express();
+const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -66,47 +66,31 @@ app.get('/api/assets/:filename(*)', (req, res) => {
   }
 });
 
-// Track initialization state
-let initPromise: Promise<any> | null = null;
+(async () => {
+  const server = await registerRoutes(app);
 
-export function ensureInitialized() {
-  if (!initPromise) {
-    initPromise = (async () => {
-      const server = await registerRoutes(app);
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    const status = err.status || err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
 
-      app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-        const status = err.status || err.statusCode || 500;
-        const message = err.message || "Internal Server Error";
+    res.status(status).json({ message });
+    throw err;
+  });
 
-        res.status(status).json({ message });
-        throw err;
-      });
-
-      // importantly only setup vite in development and after
-      // setting up all the other routes so the catch-all route
-      // doesn't interfere with the other routes
-      if (app.get("env") === "development") {
-        await setupVite(app, server);
-      } else {
-        serveStatic(app);
-      }
-
-      // Only listen in development or when not on Vercel
-      if (!process.env.VERCEL) {
-        // Serve the app on the configured port (default: 5000)
-        const port = parseInt(process.env.PORT || "5000", 10);
-        server.listen(port, "0.0.0.0", () => {
-          log(`serving on port ${port}`);
-        });
-      }
-
-      return server;
-    })();
+  // Setup Vite in development, serve static in production (non-Vercel)
+  // On Vercel, static files are served separately via @vercel/static
+  if (app.get("env") === "development") {
+    await setupVite(app, server);
+  } else if (!process.env.VERCEL) {
+    serveStatic(app);
   }
-  return initPromise;
-}
 
-// Initialize on import (so it's ready when API handler calls it)
-ensureInitialized().catch((err) => {
-  console.error('Failed to initialize server:', err);
-});
+  // Start server - Vercel will hijack this port binding
+  const port = parseInt(process.env.PORT || "5000", 10);
+  server.listen(port, "0.0.0.0", () => {
+    log(`serving on port ${port}`);
+  });
+})();
+
+// Export app for Vercel serverless
+export default app;
