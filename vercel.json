@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/index.js"
+    }
+  ],
+  "outputDirectory": "dist/public",
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build",
+  "regions": ["iad1"]
+}

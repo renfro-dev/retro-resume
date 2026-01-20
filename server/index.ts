@@ -45,7 +45,10 @@ app.use((req, res, next) => {
   app.get('/api/assets/:filename(*)', (req, res) => {
     try {
       const filename = decodeURIComponent(req.params.filename);
-      const filePath = path.join(process.cwd(), 'attached_assets', filename);
+      const assetsDir = process.env.NODE_ENV === 'production'
+        ? path.join(import.meta.dirname, '..', 'attached_assets')
+        : path.join(process.cwd(), 'attached_assets');
+      const filePath = path.join(assetsDir, filename);
 
       if (!existsSync(filePath)) {
         return res.status(404).json({ error: 'File not found' });
