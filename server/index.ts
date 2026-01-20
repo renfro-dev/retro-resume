@@ -85,12 +85,11 @@ app.get('/api/assets/:filename(*)', (req, res) => {
     serveStatic(app);
   }
 
-  // Start server - Vercel will hijack this port binding
-  const port = parseInt(process.env.PORT || "5000", 10);
-  server.listen(port, "0.0.0.0", () => {
-    log(`serving on port ${port}`);
-  });
+  // Start server (only when not on Vercel - Vercel uses api/ directory)
+  if (!process.env.VERCEL) {
+    const port = parseInt(process.env.PORT || "5000", 10);
+    server.listen(port, "0.0.0.0", () => {
+      log(`serving on port ${port}`);
+    });
+  }
 })();
-
-// Export app for Vercel serverless
-export default app;
