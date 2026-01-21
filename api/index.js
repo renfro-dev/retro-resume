@@ -487,8 +487,61 @@ function getWeekStartDate(date) {
   d.setDate(diff);
   return d.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "2-digit" });
 }
+function transformDbVideosToUI(dbVideos) {
+  return dbVideos.map((v) => {
+    const weekStart = getWeekStartDate(new Date(v.shared_at));
+    return {
+      id: v.id,
+      url: v.url,
+      title: v.title,
+      channel: v.channel,
+      durationSec: v.metadata?.durationSec || 0,
+      durationFormatted: v.metadata?.formattedDuration || "0:00",
+      thumbnail: v.metadata?.thumbnails?.medium?.url || v.metadata?.thumbnails?.default?.url || `https://i.ytimg.com/vi/${v.id}/mqdefault.jpg`,
+      group: weekStart,
+      sharedAt: v.shared_at,
+      vibe: v.vibe,
+      reason: v.reason,
+      source: v.source,
+      description: v.description,
+      viewCount: v.metadata?.viewCount,
+      likeCount: v.metadata?.likeCount,
+      publishedAt: v.published_at,
+      tags: v.metadata?.tags,
+      transcript: v.metadata?.transcript
+    };
+  });
+}
+function buildResponse(videos, emailsProcessed) {
+  const uniqueGroups = Array.from(new Set(videos.map((v) => v.group)));
+  uniqueGroups.sort((a, b) => {
+    const dateA = new Date(a);
+    const dateB = new Date(b);
+    return dateB.getTime() - dateA.getTime();
+  });
+  const groupArray = uniqueGroups.map((groupName) => {
+    const groupVideos = videos.filter((v) => v.group === groupName);
+    return {
+      name: `Week of ${groupName}`,
+      startDate: groupName,
+      videoIds: groupVideos.map((v) => v.id),
+      count: groupVideos.length
+    };
+  });
+  return {
+    videos,
+    groups: groupArray,
+    metadata: {
+      emailsProcessed,
+      uniqueVideos: videos.length,
+      lastUpdated: (/* @__PURE__ */ new Date()).toISOString(),
+      sources: Array.from(new Set(videos.filter((v) => v.source).map((v) => v.source)))
+    }
+  };
+}
 async function getNewsletters(req, res) {
   try {
+    const shouldRefresh = req.query.refresh === "true";
     let dbVideos = [];
     try {
       const { data, error } = await supabase.from("videos").select("*");
@@ -497,6 +550,11 @@ async function getNewsletters(req, res) {
       console.log(`Loaded ${dbVideos.length} videos from Supabase.`);
     } catch (error) {
       console.log("Error loading from Supabase, starting fresh cache:", error);
+    }
+    if (!shouldRefresh && dbVideos.length > 0) {
+      console.log("Returning cached data (fast path)");
+      const cachedVideos = transformDbVideosToUI(dbVideos);
+      return res.json(buildResponse(cachedVideos, 0));
     }
     const incompleteVideos = dbVideos.filter(
       (v) => !v.metadata?.durationSec || v.metadata.durationSec === 0 || v.title.startsWith("AI Video") || v.channel === "Unknown Channel"
@@ -541,29 +599,7 @@ async function getNewsletters(req, res) {
         }
       }
     });
-    const allVideosFromSupabase = dbVideos.map((v) => {
-      const weekStart = getWeekStartDate(new Date(v.shared_at));
-      return {
-        id: v.id,
-        url: v.url,
-        title: v.title,
-        channel: v.channel,
-        durationSec: v.metadata?.durationSec || 0,
-        durationFormatted: v.metadata?.formattedDuration || "0:00",
-        thumbnail: v.metadata?.thumbnails?.medium?.url || v.metadata?.thumbnails?.default?.url || `https://i.ytimg.com/vi/${v.id}/mqdefault.jpg`,
-        group: weekStart,
-        sharedAt: v.shared_at,
-        vibe: v.vibe,
-        reason: v.reason,
-        source: v.source,
-        description: v.description,
-        viewCount: v.metadata?.viewCount,
-        likeCount: v.metadata?.likeCount,
-        publishedAt: v.published_at,
-        tags: v.metadata?.tags,
-        transcript: v.metadata?.transcript
-      };
-    });
+    const allVideosFromSupabase = transformDbVideosToUI(dbVideos);
     try {
       let emails = [];
       const now = /* @__PURE__ */ new Date();
@@ -712,32 +748,7 @@ async function getNewsletters(req, res) {
         console.log("No new videos found to process or upsert.");
       }
       const allProcessedVideos = [...allVideosFromSupabase, ...newVideos];
-      const uniqueGroups = Array.from(new Set(allProcessedVideos.map((v) => v.group)));
-      uniqueGroups.sort((a, b) => {
-        const dateA = new Date(a);
-        const dateB = new Date(b);
-        return dateB.getTime() - dateA.getTime();
-      });
-      const groupArray = uniqueGroups.map((groupName) => {
-        const groupVideos = allProcessedVideos.filter((v) => v.group === groupName);
-        return {
-          name: `Week of ${groupName}`,
-          startDate: groupName,
-          videoIds: groupVideos.map((v) => v.id),
-          count: groupVideos.length
-        };
-      });
-      const result = {
-        videos: allProcessedVideos,
-        groups: groupArray,
-        metadata: {
-          emailsProcessed: emails.length,
-          uniqueVideos: allProcessedVideos.length,
-          lastUpdated: (/* @__PURE__ */ new Date()).toISOString(),
-          sources: Array.from(new Set(emails.map((e) => e.sender)))
-        }
-      };
-      return res.json(result);
+      return res.json(buildResponse(allProcessedVideos, emails.length));
     } catch (gmailError) {
       console.error("API error:", gmailError);
       return res.status(500).json({ error: "Failed to fetch data" });

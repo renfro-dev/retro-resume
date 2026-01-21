@@ -58,8 +58,68 @@ function getWeekStartDate(date: Date): string {
   return d.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
 }
 
+function transformDbVideosToUI(dbVideos: any[]): Video[] {
+  return dbVideos.map((v: any) => {
+    const weekStart = getWeekStartDate(new Date(v.shared_at));
+    return {
+      id: v.id,
+      url: v.url,
+      title: v.title,
+      channel: v.channel,
+      durationSec: v.metadata?.durationSec || 0,
+      durationFormatted: v.metadata?.formattedDuration || '0:00',
+      thumbnail: v.metadata?.thumbnails?.medium?.url || v.metadata?.thumbnails?.default?.url || `https://i.ytimg.com/vi/${v.id}/mqdefault.jpg`,
+      group: weekStart,
+      sharedAt: v.shared_at,
+      vibe: v.vibe,
+      reason: v.reason,
+      source: v.source,
+      description: v.description,
+      viewCount: v.metadata?.viewCount,
+      likeCount: v.metadata?.likeCount,
+      publishedAt: v.published_at,
+      tags: v.metadata?.tags,
+      transcript: v.metadata?.transcript
+    };
+  });
+}
+
+function buildResponse(videos: Video[], emailsProcessed: number) {
+  const uniqueGroups = Array.from(new Set(videos.map(v => v.group)));
+
+  uniqueGroups.sort((a, b) => {
+    const dateA = new Date(a);
+    const dateB = new Date(b);
+    return dateB.getTime() - dateA.getTime();
+  });
+
+  const groupArray: Group[] = uniqueGroups.map(groupName => {
+    const groupVideos = videos.filter(v => v.group === groupName);
+    return {
+      name: `Week of ${groupName}`,
+      startDate: groupName,
+      videoIds: groupVideos.map(v => v.id),
+      count: groupVideos.length
+    };
+  });
+
+  return {
+    videos,
+    groups: groupArray,
+    metadata: {
+      emailsProcessed,
+      uniqueVideos: videos.length,
+      lastUpdated: new Date().toISOString(),
+      sources: Array.from(new Set(videos.filter(v => v.source).map(v => v.source!)))
+    }
+  };
+}
+
 export async function getNewsletters(req: Request, res: Response) {
   try {
+    // Check if this is a refresh request (slow) or just cached data (fast)
+    const shouldRefresh = req.query.refresh === 'true';
+
     // 1. Loading Cache from Supabase (Smart Optimization)
     let dbVideos: any[] = [];
     try {
@@ -69,6 +129,13 @@ export async function getNewsletters(req: Request, res: Response) {
       console.log(`Loaded ${dbVideos.length} videos from Supabase.`);
     } catch (error) {
       console.log('Error loading from Supabase, starting fresh cache:', error);
+    }
+
+    // If not refreshing, return cached data immediately (fast path)
+    if (!shouldRefresh && dbVideos.length > 0) {
+      console.log('Returning cached data (fast path)');
+      const cachedVideos = transformDbVideosToUI(dbVideos);
+      return res.json(buildResponse(cachedVideos, 0));
     }
 
     // 1.5 Repair Incomplete Videos (Self-Healing)
@@ -126,29 +193,7 @@ export async function getNewsletters(req: Request, res: Response) {
     });
 
     // Transform DB videos back to UI format
-    const allVideosFromSupabase: Video[] = dbVideos.map((v: any) => {
-      const weekStart = getWeekStartDate(new Date(v.shared_at));
-      return {
-        id: v.id,
-        url: v.url,
-        title: v.title,
-        channel: v.channel,
-        durationSec: v.metadata?.durationSec || 0,
-        durationFormatted: v.metadata?.formattedDuration || '0:00',
-        thumbnail: v.metadata?.thumbnails?.medium?.url || v.metadata?.thumbnails?.default?.url || `https://i.ytimg.com/vi/${v.id}/mqdefault.jpg`,
-        group: weekStart,
-        sharedAt: v.shared_at,
-        vibe: v.vibe,
-        reason: v.reason,
-        source: v.source,
-        description: v.description,
-        viewCount: v.metadata?.viewCount,
-        likeCount: v.metadata?.likeCount,
-        publishedAt: v.published_at,
-        tags: v.metadata?.tags,
-        transcript: v.metadata?.transcript
-      };
-    });
+    const allVideosFromSupabase: Video[] = transformDbVideosToUI(dbVideos);
 
     try {
       let emails: any[] = [];
@@ -327,37 +372,7 @@ export async function getNewsletters(req: Request, res: Response) {
       // Combine all videos (existing from Supabase + newly processed)
       const allProcessedVideos = [...allVideosFromSupabase, ...newVideos];
 
-      // Generate groups from the combined list
-      const uniqueGroups = Array.from(new Set(allProcessedVideos.map(v => v.group)));
-
-      uniqueGroups.sort((a, b) => {
-        const dateA = new Date(a);
-        const dateB = new Date(b);
-        return dateB.getTime() - dateA.getTime();
-      });
-
-      const groupArray: Group[] = uniqueGroups.map(groupName => {
-        const groupVideos = allProcessedVideos.filter(v => v.group === groupName);
-        return {
-          name: `Week of ${groupName}`,
-          startDate: groupName,
-          videoIds: groupVideos.map(v => v.id),
-          count: groupVideos.length
-        };
-      });
-
-      const result = {
-        videos: allProcessedVideos,
-        groups: groupArray,
-        metadata: {
-          emailsProcessed: emails.length,
-          uniqueVideos: allProcessedVideos.length,
-          lastUpdated: new Date().toISOString(),
-          sources: Array.from(new Set(emails.map(e => e.sender)))
-        }
-      };
-
-      return res.json(result);
+      return res.json(buildResponse(allProcessedVideos, emails.length));
 
     } catch (gmailError) {
       console.error('API error:', gmailError);
