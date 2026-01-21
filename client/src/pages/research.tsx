@@ -168,11 +168,17 @@ export default function Research() {
                                 <span className="terminal-prompt-icon text-sm">[&gt;]</span>
                                 <span>
                                   {isWeeklyBrief(article) ? (
-                                    `${new Date(article.week_start_date).toLocaleDateString('en-US', {
-                                      month: 'short',
-                                      day: 'numeric',
-                                      year: 'numeric'
-                                    })}`
+                                    (() => {
+                                      // Publish date is the day after the week ends (start + 7 days)
+                                      const startDate = new Date(article.week_start_date);
+                                      const publishDate = new Date(startDate);
+                                      publishDate.setDate(startDate.getDate() + 7);
+                                      return publishDate.toLocaleDateString('en-US', {
+                                        month: 'short',
+                                        day: 'numeric',
+                                        year: 'numeric'
+                                      });
+                                    })()
                                   ) : isContextOrchestration(article) ? (
                                     `${new Date(article.period_start_date).toLocaleDateString('en-US', {
                                       month: 'short',
