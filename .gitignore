@@ -60,4 +60,4 @@ temp
 
 # Replit (keep for reference but not needed for local dev)
 .replit
-replit.nix
+replit.nixapi/index.js
