@@ -115,7 +115,16 @@ export default function Research() {
             className="terminal-card p-8 max-w-4xl mx-auto"
           >
             <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
-              <pre className="text-[var(--terminal-cyan)] text-xs terminal-glow">
+              {/* Mobile logo */}
+              <pre className="md:hidden text-[var(--terminal-cyan)] text-xs terminal-glow">
+{`
+╔═══════════════════╗
+║     RESEARCH      ║
+╚═══════════════════╝
+`}
+              </pre>
+              {/* Desktop logo */}
+              <pre className="hidden md:block text-[var(--terminal-cyan)] text-xs terminal-glow">
 {`
  ██████╗ ███████╗███████╗███████╗ █████╗ ██████╗  ██████╗██╗  ██╗
  ██╔══██╗██╔════╝██╔════╝██╔════╝██╔══██╗██╔══██╗██╔════╝██║  ██║
