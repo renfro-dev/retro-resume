@@ -748,7 +748,7 @@ async function getNewsletters(req, res) {
   }
 }
 
-// api/index.ts
+// src/api/index.ts
 async function handler(req, res) {
   const path = req.url?.split("?")[0] || "";
   if (path === "/api/newsletters" || path === "/api/newsletters/") {

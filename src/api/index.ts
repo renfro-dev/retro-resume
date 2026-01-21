@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getNewsletters } from '../server/routes/newsletters';
+import { getNewsletters } from '../../server/routes/newsletters';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const path = req.url?.split('?')[0] || '';
