@@ -33,7 +33,7 @@ export default function Research() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedTheme, setSelectedTheme] = useState<ResearchTheme>('ai_evolution');
+  const [selectedTheme, setSelectedTheme] = useState<ResearchTheme>('context_orchestration');
   const [openItems, setOpenItems] = useState<string[]>([]);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 

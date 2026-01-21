@@ -29,12 +29,12 @@ function Router() {
 function App() {
   // Force title persistence throughout app lifecycle
   useEffect(() => {
-    document.title = "Retro Resume";
-    
+    document.title = "Renfro.dev";
+
     // Create observer to watch for any title changes and revert them
     const titleObserver = new MutationObserver(() => {
-      if (document.title !== "Retro Resume") {
-        document.title = "Retro Resume";
+      if (document.title !== "Renfro.dev") {
+        document.title = "Renfro.dev";
       }
     });
     
