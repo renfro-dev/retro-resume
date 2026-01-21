@@ -70,7 +70,7 @@ function generateOgTags(video: VideoMetadata): string {
     <meta property="og:image" content="${video.thumbnail}">
     <meta property="og:url" content="${videoUrl}">
     <meta property="og:type" content="video.other">
-    <meta property="og:site_name" content="Renfro.dev">
+    <meta property="og:site_name" content="Jus' Tryna Vibe">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="${title}">
     <meta name="twitter:description" content="${description}">
