@@ -5,6 +5,17 @@
   "outputDirectory": "dist/public",
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api" },
+    {
+      "source": "/vibetube/:videoId",
+      "destination": "/api/vibetube/:videoId",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(bot|crawl|spider|facebookexternalhit|Twitterbot|LinkedInBot|Slackbot|Discord|TelegramBot|WhatsApp).*"
+        }
+      ]
+    },
     { "source": "/((?!assets/).*)", "destination": "/index.html" }
   ]
 }

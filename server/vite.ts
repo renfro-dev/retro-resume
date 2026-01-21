@@ -5,6 +5,7 @@ import { createServer as createViteServer, createLogger } from "vite";
 import { type Server } from "http";
 import viteConfig from "../vite.config";
 import { nanoid } from "nanoid";
+import { getVideoMetadata, generateOgTags, injectOgTags } from "./lib/og-tags";
 
 const viteLogger = createLogger();
 
@@ -21,9 +22,9 @@ export function log(message: string, source = "express") {
 
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
-    middlewareMode: true,
+    middlewareMode: true as const,
     hmr: { server },
-    allowedHosts: true,
+    allowedHosts: true as const,
   };
 
   const vite = await createViteServer({
@@ -58,6 +59,24 @@ export async function setupVite(app: Express, server: Server) {
         `src="/src/main.tsx"`,
         `src="/src/main.tsx?v=${nanoid()}"`,
       );
+
+      // Check if this is a VibeTube video URL and inject OG tags
+      const vibetubeMatch = url.match(/^\/vibetube\/([a-zA-Z0-9_-]+)/);
+      if (vibetubeMatch) {
+        const videoId = vibetubeMatch[1];
+        try {
+          const video = await getVideoMetadata(videoId);
+          if (video) {
+            const baseUrl = `${req.protocol}://${req.get('host')}`;
+            const ogTags = generateOgTags(video, baseUrl);
+            template = injectOgTags(template, ogTags);
+            log(`Injected OG tags for video: ${videoId}`);
+          }
+        } catch (err) {
+          log(`Failed to inject OG tags for video ${videoId}: ${err}`);
+        }
+      }
+
       const page = await vite.transformIndexHtml(url, template);
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
     } catch (e) {
