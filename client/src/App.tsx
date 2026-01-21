@@ -20,7 +20,7 @@ function Router() {
       <Route path="/research/:briefId?" component={Research} />
       <Route path="/research-test" component={ResearchTest} />
       <Route path="/brands" component={Brands} />
-      <Route path="/vibetube" component={VibeTube} />
+      <Route path="/vibetube/:videoId?" component={VibeTube} />
       <Route component={NotFound} />
     </Switch>
   );

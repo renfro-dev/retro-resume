@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
+import { useRoute, useLocation } from "wouter";
 import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { YouTubePlayer } from "@/components/vibetube/YouTubePlayer";
-import { RefreshCw, Trash2, Lock } from "lucide-react";
+import { RefreshCw, Trash2, Lock, Link2, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { vibetubeApi } from "@/lib/vibetube-api";
 import type { Video, NewsletterData } from "@/types/vibetube";
@@ -18,6 +19,11 @@ export default function VibeTube() {
   const [activeGroup, setActiveGroup] = useState<string>('All');
   const [activeVibe, setActiveVibe] = useState<string>('All');
   const [isUpdating, setIsUpdating] = useState(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  // URL routing for shareable links
+  const [, params] = useRoute("/vibetube/:videoId");
+  const [, setLocation] = useLocation();
 
   // Admin State
   const [isAdmin, setIsAdmin] = useState(false);
@@ -55,6 +61,34 @@ export default function VibeTube() {
     fetchNewsletters();
     checkAuth();
   }, []);
+
+  // Auto-open video from URL parameter
+  useEffect(() => {
+    if (params?.videoId && data.videos.length > 0) {
+      const video = data.videos.find(v => v.id === params.videoId);
+      if (video) {
+        setSelectedVideo(video);
+      }
+    }
+  }, [params?.videoId, data.videos]);
+
+  const copyVideoLink = (videoId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const url = `${window.location.origin}/vibetube/${videoId}`;
+    navigator.clipboard.writeText(url);
+    setCopiedId(videoId);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const handleVideoSelect = (video: Video) => {
+    setSelectedVideo(video);
+    setLocation(`/vibetube/${video.id}`);
+  };
+
+  const handleVideoClose = () => {
+    setSelectedVideo(null);
+    setLocation('/vibetube');
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,9 +152,9 @@ export default function VibeTube() {
 
     if (currentIndex >= 0 && currentIndex < filteredVideos.length - 1) {
       const nextVideo = filteredVideos[currentIndex + 1];
-      setSelectedVideo(nextVideo);
+      handleVideoSelect(nextVideo);
     } else {
-      setSelectedVideo(null);
+      handleVideoClose();
     }
   };
 
@@ -246,7 +280,8 @@ export default function VibeTube() {
                     onClick={(e) => {
                       if ((e.target as HTMLElement).closest('.edit-trigger')) return;
                       if ((e.target as HTMLElement).closest('.delete-trigger')) return;
-                      setSelectedVideo(video);
+                      if ((e.target as HTMLElement).closest('.share-trigger')) return;
+                      handleVideoSelect(video);
                     }}
                   >
                     <CardContent className="p-0 flex flex-col h-full">
@@ -277,6 +312,26 @@ export default function VibeTube() {
                               ))}
                             </SelectContent>
                           </Select>
+                        </div>
+
+                        {/* SHARE LINK BUTTON */}
+                        <div
+                          className={cn(
+                            "absolute top-2 z-20 share-trigger",
+                            isAdmin ? "right-10" : "right-2"
+                          )}
+                        >
+                          <button
+                            onClick={(e) => copyVideoLink(video.id, e)}
+                            className="h-6 w-6 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm bg-black/60 hover:bg-black/80"
+                            title="Copy shareable link"
+                          >
+                            {copiedId === video.id ? (
+                              <Check className="w-3 h-3 text-[var(--terminal-green)]" />
+                            ) : (
+                              <Link2 className="w-3 h-3 text-[var(--terminal-cyan)]" />
+                            )}
+                          </button>
                         </div>
 
                         {/* ADMIN DELETE BUTTON */}
@@ -371,9 +426,16 @@ export default function VibeTube() {
             <YouTubePlayer
               videoId={selectedVideo.id}
               isOpen={!!selectedVideo}
-              onClose={() => setSelectedVideo(null)}
+              onClose={handleVideoClose}
               title={selectedVideo.title}
               onEnded={handleVideoEnd}
+              onShare={() => {
+                const url = `${window.location.origin}/vibetube/${selectedVideo.id}`;
+                navigator.clipboard.writeText(url);
+                setCopiedId(selectedVideo.id);
+                setTimeout(() => setCopiedId(null), 2000);
+              }}
+              isLinkCopied={copiedId === selectedVideo.id}
             />
           )}
         </div>
