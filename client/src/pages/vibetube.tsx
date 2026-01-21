@@ -131,7 +131,16 @@ export default function VibeTube() {
         <div className="container mx-auto px-4 py-8 max-w-7xl relative pb-24">
           <header className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
             <div>
-              <pre className="text-[var(--terminal-cyan)] text-xs terminal-glow mb-2">
+              {/* Mobile logo */}
+              <pre className="md:hidden text-[var(--terminal-cyan)] text-xs terminal-glow mb-2">
+{`
+╔═══════════════════╗
+║    VIBETUBE       ║
+╚═══════════════════╝
+`}
+              </pre>
+              {/* Desktop logo */}
+              <pre className="hidden md:block text-[var(--terminal-cyan)] text-xs terminal-glow mb-2">
 {`
 ██╗   ██╗██╗██████╗ ███████╗████████╗██╗   ██╗██████╗ ███████╗
 ██║   ██║██║██╔══██╗██╔════╝╚══██╔══╝██║   ██║██╔══██╗██╔════╝

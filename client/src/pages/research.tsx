@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useRoute, useLocation } from "wouter";
 import ReactMarkdown from "react-markdown";
 import Header from "@/components/header";
 import { supabase, type Article, isWeeklyBrief, isContextOrchestration } from "@/lib/supabase";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Link2, Check } from "lucide-react";
 
 type ResearchTheme = 'ai_evolution' | 'context_orchestration';
 
@@ -32,6 +34,12 @@ export default function Research() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedTheme, setSelectedTheme] = useState<ResearchTheme>('ai_evolution');
+  const [openItems, setOpenItems] = useState<string[]>([]);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  // Get briefId from URL
+  const [, params] = useRoute("/research/:briefId");
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
     async function fetchArticles() {
@@ -63,6 +71,36 @@ export default function Research() {
 
     fetchArticles();
   }, [selectedTheme]);
+
+  // Open brief from URL param when articles load
+  useEffect(() => {
+    if (params?.briefId && articles.length > 0) {
+      const briefExists = articles.some(a => a.id === params.briefId);
+      if (briefExists) {
+        setOpenItems([params.briefId]);
+      }
+    }
+  }, [params?.briefId, articles]);
+
+  // Handle accordion change and update URL
+  const handleAccordionChange = (value: string[]) => {
+    setOpenItems(value);
+    // Update URL to the first open item (or clear if none)
+    if (value.length > 0) {
+      setLocation(`/research/${value[0]}`);
+    } else {
+      setLocation('/research');
+    }
+  };
+
+  // Copy link to clipboard
+  const copyBriefLink = (briefId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const url = `${window.location.origin}/research/${briefId}`;
+    navigator.clipboard.writeText(url);
+    setCopiedId(briefId);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
 
   return (
     <div className="font-mono bg-terminal pattern-grid min-h-screen">
@@ -149,7 +187,7 @@ export default function Research() {
                   </p>
                 </div>
 
-                <Accordion type="multiple" defaultValue={[]} className="space-y-4">
+                <Accordion type="multiple" value={openItems} onValueChange={handleAccordionChange} className="space-y-4">
                   {articles.map((article, index) => (
                     <motion.div
                       key={article.id}
@@ -187,9 +225,20 @@ export default function Research() {
                                   ) : null}
                                 </span>
                               </div>
-                              <div className="flex gap-4 text-xs text-[var(--terminal-gray)] whitespace-nowrap">
+                              <div className="flex items-center gap-4 text-xs text-[var(--terminal-gray)] whitespace-nowrap">
                                 {article.word_count && <span>{article.word_count.toLocaleString()} words</span>}
                                 {article.reading_time_minutes && <span>· {article.reading_time_minutes} min</span>}
+                                <button
+                                  onClick={(e) => copyBriefLink(article.id, e)}
+                                  className="p-1 rounded hover:bg-[var(--terminal-dark-gray)] transition-colors"
+                                  title="Copy link to brief"
+                                >
+                                  {copiedId === article.id ? (
+                                    <Check className="w-3.5 h-3.5 text-[var(--terminal-green)]" />
+                                  ) : (
+                                    <Link2 className="w-3.5 h-3.5 text-[var(--terminal-gray)] hover:text-[var(--terminal-cyan)]" />
+                                  )}
+                                </button>
                               </div>
                             </div>
 
