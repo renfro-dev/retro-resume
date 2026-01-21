@@ -809,18 +809,42 @@ function generateOgTags(video) {
     <meta name="description" content="${description}">
     <title>${title} | VibeTube</title>`;
 }
-function generateBotHtml(ogTags) {
+var cachedBaseHtml = null;
+var cacheTime = 0;
+var CACHE_TTL = 60 * 60 * 1e3;
+async function getBaseHtml() {
+  const now = Date.now();
+  if (cachedBaseHtml && now - cacheTime < CACHE_TTL) {
+    return cachedBaseHtml;
+  }
+  try {
+    const response = await fetch("https://renfro.dev/index.html");
+    if (response.ok) {
+      cachedBaseHtml = await response.text();
+      cacheTime = now;
+      return cachedBaseHtml;
+    }
+  } catch (err) {
+    console.error("Failed to fetch base HTML:", err);
+  }
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    ${ogTags}
+    {{OG_TAGS}}
   </head>
   <body>
-    <p>VibeTube - AI-curated video feed</p>
+    <div id="root"></div>
+    <p>Loading VibeTube...</p>
   </body>
 </html>`;
+}
+function injectOgTags(html, ogTags) {
+  let modified = html.replace(/<title>[^<]*<\/title>/i, "").replace(/<meta\s+property="og:[^"]*"[^>]*>/gi, "").replace(/<meta\s+name="twitter:[^"]*"[^>]*>/gi, "").replace(/<meta\s+name="description"[^>]*>/gi, "");
+  modified = modified.replace(/<head>/i, `<head>
+${ogTags}`);
+  return modified;
 }
 var defaultOgTags = `
     <title>VibeTube | Renfro.dev</title>
@@ -832,9 +856,12 @@ var defaultOgTags = `
     <meta property="og:url" content="https://renfro.dev/vibetube">
     <meta name="twitter:card" content="summary_large_image">`;
 async function handleVibetubeVideo(videoId, res) {
-  const video = await getVideoMetadata(videoId);
+  const [video, baseHtml] = await Promise.all([
+    getVideoMetadata(videoId),
+    getBaseHtml()
+  ]);
   const ogTags = video ? generateOgTags(video) : defaultOgTags;
-  const html = generateBotHtml(ogTags);
+  const html = baseHtml.includes("{{OG_TAGS}}") ? baseHtml.replace("{{OG_TAGS}}", ogTags) : injectOgTags(baseHtml, ogTags);
   res.setHeader("Content-Type", "text/html; charset=utf-8");
   res.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate");
   return res.status(200).send(html);

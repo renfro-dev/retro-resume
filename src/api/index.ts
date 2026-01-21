@@ -79,19 +79,56 @@ function generateOgTags(video: VideoMetadata): string {
     <title>${title} | VibeTube</title>`;
 }
 
-// Minimal HTML for social crawlers - only bots hit this endpoint (via conditional rewrite)
-function generateBotHtml(ogTags: string): string {
+// Cache the base HTML template
+let cachedBaseHtml: string | null = null;
+let cacheTime = 0;
+const CACHE_TTL = 60 * 60 * 1000; // 1 hour
+
+async function getBaseHtml(): Promise<string> {
+  const now = Date.now();
+  if (cachedBaseHtml && (now - cacheTime) < CACHE_TTL) {
+    return cachedBaseHtml;
+  }
+
+  try {
+    // Fetch the static index.html from the same deployment
+    const response = await fetch('https://renfro.dev/index.html');
+    if (response.ok) {
+      cachedBaseHtml = await response.text();
+      cacheTime = now;
+      return cachedBaseHtml;
+    }
+  } catch (err) {
+    console.error('Failed to fetch base HTML:', err);
+  }
+
+  // Fallback HTML if fetch fails
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    ${ogTags}
+    {{OG_TAGS}}
   </head>
   <body>
-    <p>VibeTube - AI-curated video feed</p>
+    <div id="root"></div>
+    <p>Loading VibeTube...</p>
   </body>
 </html>`;
+}
+
+function injectOgTags(html: string, ogTags: string): string {
+  // Remove existing OG/meta tags that we'll replace
+  let modified = html
+    .replace(/<title>[^<]*<\/title>/i, '')
+    .replace(/<meta\s+property="og:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta\s+name="twitter:[^"]*"[^>]*>/gi, '')
+    .replace(/<meta\s+name="description"[^>]*>/gi, '');
+
+  // Inject new tags right after <head>
+  modified = modified.replace(/<head>/i, `<head>\n${ogTags}`);
+
+  return modified;
 }
 
 const defaultOgTags = `
@@ -105,10 +142,15 @@ const defaultOgTags = `
     <meta name="twitter:card" content="summary_large_image">`;
 
 async function handleVibetubeVideo(videoId: string, res: VercelResponse) {
-  const video = await getVideoMetadata(videoId);
+  const [video, baseHtml] = await Promise.all([
+    getVideoMetadata(videoId),
+    getBaseHtml()
+  ]);
 
   const ogTags = video ? generateOgTags(video) : defaultOgTags;
-  const html = generateBotHtml(ogTags);
+  const html = baseHtml.includes('{{OG_TAGS}}')
+    ? baseHtml.replace('{{OG_TAGS}}', ogTags)
+    : injectOgTags(baseHtml, ogTags);
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate');
