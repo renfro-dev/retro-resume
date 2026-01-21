@@ -165,7 +165,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return getNewsletters(req as any, res as any);
   }
 
-  // Handle VibeTube video pages for OG tags (e.g., /api/vibetube/VIDEO_ID)
+  // Handle VibeTube video pages for OG tags
+  // Check query param first (from Vercel rewrite), then path param
+  const videoIdFromQuery = req.query.videoId as string;
+  if (videoIdFromQuery) {
+    return handleVibetubeVideo(videoIdFromQuery, res);
+  }
+
   const vibetubeMatch = path.match(/^\/api\/vibetube\/([a-zA-Z0-9_-]+)$/);
   if (vibetubeMatch) {
     const videoId = vibetubeMatch[1];

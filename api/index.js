@@ -871,6 +871,10 @@ async function handler(req, res) {
   if (path === "/api/newsletters" || path === "/api/newsletters/") {
     return getNewsletters(req, res);
   }
+  const videoIdFromQuery = req.query.videoId;
+  if (videoIdFromQuery) {
+    return handleVibetubeVideo(videoIdFromQuery, res);
+  }
   const vibetubeMatch = path.match(/^\/api\/vibetube\/([a-zA-Z0-9_-]+)$/);
   if (vibetubeMatch) {
     const videoId = vibetubeMatch[1];

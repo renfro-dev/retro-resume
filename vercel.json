@@ -3,10 +3,9 @@
   "buildCommand": "npm run build",
   "installCommand": "npm ci",
   "outputDirectory": "dist/public",
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api" },
-    { "src": "/vibetube/([a-zA-Z0-9_-]+)", "dest": "/api/vibetube/$1" },
-    { "src": "/assets/(.*)", "dest": "/assets/$1" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api" },
+    { "source": "/vibetube/:videoId([a-zA-Z0-9_-]+)", "destination": "/api?videoId=:videoId" },
+    { "source": "/((?!assets/).*)", "destination": "/index.html" }
   ]
 }
