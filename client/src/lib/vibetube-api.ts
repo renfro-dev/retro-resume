@@ -2,8 +2,11 @@
 const VIBETUBE_API_URL = '';
 
 export const vibetubeApi = {
-  async getNewsletters() {
-    const response = await fetch(`${VIBETUBE_API_URL}/api/newsletters`, {
+  async getNewsletters(refresh = false) {
+    const url = refresh
+      ? `${VIBETUBE_API_URL}/api/newsletters?refresh=true`
+      : `${VIBETUBE_API_URL}/api/newsletters`;
+    const response = await fetch(url, {
       credentials: 'include'
     });
     if (!response.ok) throw new Error('Failed to fetch newsletters');

@@ -31,11 +31,11 @@ export default function VibeTube() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  const fetchNewsletters = async () => {
+  const fetchNewsletters = async (refresh = false) => {
     setIsLoading(true);
     setError(null);
     try {
-      const result = await vibetubeApi.getNewsletters();
+      const result = await vibetubeApi.getNewsletters(refresh);
       setData(result);
       if (result.groups.length > 0 && activeGroup === 'All') {
         setActiveGroup(result.groups[0].name);
@@ -209,7 +209,7 @@ export default function VibeTube() {
               )}
 
               <Button
-                onClick={fetchNewsletters}
+                onClick={() => fetchNewsletters(true)}
                 disabled={isLoading}
                 variant="outline"
                 className="gap-2 border-[var(--terminal-dark-gray)] bg-[var(--terminal-bg)] text-[var(--terminal-green)] hover:bg-[var(--terminal-dark-gray)] hover:text-[var(--terminal-yellow)]"
