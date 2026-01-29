@@ -35,19 +35,6 @@ export default function About() {
                 velocity leaders.
               </p>
 
-              <p>
-                <span className="text-[var(--terminal-yellow)]">&gt;</span> Want to connect? You can
-                schedule a meeting with me{" "}
-                <a
-                  href="https://calendar.app.google/4yFy6fGkPc9r6UAs8"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--terminal-cyan)] hover:text-[var(--terminal-yellow)] underline transition-colors terminal-glow"
-                >
-                  here
-                </a>
-                .
-              </p>
             </div>
           </motion.div>
         </div>
