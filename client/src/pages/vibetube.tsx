@@ -187,6 +187,9 @@ export default function VibeTube() {
               <p className="text-[var(--terminal-gray)] font-mono text-sm">
                 weekly discovery videos for vibe coders and AI enthusiasts, designed for your side monitor
               </p>
+              <p className="text-[var(--terminal-gray)] font-mono text-xs mt-1 opacity-60">
+                this feature was deprecated February 1, 2026 when I started transitioning away from hobby builds to focus more on enterprise
+              </p>
             </div>
 
             <div className="flex items-center gap-4">
