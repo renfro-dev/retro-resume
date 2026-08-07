@@ -9,9 +9,9 @@ interface NavTab {
 const tabs: NavTab[] = [
   { path: "/", label: "ABOUT" },
   { path: "/bio", label: "BIO" },
-  { path: "/research", label: "RESEARCH" },
-  { path: "/vibetube", label: "VIBETUBE" },
-  { path: "https://github.com/renfro-dev/openharp", label: "OPENHARP", external: true },
+  // { path: "/research", label: "RESEARCH" },
+  // { path: "/vibetube", label: "VIBETUBE" },
+  // { path: "https://github.com/renfro-dev/openharp", label: "OPENHARP", external: true },
   // { path: "/brands", label: "BRANDS" },
 ];
 

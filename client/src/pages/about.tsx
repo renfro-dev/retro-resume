@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Header from "@/components/header";
+import VectorWalk from "@/components/vector-walk";
 
 export default function About() {
   return (
@@ -21,22 +22,25 @@ export default function About() {
 
               <p>
                 <span className="text-[var(--terminal-yellow)]">&gt;</span> I'm a{" "}
-                <span className="text-[var(--terminal-cyan)] font-bold">RevOps Leader</span>,{" "}
-                <span className="text-[var(--terminal-cyan)] font-bold">GTM Strategist</span>, and{" "}
-                <span className="text-[var(--terminal-cyan)] font-bold">Vibe Coder</span>.
+                <span className="text-[var(--terminal-cyan)] font-bold">Growth Engineer</span>,{" "}
+                <span className="text-[var(--terminal-cyan)] font-bold">RevOps Leader</span>, and{" "}
+                <span className="text-[var(--terminal-cyan)] font-bold">AI Researcher</span>.
               </p>
 
               <p>
-                <span className="text-[var(--terminal-yellow)]">&gt;</span> I'm currently researching{" "}
+                <span className="text-[var(--terminal-yellow)]">&gt;</span> I build{" "}
                 <span className="text-[var(--terminal-bright-green)] font-bold">
-                  context orchestration
+                  products and teams
                 </span>{" "}
-                (MCP, agents, vector databases) and how these tools can create leverage for high
-                velocity leaders.
+                that help companies grow.
               </p>
 
             </div>
           </motion.div>
+
+          <div className="mt-16 max-w-3xl mx-auto">
+            <VectorWalk />
+          </div>
         </div>
       </main>
     </div>
