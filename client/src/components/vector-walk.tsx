@@ -28,10 +28,16 @@ const FRAG =
   "float a=texture2D(t,vec2(0.5+uv.x*0.5,uv.y)).r;" +
   "gl_FragColor=vec4(c,a);}";
 
-export default function VectorWalk() {
+interface VectorWalkProps {
+  onComplete?: () => void;
+}
+
+export default function VectorWalk({ onComplete }: VectorWalkProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
   useEffect(() => {
     const container = containerRef.current;
@@ -56,6 +62,9 @@ export default function VectorWalk() {
     const reduceMotion =
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const onEnded = () => onCompleteRef.current?.();
+    video.addEventListener("ended", onEnded);
 
     function resize() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -223,11 +232,14 @@ export default function VectorWalk() {
       } else {
         start();
       }
+    } else {
+      onCompleteRef.current?.();
     }
 
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener("resize", resize);
+      video.removeEventListener("ended", onEnded);
       io?.disconnect();
     };
   }, []);

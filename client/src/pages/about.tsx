@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Header from "@/components/header";
 import VectorWalk from "@/components/vector-walk";
+import ServicesAccordion from "@/components/services-accordion";
 
 export default function About() {
+  const [servicesVisible, setServicesVisible] = useState(false);
+
   return (
     <div className="font-mono bg-terminal pattern-grid min-h-screen">
       <Header />
@@ -39,7 +43,25 @@ export default function About() {
           </motion.div>
 
           <div className="mt-16 max-w-3xl mx-auto">
-            <VectorWalk />
+            {!servicesVisible && (
+              <VectorWalk onComplete={() => setServicesVisible(true)} />
+            )}
+
+            {servicesVisible && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="max-w-2xl mx-auto"
+              >
+                <div className="mb-4">
+                  <span className="text-[var(--terminal-yellow)] font-mono text-sm tracking-wider terminal-glow">
+                    // SERVICES
+                  </span>
+                </div>
+                <ServicesAccordion />
+              </motion.div>
+            )}
           </div>
         </div>
       </main>

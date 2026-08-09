@@ -120,7 +120,7 @@ export default function Home() {
     { text: "/psychographic=entrepreneur", delay: 1250 },
     { text: "/experience=16_years", delay: 1250 },
     { text: "/founder_roles=3", delay: 1250 },
-    { text: "/current_industry=legal_tech", delay: 1250 },
+    { text: "/current_industry=AI_Services", delay: 1250 },
     { text: "/location=33.0644° N, 117.3017° W", delay: 1250 },
     { text: "/re-enrollment=disabled", delay: 1250 },
     { text: "PROFILE LOADED", delay: 0 }
