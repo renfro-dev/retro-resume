@@ -13,7 +13,7 @@ export const services: ServiceEntry[] = [
   {
     slug: "customer_intelligence",
     title: "Customer Intelligence",
-    description: "Audit, enrich, and analyse CRM data to find where to focus your efforts.",
+    description: "Audit, enrich, and analyze CRM data to find where to focus your efforts.",
   },
   {
     slug: "ai_workflow_libraries",
@@ -23,7 +23,7 @@ export const services: ServiceEntry[] = [
   {
     slug: "ai_executive_training",
     title: "AI Executive Training",
-    description: "We train and empower executives with hands on training.",
+    description: "Hands on AI training for executive leadership teams",
   },
   {
     slug: "recruiting_prospecting",
