@@ -66,6 +66,12 @@ export default function VectorWalk({ onComplete }: VectorWalkProps) {
     const onEnded = () => onCompleteRef.current?.();
     video.addEventListener("ended", onEnded);
 
+    const onError = () => {
+      done = true;
+      onCompleteRef.current?.();
+    };
+    video.addEventListener("error", onError);
+
     function resize() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       W = container!.clientWidth;
@@ -200,18 +206,27 @@ export default function VectorWalk({ onComplete }: VectorWalkProps) {
       }
     }
 
+    function playBlocked() {
+      done = true;
+      onCompleteRef.current?.();
+    }
+
     function start() {
       const onReady = () => {
         video!.removeEventListener("canplay", onReady);
-        video!.play().catch(() => {});
+        video!.play().catch(playBlocked);
       };
       video!.addEventListener("canplay", onReady);
-      if (video!.readyState >= 3) video!.play().catch(() => {});
+      if (video!.readyState >= 3) video!.play().catch(playBlocked);
     }
 
     resize();
     initGL();
     window.addEventListener("resize", resize);
+
+    const stallTimer = window.setTimeout(() => {
+      if (!done) playBlocked();
+    }, 8000);
 
     let io: IntersectionObserver | null = null;
     if (!reduceMotion) {
@@ -238,8 +253,10 @@ export default function VectorWalk({ onComplete }: VectorWalkProps) {
 
     return () => {
       cancelAnimationFrame(rafId);
+      window.clearTimeout(stallTimer);
       window.removeEventListener("resize", resize);
       video.removeEventListener("ended", onEnded);
+      video.removeEventListener("error", onError);
       io?.disconnect();
     };
   }, []);
