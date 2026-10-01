@@ -1,15 +1,17 @@
-import index from "@/content/research/index.json";
+import briefIndex from "@/content/research/index.json";
+import essayIndex from "@/content/essays/index.json";
 
-export type ResearchCategory = "systems_thinking" | "context_orchestration";
-export type ResearchPeriod = "weekly" | "monthly" | "quarterly";
+// "essay" posts are hand-written (content/essays); the rest are exported briefs (content/research).
+export type ResearchCategory = "systems_thinking" | "context_orchestration" | "essay";
+export type ResearchPeriod = "weekly" | "monthly" | "quarterly" | "essay";
 
 export interface PostMeta {
   title: string;
   slug: string;
   category: ResearchCategory;
   period_type: ResearchPeriod;
-  period_start_date: string;
-  period_end_date: string;
+  period_start_date?: string;
+  period_end_date?: string;
   published_at: string;
   word_count: number;
   reading_time_minutes: number;
@@ -19,10 +21,11 @@ export interface PostMeta {
 export const CATEGORY_LABELS: Record<ResearchCategory, string> = {
   systems_thinking: "Systems Thinking",
   context_orchestration: "Context Orchestration",
+  essay: "Essay",
 };
 
-// index.json is sorted ascending; the list page wants newest first.
-export const posts: PostMeta[] = [...(index as PostMeta[])].sort(
+// Index files are sorted ascending; the list page wants newest first.
+export const posts: PostMeta[] = [...(briefIndex as PostMeta[]), ...(essayIndex as PostMeta[])].sort(
   (a, b) => b.published_at.localeCompare(a.published_at),
 );
 
@@ -31,7 +34,7 @@ export function getPostMeta(slug: string): PostMeta | undefined {
 }
 
 // Bodies are code-split per file; only the post being viewed is fetched.
-const bodies = import.meta.glob("/src/content/research/*.md", {
+const bodies = import.meta.glob(["/src/content/research/*.md", "/src/content/essays/*.md"], {
   query: "?raw",
   import: "default",
 }) as Record<string, () => Promise<string>>;
@@ -42,7 +45,8 @@ function stripFrontmatter(raw: string): string {
 }
 
 export async function loadPostBody(meta: PostMeta): Promise<string | null> {
-  const load = bodies[`/src/content/research/${meta.file}`];
+  const dir = meta.category === "essay" ? "essays" : "research";
+  const load = bodies[`/src/content/${dir}/${meta.file}`];
   if (!load) return null;
   return stripFrontmatter(await load());
 }
