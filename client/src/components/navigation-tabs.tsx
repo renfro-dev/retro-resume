@@ -9,7 +9,7 @@ interface NavTab {
 const tabs: NavTab[] = [
   { path: "/", label: "ABOUT" },
   { path: "/bio", label: "BIO" },
-  // { path: "/research", label: "RESEARCH" },
+  { path: "/research", label: "RESEARCH" },
   // { path: "/vibetube", label: "VIBETUBE" },
   // { path: "https://github.com/renfro-dev/openharp", label: "OPENHARP", external: true },
   // { path: "/brands", label: "BRANDS" },
@@ -21,7 +21,9 @@ export default function NavigationTabs() {
   return (
     <nav className="flex items-center gap-6">
       {tabs.map((tab) => {
-        const isActive = location === tab.path;
+        const isActive =
+          location === tab.path ||
+          (tab.path === "/research" && location.startsWith("/posts/"));
 
         if (tab.external) {
           return (

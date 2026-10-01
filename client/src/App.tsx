@@ -6,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import About from "@/pages/about";
 import Home from "@/pages/home";
 import Research from "@/pages/research";
-import ResearchTest from "@/pages/research-test";
+import Post from "@/pages/post";
 import Brands from "@/pages/brands";
 import VibeTube from "@/pages/vibetube";
 import NotFound from "@/pages/not-found";
@@ -17,8 +17,8 @@ function Router() {
     <Switch>
       <Route path="/" component={About} />
       <Route path="/bio" component={Home} />
-      <Route path="/research/:briefId?" component={Research} />
-      <Route path="/research-test" component={ResearchTest} />
+      <Route path="/research" component={Research} />
+      <Route path="/posts/:slug" component={Post} />
       <Route path="/brands" component={Brands} />
       <Route path="/vibetube/:videoId?" component={VibeTube} />
       <Route component={NotFound} />
