@@ -89,11 +89,19 @@ const chapters = [
     status: "Active",
     reportContent: "CSA Boss",
     externalLinks: [
-      { url: "https://www.linkedin.com/posts/joshuarenfro_replit-project-10-hour-milestone-activity-7344517801254010880-Xm9b?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAWtKSwBtM0WdUYcXCyRF_9ACl0MpPIp5xc", text: "Vibing" },
-      { url: "https://drafter.legal/", text: "Drafter" },
       { url: "https://www.linkedin.com/posts/joshuarenfro_sdx-cursor-openai-hack-day-recap-activity-7365813628828069888-bfmr?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAWtKSwBtM0WdUYcXCyRF_9ACl0MpPIp5xc", text: "Hack" },
       { url: "https://www.linkedin.com/posts/maxkrueger1_our-last-ai-tinkerers-sd-meetup-of-2025-was-ugcPost-7397669685082640385-IfeE?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAWtKSwBtM0WdUYcXCyRF_9ACl0MpPIp5xc", text: "Learn" }
     ]
+  },
+  {
+    title: "Rev",
+    description: "I'm building at the intersection of AI, RevOps, and GTM.",
+    imageUrl: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200",
+    imageAlt: "Revenue engineering across AI, RevOps, and GTM",
+    status: "Active",
+    reportContent: null,
+    externalLink: "https://www.linkedin.com/pulse/revenue-engineering-where-revops-gtm-ai-meet-joshua-renfro-mwqbc/",
+    buttonText: "Revenue Engineering"
   }
 ];
 
