@@ -3,13 +3,13 @@ title: "Building AI Workspaces with Grok Bot, Buzz, and Dots"
 slug: "building-ai-workspaces-grok-bot-buzz-dots"
 category: "essay"
 period_type: "essay"
-published_at: "2026-10-19T10:40:00"
+published_at: "2026-10-15T10:40:00"
 word_count: 1404
 reading_time_minutes: 8
-file: "2026-10-19-1040-building-ai-workspaces-grok-bot-buzz-dots.md"
+file: "2026-10-15-1040-building-ai-workspaces-grok-bot-buzz-dots.md"
 source_url: "https://www.linkedin.com/feed/update/urn:li:activity:7516226125606477824"
 source_id: "linkedin:activity:7516226125606477824"
-bundle_sha256: "fa20bdf074d289d017fb80179c0ef9e8c9fdaa63e2c6da91ee43d219ed1bacee"
+bundle_sha256: "4a4d46fb8d0966c080e2a2165cdc01ef6cb512b95cdc431d83a2cfc34497b083"
 ---
 
 I approached Grok Bot, Buzz, and OpenAI's Dots thinking I was comparing three versions of the same product. An agent with a computer. Give it tools, give it a job, see what happens.
