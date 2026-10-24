@@ -1,9 +1,9 @@
 import briefIndex from "@/content/research/index.json";
 import essayIndex from "@/content/essays/index.json";
 
-// "essay" posts are hand-written (content/essays); the rest are exported briefs (content/research).
-export type ResearchCategory = "systems_thinking" | "context_orchestration" | "essay";
-export type ResearchPeriod = "weekly" | "monthly" | "quarterly" | "essay";
+// Hand-written essays and guides live in content/essays; the rest are exported briefs.
+export type ResearchCategory = "systems_thinking" | "context_orchestration" | "essay" | "guide";
+export type ResearchPeriod = "weekly" | "monthly" | "quarterly" | "essay" | "guide";
 
 export interface PostMeta {
   title: string;
@@ -22,9 +22,10 @@ export const CATEGORY_LABELS: Record<ResearchCategory, string> = {
   systems_thinking: "Systems Thinking",
   context_orchestration: "Context Orchestration",
   essay: "Essay",
+  guide: "Guide",
 };
 
-// Index files are sorted ascending; the list page wants newest first.
+// The list page shows the newest posts first, regardless of index order.
 export const posts: PostMeta[] = [...(briefIndex as PostMeta[]), ...(essayIndex as PostMeta[])].sort(
   (a, b) => b.published_at.localeCompare(a.published_at),
 );
@@ -45,7 +46,7 @@ function stripFrontmatter(raw: string): string {
 }
 
 export async function loadPostBody(meta: PostMeta): Promise<string | null> {
-  const dir = meta.category === "essay" ? "essays" : "research";
+  const dir = meta.category === "essay" || meta.category === "guide" ? "essays" : "research";
   const load = bodies[`/src/content/${dir}/${meta.file}`];
   if (!load) return null;
   return stripFrontmatter(await load());

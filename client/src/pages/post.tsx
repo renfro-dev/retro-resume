@@ -36,7 +36,7 @@ export default function Post() {
 
             {!post ? (
               <p className="mt-6 text-[var(--terminal-yellow)] text-sm">
-                <span>&gt; BRIEF NOT FOUND</span>
+                <span>&gt; POST NOT FOUND</span>
               </p>
             ) : (
               <article className="mt-6">

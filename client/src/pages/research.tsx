@@ -42,7 +42,7 @@ export default function Research() {
             <p className="flex items-center gap-2 text-[var(--terminal-green)] text-sm mb-4">
               <span className="text-[var(--terminal-yellow)]">&gt;</span>
               <span>
-                FOUND {posts.length} BRIEF{posts.length !== 1 ? "S" : ""}
+                FOUND {posts.length} POST{posts.length !== 1 ? "S" : ""}
               </span>
             </p>
 
